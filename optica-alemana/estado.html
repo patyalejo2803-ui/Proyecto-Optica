@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Óptica Alemana - Estado de Mi Pedido</title>
+  <link rel="stylesheet" href="css/estado.css">
+</head>
+<body>
+
+  <div class="pagina">
+
+    <!-- ── ENCABEZADO ── -->
+    <div class="encabezado">
+      <div class="encabezado-icono">🔍</div>
+      <h1>ÓPTICA ALEMANA</h1>
+      <h2>Estado de Mi Pedido</h2>
+      <p>Sigue el progreso de tu pedido en tiempo real</p>
+    </div>
+
+    <!-- ── RESUMEN DEL PEDIDO ── -->
+    <div class="seccion">
+      <h3>Información del Pedido</h3>
+
+      <div class="resumen">
+        <p class="resumen-linea">
+          <span class="resumen-label">Pedido #:</span>
+          <span class="resumen-valor">0001</span>
+        </p>
+        <p class="resumen-linea">
+          <span class="resumen-label">Producto:</span>
+          <span class="resumen-valor">Montura Azul</span>
+        </p>
+        <p class="resumen-linea">
+          <span class="resumen-label">Estado:</span>
+          <span class="resumen-estado">EN PROCESO</span>
+        </p>
+        <p class="resumen-linea">
+          <span class="resumen-label">Fecha estimada:</span>
+          <span class="resumen-valor">30/04/2026</span>
+        </p>
+      </div>
+    </div>
+
+    <!-- ── SEGUIMIENTO ── -->
+    <div class="seccion">
+      <h3>Seguimiento</h3>
+
+      <div class="pasos">
+
+        <div class="paso completado">
+          <div class="paso-icono">✔</div>
+          <div class="paso-info">
+            <p class="paso-nombre">Pedido recibido</p>
+            <p class="paso-fecha">15/04/2026 — 10:30 AM</p>
+          </div>
+        </div>
+
+        <div class="paso completado">
+          <div class="paso-icono">✔</div>
+          <div class="paso-info">
+            <p class="paso-nombre">Pago confirmado</p>
+            <p class="paso-fecha">15/04/2026 — 11:00 AM</p>
+          </div>
+        </div>
+
+        <div class="paso en-proceso">
+          <div class="paso-icono">🕐</div>
+          <div class="paso-info">
+            <p class="paso-nombre">En proceso</p>
+            <p class="paso-fecha">En preparación...</p>
+          </div>
+        </div>
+
+        <div class="paso pendiente">
+          <div class="paso-icono"></div>
+          <div class="paso-info">
+            <p class="paso-nombre">Entregado</p>
+            <p class="paso-fecha">Fecha estimada: 30/04/2026</p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ── BARRA DE PROGRESO ── -->
+      <div class="barra-contenedor">
+        <div class="barra-progreso" style="width: 60%;"></div>
+      </div>
+      <p class="barra-label">Progreso: 60%</p>
+
+    </div>
+
+    <!-- ── BOTÓN VOLVER ── -->
+    <button onclick="window.location.href='pedidos.html'">← Volver a mis pedidos</button>
+
+  </div>
+
+  <!-- ── MENÚ INFERIOR ── -->
+  <div class="menu-nav">
+    <a href="index.html">🏠</a>
+    <a href="citas.html">📅</a>
+    <a href="pago.html">💳</a>
+    <a href="pedidos.html" class="activo">📦</a>
+  </div>
+
+  <script src="js/estado.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>App Óptica Alemana - Login</title>
+
+  <!-- Enlace al archivo de estilos -->
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+
+  <div class="tarjeta">
+
+    <h1>Óptica Alemana</h1>
+    <p class="subtitulo">¿Ya te has registrado? Ingresa aquí.</p>
+
+    <form id="miFormulario">
+
+      <!-- Campo Nombre -->
+      <label for="nombre">Nombre</label>
+      <input type="text" id="nombre" placeholder="Jana Martín">
+      <p class="error" id="error-nombre">Escribe tu nombre.</p>
+
+      <!-- Campo Correo -->
+      <label for="correo">Correo</label>
+      <input type="email" id="correo" placeholder="hola@ejemplo.com">
+      <p class="error" id="error-correo">Escribe un correo válido.</p>
+
+      <!-- Campo Clave -->
+      <label for="clave">Clave</label>
+      <input type="password" id="clave" placeholder="••••••">
+      <p class="error" id="error-clave">La clave debe tener mínimo 6 caracteres.</p>
+
+      <!-- Campo Fecha de Nacimiento -->
+      <label for="fecha">Fecha de Nacimiento</label>
+      <input type="date" id="fecha">
+      <p class="error" id="error-fecha">Selecciona tu fecha de nacimiento.</p>
+
+      <!-- Botón -->
+      <button type="button" onclick="validarFormulario()">Ingresar</button>
+
+    </form>
+
+    <!-- Mensaje de éxito -->
+    <p class="mensaje-exito" id="mensaje-exito">
+      ✅ ¡Bienvenido! Ingreso exitoso.
+    </p>
+
+    <!-- Link de registro -->
+    <div class="link-registro">
+      ¿No tienes cuenta? <a href="#">Regístrate aquí</a>
+    </div>
+
+  </div>
+
+  <!-- Enlace al archivo de JavaScript -->
+  <script src="js/validacion.js"></script>
+
+</body>
+</html>

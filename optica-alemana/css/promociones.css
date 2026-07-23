@@ -1,0 +1,233 @@
+/* ── General ── */
+body {
+  background-color: #0d1117;
+  color: #ffffff;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 20px 20px 80px 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.pagina {
+  width: 100%;
+  max-width: 900px;
+}
+
+/* ── Perfil ── */
+.perfil {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #0f2044;
+  border: 1px solid #1f6feb;
+  border-radius: 12px;
+  padding: 16px 20px;
+  margin-bottom: 14px;
+}
+
+.perfil-izquierda {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.avatar {
+  width: 50px;
+  height: 50px;
+  background-color: #1f6feb;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+}
+
+.perfil-nombre {
+  font-size: 16px;
+  font-weight: bold;
+  color: #ffffff;
+  margin: 0 0 4px 0;
+}
+
+.perfil-correo {
+  font-size: 12px;
+  color: #8b949e;
+  margin: 0;
+}
+
+.engranaje {
+  font-size: 22px;
+  opacity: 0.7;
+}
+
+/* ── Estadísticas ── */
+.estadisticas {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.stat {
+  flex: 1;
+  background-color: #0f2044;
+  border: 1px solid #1f3a6e;
+  border-radius: 12px;
+  padding: 14px 10px;
+  text-align: center;
+}
+
+.stat-icono {
+  font-size: 20px;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.stat-numero {
+  font-size: 22px;
+  font-weight: bold;
+  color: #1f6feb;
+  margin: 0 0 4px 0;
+}
+
+.stat-label {
+  font-size: 11px;
+  color: #8b949e;
+  margin: 0;
+}
+
+/* ── Secciones ── */
+.seccion {
+  background-color: #0f2044;
+  border: 1px solid #1f3a6e;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 14px;
+}
+
+.seccion-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.seccion-titulo {
+  font-size: 15px;
+  font-weight: bold;
+  color: #ffffff;
+  margin: 0;
+}
+
+.ver-todos {
+  font-size: 13px;
+  color: #1f6feb;
+  cursor: pointer;
+}
+
+/* ── Tarjetas mini ── */
+.tarjetas-mini {
+  display: flex;
+  gap: 10px;
+}
+
+.tarjeta-mini {
+  flex: 1;
+  background-color: #162035;
+  border: 1px solid #1f3a6e;
+  border-radius: 10px;
+  padding: 14px 10px;
+  text-align: center;
+}
+
+.mini-icono {
+  font-size: 28px;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.mini-titulo {
+  font-size: 12px;
+  color: #c9d1d9;
+  margin: 0 0 4px 0;
+}
+
+.mini-desc {
+  font-size: 13px;
+  color: #1f6feb;
+  font-weight: bold;
+  margin: 0;
+}
+
+/* ── Tarjetas novedad ── */
+.tarjeta-novedad {
+  display: flex;
+  gap: 12px;
+  background-color: #162035;
+  border: 1px solid #1f3a6e;
+  border-radius: 10px;
+  padding: 14px;
+  margin-bottom: 10px;
+  align-items: flex-start;
+}
+
+.novedad-imagen {
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg, #1f6feb, #0a47b8);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  flex-shrink: 0;
+}
+
+.novedad-contenido {
+  flex: 1;
+}
+
+.novedad-titulo {
+  font-size: 14px;
+  font-weight: bold;
+  color: #ffffff;
+  margin: 0 0 4px 0;
+}
+
+.novedad-desc {
+  font-size: 11px;
+  color: #8b949e;
+  margin: 0 0 10px 0;
+  letter-spacing: 0.3px;
+}
+
+.novedad-stats {
+  font-size: 12px;
+  color: #484f58;
+  display: flex;
+  gap: 14px;
+}
+
+/* ── Menú inferior ── */
+.menu-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #0f2044;
+  border-top: 1px solid #1f3a6e;
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  padding: 14px 0;
+}
+
+.menu-nav a {
+  font-size: 22px;
+  text-decoration: none;
+  opacity: 0.4;
+}
+
+.menu-nav a.activo {
+  opacity: 1;
+}
