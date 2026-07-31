@@ -6,12 +6,14 @@ function registrarUsuario() {
   var correo     = document.getElementById("correo").value;
   var contrasena = document.getElementById("contrasena").value;
   var confirmar  = document.getElementById("confirmar").value;
+  var fecha      = document.getElementById("fecha").value;
 
   // 2. Ocultamos todos los errores
   document.getElementById("error-nombre").style.display     = "none";
   document.getElementById("error-correo").style.display     = "none";
   document.getElementById("error-contrasena").style.display = "none";
   document.getElementById("error-confirmar").style.display  = "none";
+  document.getElementById("error-fecha").style.display  = "none";
   document.getElementById("mensaje-exito").style.display    = "none";
 
   // 3. Variable para errores
@@ -40,7 +42,13 @@ function registrarUsuario() {
     document.getElementById("error-confirmar").style.display = "block";
     hayError = true;
   }
-
+  
+  // 7. Validar fecha: no puede estar vacía
+  if (fecha == "") {
+    document.getElementById("error-fecha").style.display = "block";
+    hayError = true;
+  }
+  
   // 8. Si no hay errores, mostramos el éxito
   if (hayError == false) {
     document.getElementById("mensaje-exito").style.display = "block";

@@ -15,27 +15,17 @@
     <h1>Óptica Alemana</h1>
     <p class="subtitulo">¿Ya te has registrado? Ingresa aquí.</p>
 
-    <form id="miFormulario">
-
-      <!-- Campo Nombre -->
-      <label for="nombre">Nombre</label>
-      <input type="text" id="nombre" placeholder="Jana Martín">
-      <p class="error" id="error-nombre">Escribe tu nombre.</p>
+    <form id="miFormulario" action="#" method="post">
 
       <!-- Campo Correo -->
       <label for="correo">Correo</label>
-      <input type="email" id="correo" placeholder="hola@ejemplo.com">
+      <input type="email" id="correo" placeholder="hola@ejemplo.com" required>
       <p class="error" id="error-correo">Escribe un correo válido.</p>
 
-      <!-- Campo Clave -->
-      <label for="clave">Clave</label>
-      <input type="password" id="clave" placeholder="••••••">
-      <p class="error" id="error-clave">La clave debe tener mínimo 6 caracteres.</p>
-
-      <!-- Campo Fecha de Nacimiento -->
-      <label for="fecha">Fecha de Nacimiento</label>
-      <input type="date" id="fecha">
-      <p class="error" id="error-fecha">Selecciona tu fecha de nacimiento.</p>
+      <!-- Campo Contraseña -->
+      <label for="clave">Contraseña</label>
+      <input type="password" id="clave" placeholder="••••••" required>
+      <p class="error" id="error-clave">La contraseña debe tener mínimo 6 caracteres.</p>
 
       <!-- Botón -->
       <button type="button" onclick="validarFormulario()">Ingresar</button>
@@ -49,7 +39,7 @@
 
     <!-- Link de registro -->
     <div class="link-registro">
-      ¿No tienes cuenta? <a href="#">Regístrate aquí</a>
+      ¿No tienes cuenta? <a href="registro.html">Regístrate aquí</a>
     </div>
 
   </div>
