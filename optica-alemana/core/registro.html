@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Óptica Alemana - Registro</title>
+
+  <style>
+    /* ── General ── */
+    body {
+      background-color: #0d1117;
+      color: #ffffff;
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      padding: 20px;
+    }
+
+    /* ── Tarjeta ── */
+    .tarjeta {
+      background-color: #161b22;
+      border: 1px solid #1f6feb;
+      border-radius: 12px;
+      padding: 40px 36px;
+      width: 100%;
+      max-width: 420px;
+    }
+
+    /* ── Título ── */
+    h1 {
+      text-align: center;
+      color: #ffffff;
+      font-size: 24px;
+      margin-bottom: 6px;
+    }
+
+    /* ── Subtítulo ── */
+    .subtitulo {
+      text-align: center;
+      color: #8b949e;
+      font-size: 14px;
+      margin-bottom: 28px;
+    }
+
+    /* ── Labels ── */
+    label {
+      display: block;
+      font-size: 12px;
+      color: #8b949e;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 6px;
+    }
+
+    /* ── Inputs ── */
+    input,
+    select {
+      width: 100%;
+      padding: 12px 14px;
+      background-color: #0d1117;
+      border: 1px solid #30363d;
+      border-radius: 8px;
+      color: #ffffff;
+      font-size: 15px;
+      margin-bottom: 18px;
+      box-sizing: border-box;
+    }
+
+    input:focus,
+    select:focus {
+      outline: none;
+      border-color: #1f6feb;
+    }
+
+    input::placeholder {
+      color: #484f58;
+    }
+
+    /* ── Botón ── */
+    button {
+      width: 100%;
+      padding: 13px;
+      background-color: #1f6feb;
+      color: #ffffff;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 6px;
+    }
+
+    button:hover {
+      background-color: #388bfd;
+    }
+
+    /* ── Errores ── */
+    .error {
+      color: #f85149;
+      font-size: 13px;
+      margin-top: -14px;
+      margin-bottom: 12px;
+      display: none;
+    }
+
+    /* ── Mensaje de éxito ── */
+    .mensaje-exito {
+      background-color: #1a3a2a;
+      border: 1px solid #238636;
+      color: #3fb950;
+      padding: 12px;
+      border-radius: 8px;
+      text-align: center;
+      font-size: 14px;
+      margin-top: 16px;
+      display: none;
+    }
+
+    /* ── Link login ── */
+    .link-login {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 13px;
+      color: #8b949e;
+    }
+
+    .link-login a {
+      color: #388bfd;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .link-login a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="tarjeta">
+
+    <h1>Óptica Alemana</h1>
+    <p class="subtitulo">Crea tu cuenta para acceder a compras y citas</p>
+
+    <form id="formRegistro">
+
+      <!-- Nombre -->
+      <label for="nombre">Nombre completo</label>
+      <input type="text" id="nombre" placeholder="Jana Martín">
+      <p class="error" id="error-nombre">Escribe tu nombre completo.</p>
+
+      <!-- Identificación -->
+      <label for="identificacion">Número de identificación</label>
+      <input type="text" id="identificacion" placeholder="1234567890">
+      <p class="error" id="error-identificacion">Escribe tu número de identificación.</p>
+
+      <!-- Correo -->
+      <label for="correo">Correo electrónico</label>
+      <input type="email" id="correo" placeholder="hola@ejemplo.com">
+      <p class="error" id="error-correo">Escribe un correo válido.</p>
+
+      <!-- Teléfono -->
+      <label for="telefono">Teléfono</label>
+      <input type="text" id="telefono" placeholder="3001234567">
+
+      <!-- Dirección -->
+      <label for="direccion">Dirección</label>
+      <input type="text" id="direccion" placeholder="CRA 12-23">
+
+      <!-- Localidad (se llena dinámicamente desde la base de datos) -->
+      <label for="localidad">Localidad</label>
+      <select id="localidad">
+        <option value="">Selecciona tu localidad</option>
+      </select>
+      <p class="error" id="error-localidad">Selecciona una localidad.</p>
+
+      <!-- Contraseña -->
+      <label for="contrasena">Contraseña</label>
+      <input type="password" id="contrasena" placeholder="Mínimo 6 caracteres">
+      <p class="error" id="error-contrasena">La contraseña debe tener mínimo 6 caracteres.</p>
+
+      <!-- Confirmar contraseña -->
+      <label for="confirmar">Confirmar contraseña</label>
+      <input type="password" id="confirmar" placeholder="Repite tu contraseña">
+      <p class="error" id="error-confirmar">Las contraseñas no coinciden.</p>
+
+      <!-- Botón -->
+      <button type="button" onclick="registrarUsuario()">Crear Cuenta</button>
+
+    </form>
+
+    <!-- Mensaje de éxito -->
+    <p class="mensaje-exito" id="mensaje-exito">
+      ✅ ¡Cuenta creada exitosamente! Ya puedes iniciar sesión.
+    </p>
+
+    <!-- Link al login -->
+    <div class="link-login">
+      ¿Ya tienes cuenta? <a href="index.html">Inicia sesión aquí</a>
+    </div>
+
+  </div>
+
+  <script>
+    // ── Cargar las localidades desde la base de datos al abrir la página ──
+    function cargarLocalidades() {
+      fetch("php/obtener_localidades.php")
+        .then(function (respuesta) { return respuesta.json(); })
+        .then(function (localidades) {
+          var select = document.getElementById("localidad");
+          localidades.forEach(function (loc) {
+            var option = document.createElement("option");
+            option.value = loc.ID_LOCALIDAD;
+            option.textContent = loc.NOMBRE;
+            select.appendChild(option);
+          });
+        })
+        .catch(function (error) {
+          console.error("Error cargando localidades:", error);
+        });
+    }
+
+    // ── Función principal de registro ──
+    function registrarUsuario() {
+
+      // 1. Leemos los valores
+      var nombre         = document.getElementById("nombre").value.trim();
+      var identificacion = document.getElementById("identificacion").value.trim();
+      var correo         = document.getElementById("correo").value.trim();
+      var telefono       = document.getElementById("telefono").value.trim();
+      var direccion      = document.getElementById("direccion").value.trim();
+      var idLocalidad    = document.getElementById("localidad").value;
+      var contrasena     = document.getElementById("contrasena").value;
+      var confirmar      = document.getElementById("confirmar").value;
+
+      // 2. Ocultamos todos los errores
+      document.getElementById("error-nombre").style.display         = "none";
+      document.getElementById("error-identificacion").style.display = "none";
+      document.getElementById("error-correo").style.display         = "none";
+      document.getElementById("error-localidad").style.display      = "none";
+      document.getElementById("error-contrasena").style.display     = "none";
+      document.getElementById("error-confirmar").style.display      = "none";
+      document.getElementById("mensaje-exito").style.display        = "none";
+
+      // 3. Variable para errores
+      var hayError = false;
+
+      // 4. Validar nombre
+      if (nombre === "") {
+        document.getElementById("error-nombre").style.display = "block";
+        hayError = true;
+      }
+
+      // 5. Validar identificación
+      if (identificacion === "") {
+        document.getElementById("error-identificacion").style.display = "block";
+        hayError = true;
+      }
+
+      // 6. Validar correo
+      if (correo === "" || !correo.includes("@") || !correo.includes(".")) {
+        document.getElementById("error-correo").style.display = "block";
+        hayError = true;
+      }
+
+      // 7. Validar localidad
+      if (idLocalidad === "") {
+        document.getElementById("error-localidad").style.display = "block";
+        hayError = true;
+      }
+
+      // 8. Validar contraseña mínimo 6 caracteres
+      if (contrasena.length < 6) {
+        document.getElementById("error-contrasena").style.display = "block";
+        hayError = true;
+      }
+
+      // 9. Validar que las contraseñas coincidan
+      if (contrasena !== confirmar) {
+        document.getElementById("error-confirmar").style.display = "block";
+        hayError = true;
+      }
+
+      // Si hay errores de validación en el navegador, no seguimos
+      if (hayError) {
+        return;
+      }
+
+      // 10. Armamos los datos y los enviamos al backend PHP
+      var datos = new FormData();
+      datos.append("nombre", nombre);
+      datos.append("identificacion", identificacion);
+      datos.append("correo", correo);
+      datos.append("telefono", telefono);
+      datos.append("direccion", direccion);
+      datos.append("id_localidad", idLocalidad);
+      datos.append("contrasena", contrasena);
+
+      fetch("php/registrar.php", {
+        method: "POST",
+        body: datos
+      })
+        .then(function (respuesta) { return respuesta.json(); })
+        .then(function (data) {
+          if (data.exito) {
+            document.getElementById("mensaje-exito").style.display = "block";
+            document.getElementById("formRegistro").reset();
+          } else {
+            alert(data.mensaje);
+          }
+        })
+        .catch(function (error) {
+          console.error("Error de conexión:", error);
+          alert("No se pudo conectar con el servidor. Verifica que Apache y MySQL estén corriendo en XAMPP.");
+        });
+    }
+
+    // Cargamos las localidades apenas la página termine de cargar
+    document.addEventListener("DOMContentLoaded", cargarLocalidades);
+  </script>
+
+</body>
+</html>

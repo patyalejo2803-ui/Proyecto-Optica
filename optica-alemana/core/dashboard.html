@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Óptica Alemana - Panel de Administración</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: #0d1117;
+      color: #ffffff;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 32px 24px;
+    }
+
+    /* ── Encabezado ── */
+    .encabezado {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1100px;
+      margin: 0 auto 32px auto;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .encabezado h1 {
+      font-size: 22px;
+      margin: 0 0 4px 0;
+    }
+
+    .encabezado .subtitulo {
+      color: #8b949e;
+      font-size: 14px;
+      margin: 0;
+    }
+
+    .btn-salir {
+      background-color: #21262d;
+      color: #f85149;
+      border: 1px solid #f85149;
+      border-radius: 8px;
+      padding: 10px 18px;
+      font-size: 14px;
+      font-weight: bold;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .btn-salir:hover {
+      background-color: #f85149;
+      color: #ffffff;
+    }
+
+    /* ── Estadísticas ── */
+    .estadisticas {
+      max-width: 1100px;
+      margin: 0 auto 40px auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+    }
+
+    .tarjeta-stat {
+      background-color: #161b22;
+      border: 1px solid #30363d;
+      border-radius: 12px;
+      padding: 20px;
+    }
+
+    .tarjeta-stat .numero {
+      font-size: 32px;
+      font-weight: bold;
+      color: #1f6feb;
+    }
+
+    .tarjeta-stat .etiqueta {
+      color: #8b949e;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-top: 4px;
+    }
+
+    /* ── Módulos ── */
+    .seccion-titulo {
+      max-width: 1100px;
+      margin: 0 auto 16px auto;
+      font-size: 16px;
+      color: #8b949e;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .modulos {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+    }
+
+    .modulo {
+      background-color: #161b22;
+      border: 1px solid #1f6feb;
+      border-radius: 12px;
+      padding: 24px;
+      text-decoration: none;
+      color: #ffffff;
+      transition: background-color 0.15s ease;
+    }
+
+    .modulo:hover {
+      background-color: #1c2530;
+    }
+
+    .modulo .icono {
+      font-size: 26px;
+      margin-bottom: 10px;
+      display: block;
+    }
+
+    .modulo .titulo-modulo {
+      font-weight: bold;
+      font-size: 16px;
+      margin-bottom: 4px;
+    }
+
+    .modulo .descripcion-modulo {
+      font-size: 13px;
+      color: #8b949e;
+    }
+
+    /* ── Estado de carga ── */
+    .cargando {
+      text-align: center;
+      color: #8b949e;
+      padding: 60px 0;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Se muestra mientras se verifica la sesión -->
+  <div class="cargando" id="cargando">Cargando panel...</div>
+
+  <!-- Contenido real del dashboard (oculto hasta confirmar la sesión) -->
+  <div id="contenido" style="display:none;">
+
+    <div class="encabezado">
+      <div>
+        <h1>Panel de Administración</h1>
+        <p class="subtitulo">Bienvenido/a, <span id="nombreUsuario"></span></p>
+      </div>
+      <a href="php/logout.php" class="btn-salir">Cerrar sesión</a>
+    </div>
+
+    <div class="estadisticas">
+      <div class="tarjeta-stat">
+        <div class="numero" id="totalUsuarios">0</div>
+        <div class="etiqueta">Usuarios registrados</div>
+      </div>
+      <div class="tarjeta-stat">
+        <div class="numero" id="totalProductos">0</div>
+        <div class="etiqueta">Productos</div>
+      </div>
+      <div class="tarjeta-stat">
+        <div class="numero" id="totalOrdenes">0</div>
+        <div class="etiqueta">Órdenes</div>
+      </div>
+      <div class="tarjeta-stat">
+        <div class="numero" id="totalServicios">0</div>
+        <div class="etiqueta">Servicios</div>
+      </div>
+    </div>
+
+    <p class="seccion-titulo">Módulos del sistema</p>
+
+    <div class="modulos">
+      <a href="admin.html" class="modulo">
+        <span class="icono">🛠️</span>
+        <div class="titulo-modulo">Administración</div>
+        <div class="descripcion-modulo">Gestión general del sistema</div>
+      </a>
+
+      <a href="citas.html" class="modulo">
+        <span class="icono">📅</span>
+        <div class="titulo-modulo">Citas</div>
+        <div class="descripcion-modulo">Agenda y control de citas</div>
+      </a>
+
+      <a href="pedidos.html" class="modulo">
+        <span class="icono">📦</span>
+        <div class="titulo-modulo">Pedidos</div>
+        <div class="descripcion-modulo">Órdenes de clientes</div>
+      </a>
+
+      <a href="historial.html" class="modulo">
+        <span class="icono">🕓</span>
+        <div class="titulo-modulo">Historial</div>
+        <div class="descripcion-modulo">Historial de clientes</div>
+      </a>
+
+      <a href="promociones.html" class="modulo">
+        <span class="icono">🏷️</span>
+        <div class="titulo-modulo">Promociones</div>
+        <div class="descripcion-modulo">Ofertas y descuentos</div>
+      </a>
+
+      <a href="pago.html" class="modulo">
+        <span class="icono">💳</span>
+        <div class="titulo-modulo">Pagos</div>
+        <div class="descripcion-modulo">Registro de pagos</div>
+      </a>
+
+      <a href="estado.html" class="modulo">
+        <span class="icono">📊</span>
+        <div class="titulo-modulo">Estado</div>
+        <div class="descripcion-modulo">Estado general del sistema</div>
+      </a>
+    </div>
+
+  </div>
+
+  <script>
+    // ── Al cargar la página, verificamos sesión y traemos las estadísticas ──
+    function cargarDashboard() {
+      fetch("php/dashboard.php")
+        .then(function (respuesta) { return respuesta.json(); })
+        .then(function (data) {
+          if (!data.autenticado) {
+            // No hay sesión válida o el rol no tiene permiso: mandamos al login
+            window.location.href = "login.html";
+            return;
+          }
+
+          // Rellenamos los datos en la página
+          document.getElementById("nombreUsuario").textContent = data.nombre;
+          document.getElementById("totalUsuarios").textContent  = data.totalUsuarios;
+          document.getElementById("totalProductos").textContent = data.totalProductos;
+          document.getElementById("totalOrdenes").textContent   = data.totalOrdenes;
+          document.getElementById("totalServicios").textContent = data.totalServicios;
+
+          // Mostramos el contenido y ocultamos el mensaje de carga
+          document.getElementById("cargando").style.display  = "none";
+          document.getElementById("contenido").style.display = "block";
+        })
+        .catch(function (error) {
+          console.error("Error al cargar el dashboard:", error);
+          alert("No se pudo conectar con el servidor. Verifica que Apache y MySQL estén corriendo en XAMPP.");
+        });
+    }
+
+    document.addEventListener("DOMContentLoaded", cargarDashboard);
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>App Óptica Alemana - Login</title>
+
+  <style>
+    /* ── Estilos generales ── */
+    body {
+      background-color: #0d1117;
+      color: #ffffff;
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+
+    /* ── Tarjeta principal ── */
+    .tarjeta {
+      background-color: #161b22;
+      border: 1px solid #1f6feb;
+      border-radius: 12px;
+      padding: 40px 36px;
+      width: 100%;
+      max-width: 380px;
+    }
+
+    /* ── Título ── */
+    h1 {
+      text-align: center;
+      color: #ffffff;
+      font-size: 24px;
+      margin-bottom: 6px;
+    }
+
+    /* ── Subtítulo ── */
+    .subtitulo {
+      text-align: center;
+      color: #8b949e;
+      font-size: 14px;
+      margin-bottom: 28px;
+    }
+
+    /* ── Etiquetas ── */
+    label {
+      display: block;
+      font-size: 12px;
+      color: #8b949e;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 6px;
+    }
+
+    /* ── Campos de texto ── */
+    input {
+      width: 100%;
+      padding: 12px 14px;
+      background-color: #0d1117;
+      border: 1px solid #30363d;
+      border-radius: 8px;
+      color: #ffffff;
+      font-size: 15px;
+      margin-bottom: 18px;
+      box-sizing: border-box;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: #1f6feb;
+    }
+
+    input::placeholder {
+      color: #484f58;
+    }
+
+    /* ── Botón ── */
+    button {
+      width: 100%;
+      padding: 13px;
+      background-color: #1f6feb;
+      color: #ffffff;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 6px;
+    }
+
+    button:hover {
+      background-color: #388bfd;
+    }
+
+    /* ── Mensaje de error ── */
+    .error {
+      color: #f85149;
+      font-size: 13px;
+      margin-top: -14px;
+      margin-bottom: 12px;
+      display: none;
+    }
+
+    /* ── Mensaje de éxito ── */
+    .mensaje-exito {
+      background-color: #1a3a2a;
+      border: 1px solid #238636;
+      color: #3fb950;
+      padding: 12px;
+      border-radius: 8px;
+      text-align: center;
+      font-size: 14px;
+      margin-top: 16px;
+      display: none;
+    }
+
+    /* ── Link de registro ── */
+    .link-registro {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 13px;
+      color: #8b949e;
+    }
+
+    .link-registro a {
+      color: #388bfd;
+      text-decoration: none;
+    }
+
+    .link-registro a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="tarjeta">
+
+    <h1>Óptica Alemana</h1>
+    <p class="subtitulo">¿Ya te has registrado? Ingresa aquí.</p>
+
+    <form id="miFormulario">
+
+      <!-- Campo Usuario (= nombre completo con el que se registró) -->
+      <label for="usuario">Usuario</label>
+      <input type="text" id="usuario" placeholder="Jana Martín">
+      <p class="error" id="error-usuario">Escribe tu nombre de usuario.</p>
+
+      <!-- Campo Clave -->
+      <label for="clave">Clave</label>
+      <input type="password" id="clave" placeholder="••••••">
+      <p class="error" id="error-clave">La clave debe tener mínimo 6 caracteres.</p>
+
+      <!-- Mensaje de error general (usuario o clave incorrectos) -->
+      <p class="error" id="error-general">Usuario o contraseña incorrectos.</p>
+
+      <!-- Botón -->
+      <button type="button" onclick="validarFormulario()">Ingresar</button>
+
+    </form>
+
+    <!-- Mensaje de éxito -->
+    <p class="mensaje-exito" id="mensaje-exito">
+      ✅ ¡Bienvenido! Ingreso exitoso.
+    </p>
+
+    <!-- Link de registro -->
+    <div class="link-registro">
+      ¿No tienes cuenta? <a href="registro.html">Regístrate aquí</a>
+    </div>
+
+  </div>
+
+  <script>
+    // ── Función principal de login ──
+    function validarFormulario() {
+
+      // 1. Leemos los valores
+      var usuario = document.getElementById("usuario").value.trim();
+      var clave   = document.getElementById("clave").value;
+
+      // 2. Ocultamos todos los mensajes previos
+      document.getElementById("error-usuario").style.display = "none";
+      document.getElementById("error-clave").style.display   = "none";
+      document.getElementById("error-general").style.display = "none";
+      document.getElementById("mensaje-exito").style.display = "none";
+
+      // 3. Variable para errores
+      var hayError = false;
+
+      // 4. Validar usuario
+      if (usuario === "") {
+        document.getElementById("error-usuario").style.display = "block";
+        hayError = true;
+      }
+
+      // 5. Validar clave mínimo 6 caracteres
+      if (clave.length < 6) {
+        document.getElementById("error-clave").style.display = "block";
+        hayError = true;
+      }
+
+      // Si hay errores de validación en el navegador, no seguimos
+      if (hayError) {
+        return;
+      }
+
+      // 6. Armamos los datos y los enviamos al backend PHP
+      var datos = new FormData();
+      datos.append("usuario", usuario);
+      datos.append("clave", clave);
+
+      fetch("php/login.php", {
+        method: "POST",
+        body: datos
+      })
+        .then(function (respuesta) { return respuesta.json(); })
+        .then(function (data) {
+          if (data.exito) {
+            document.getElementById("mensaje-exito").style.display = "block";
+            // Redirige según el rol del usuario:
+            // 2 = ADMINISTRADOR, 3 = GERENTE -> dashboard.html
+            // cualquier otro rol (ej. 1 = CLIENTE) -> estado.html
+            var destino = (data.id_rol === 2 || data.id_rol === 3) ? "dashboard.html" : "estado.html";
+            setTimeout(function () {
+              window.location.href = destino;
+            }, 800);
+          } else {
+            document.getElementById("error-general").style.display = "block";
+          }
+        })
+        .catch(function (error) {
+          console.error("Error de conexión:", error);
+          alert("No se pudo conectar con el servidor. Verifica que Apache y MySQL estén corriendo en XAMPP.");
+        });
+    }
+  </script>
+
+</body>
+</html>g

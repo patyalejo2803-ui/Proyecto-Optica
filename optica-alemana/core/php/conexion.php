@@ -8,8 +8,11 @@ $conexion = new mysqli($servidor, $usuario, $password, $basedatos);
 
 if ($conexion->connect_error) {
     die("Error de conexión: " . $conexion->connect_error);
-}else {
-    echo "Conexion exitosa a la base de datos";
 }
+
+// No imprimimos nada aquí si la conexión es exitosa,
+// porque este archivo se incluye dentro de otros scripts
+// (obtener_localidades.php, registrar.php) que devuelven JSON.
+// Un echo aquí rompería ese JSON.
 
 ?>
