@@ -1,5 +1,18 @@
+import { validarLogin } from './login.js';
+
+document.addEventListener("DOMContentLoaded", (e)=> {
+    document.getElementById("mensaje").style.display = "none";
+})
+
+document.addEventListener("click", (e)=> {
+  if(e.target && e.target.id == "btn-ingresar"){
+    e.preventDefault();
+    validarFormulario();
+  }
+})
+
 // Función principal que se ejecuta al hacer clic en "Ingresar"
-function validarFormulario() {
+export function validarFormulario() {
 
   // 1. Obtenemos los valores que el usuario escribió
   var correo = document.getElementById("correo").value;
@@ -8,7 +21,7 @@ function validarFormulario() {
   // 2. Ocultamos todos los errores antes de validar
   document.getElementById("error-correo").style.display = "none";
   document.getElementById("error-clave").style.display  = "none";
-  document.getElementById("mensaje-exito").style.display = "none";
+  document.getElementById("mensaje").style.display = "none";
 
   // 3. Variable para saber si hay algún error
   var hayError = false;
@@ -25,10 +38,13 @@ function validarFormulario() {
     hayError = true;
   }
 
+  // 7. Encriptar la clave usando MD5
+  let claveencriptada = md5(clave);
 
   // 8. Si no hay errores, mostramos el mensaje de éxito
   if (hayError == false) {
-    document.getElementById("mensaje-exito").style.display = "block";
+    document.getElementById("mensaje").style.display = "block";
+    validarLogin(correo, claveencriptada);
   }
 
 }

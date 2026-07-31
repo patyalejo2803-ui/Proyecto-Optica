@@ -48,7 +48,7 @@ function registrarUsuario() {
     document.getElementById("error-fecha").style.display = "block";
     hayError = true;
   }
-  
+
   // 8. Si no hay errores, mostramos el éxito
   if (hayError == false) {
     document.getElementById("mensaje-exito").style.display = "block";

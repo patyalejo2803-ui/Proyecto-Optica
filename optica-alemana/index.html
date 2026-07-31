@@ -28,15 +28,13 @@
       <p class="error" id="error-clave">La contraseña debe tener mínimo 6 caracteres.</p>
 
       <!-- Botón -->
-      <button type="button" onclick="validarFormulario()">Ingresar</button>
+      <button type="button" id="btn-ingresar">Ingresar</button>
 
     </form>
 
     <!-- Mensaje de éxito -->
-    <p class="mensaje-exito" id="mensaje-exito">
-      ✅ ¡Bienvenido! Ingreso exitoso.
-    </p>
-
+    <center id="mensaje"><div class="loader"></div></center>
+    
     <!-- Link de registro -->
     <div class="link-registro">
       ¿No tienes cuenta? <a href="registro.html">Regístrate aquí</a>
@@ -45,7 +43,7 @@
   </div>
 
   <!-- Enlace al archivo de JavaScript -->
-  <script src="js/validacion.js"></script>
-
+  <script src="js/validacion.js" type="module"></script>
+  <script src="js/md5.js"></script>
 </body>
 </html>

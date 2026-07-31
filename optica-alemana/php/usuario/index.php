@@ -7,7 +7,7 @@
         if($_SERVER["REQUEST_METHOD"]=="POST"){
             try{
                 //Validacion de parametros
-                //$_POST = json_decode(file_get_contents('php://input'), true);
+                $_POST = json_decode(file_get_contents('php://input'), true);
                 // Validar parámetros
                 if (!empty($_POST['usuario']) && !empty($_POST['clave'])) {
                     $usuario = htmlspecialchars(trim($_POST['usuario']));
