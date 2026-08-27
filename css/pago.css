@@ -1,0 +1,240 @@
+/* ── Estilos generales ── */
+body {
+  background-color: #0d1117;
+  color: #ffffff;
+  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  margin: 0;
+  padding: 30px 20px;
+}
+
+/* ── Tarjeta principal ── */
+.tarjeta {
+  background-color: #0f2044;
+  border: 1px solid #1f6feb;
+  border-radius: 12px;
+  padding: 36px;
+  width: 100%;
+  max-width: 420px;
+}
+
+/* ── Encabezado ── */
+.encabezado {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.encabezado h1 {
+  font-size: 22px;
+  color: #ffffff;
+  letter-spacing: 2px;
+  margin-bottom: 6px;
+}
+
+.encabezado h2 {
+  font-size: 20px;
+  color: #ffffff;
+  font-weight: bold;
+}
+
+/* ── Secciones ── */
+.seccion {
+  margin-bottom: 24px;
+}
+
+.seccion h3 {
+  font-size: 14px;
+  color: #8b949e;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 14px;
+  border-bottom: 1px solid #1f3a6e;
+  padding-bottom: 8px;
+}
+
+/* ── Productos ── */
+.productos {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 8px;
+}
+
+.producto {
+  background-color: #162035;
+  border: 2px solid #1f3a6e;
+  border-radius: 10px;
+  padding: 14px 10px;
+  text-align: center;
+  cursor: pointer;
+  width: 33%;
+  transition: border-color 0.2s;
+}
+
+.producto:hover {
+  border-color: #388bfd;
+}
+
+.producto.seleccionado {
+  border-color: #388bfd;
+  background-color: #1a3060;
+}
+
+.producto .icono {
+  font-size: 26px;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.producto p {
+  font-size: 12px;
+  color: #c9d1d9;
+  margin: 0;
+}
+
+.producto .precio {
+  color: #3fb950;
+  font-weight: bold;
+  margin-top: 4px !important;
+  font-size: 13px !important;
+}
+
+/* ── Medios de pago ── */
+.medios {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 8px;
+}
+
+.medio {
+  background-color: #162035;
+  border: 2px solid #1f3a6e;
+  border-radius: 10px;
+  padding: 14px 10px;
+  text-align: center;
+  cursor: pointer;
+  width: 33%;
+  transition: border-color 0.2s;
+}
+
+.medio:hover {
+  border-color: #388bfd;
+}
+
+.medio.seleccionado {
+  border-color: #388bfd;
+  background-color: #1a3060;
+}
+
+.medio .icono {
+  font-size: 26px;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.medio p {
+  font-size: 11px;
+  color: #c9d1d9;
+  margin: 0;
+  font-weight: bold;
+  letter-spacing: 0.5px;
+}
+
+/* ── Inputs ── */
+label {
+  display: block;
+  font-size: 12px;
+  color: #8b949e;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 6px;
+}
+
+input {
+  width: 100%;
+  padding: 12px 14px;
+  background-color: #0d1117;
+  border: 1px solid #30363d;
+  border-radius: 8px;
+  color: #ffffff;
+  font-size: 15px;
+  margin-bottom: 16px;
+  box-sizing: border-box;
+}
+
+input:focus {
+  outline: none;
+  border-color: #1f6feb;
+}
+
+input::placeholder {
+  color: #484f58;
+}
+
+/* ── Botón ── */
+button {
+  width: 100%;
+  padding: 14px;
+  background-color: #1f6feb;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 6px;
+  letter-spacing: 0.5px;
+}
+
+button:hover {
+  background-color: #388bfd;
+}
+
+/* ── Mensajes de error ── */
+.error {
+  color: #f85149;
+  font-size: 13px;
+  margin-top: -10px;
+  margin-bottom: 10px;
+  display: none;
+}
+
+/* ── Factura ── */
+.factura {
+  background-color: #0d2137;
+  border: 1px solid #238636;
+  border-radius: 10px;
+  padding: 20px;
+  margin-top: 20px;
+  display: none;
+}
+
+.factura h3 {
+  color: #3fb950;
+  margin-bottom: 14px;
+  font-size: 16px;
+}
+
+.factura p {
+  color: #c9d1d9;
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+.factura span {
+  color: #ffffff;
+  font-weight: bold;
+}
+
+.guardado {
+  color: #3fb950 !important;
+  margin-top: 14px !important;
+  font-weight: bold !important;
+  text-align: center;
+  border-top: 1px solid #1f3a6e;
+  padding-top: 12px;
+}

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Óptica Alemana - Panel Administrador</title>
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+
+  <div class="pagina">
+
+    <!-- ── ENCABEZADO ── -->
+    <div class="encabezado">
+      <div class="encabezado-icono">👁️</div>
+      <div class="encabezado-marca">
+        <span class="marca-punto"></span>
+        <span class="marca-nombre">VISIONLAB</span>
+      </div>
+      <h2>Panel Administrador</h2>
+      <p>La luz de tus ojos ✨</p>
+    </div>
+
+    <!-- ── TARJETAS DE ESTADÍSTICAS ── -->
+    <div class="stats">
+
+      <div class="stat-card stat-azul">
+        <span class="stat-icono">👥</span>
+        <p class="stat-label">Clientes</p>
+        <p class="stat-valor">1,234</p>
+      </div>
+
+      <div class="stat-card stat-verde">
+        <span class="stat-icono">📅</span>
+        <p class="stat-label">Citas</p>
+        <p class="stat-valor">45</p>
+      </div>
+
+      <div class="stat-card stat-amarillo">
+        <span class="stat-icono">📦</span>
+        <p class="stat-label">Pedidos</p>
+        <p class="stat-valor">89</p>
+      </div>
+
+      <div class="stat-card stat-morado">
+        <span class="stat-icono">🛡️</span>
+        <p class="stat-label">Ventas</p>
+        <p class="stat-valor">$5.6M</p>
+      </div>
+
+    </div>
+
+    <!-- ── PANELES INFERIORES ── -->
+    <div class="paneles">
+
+      <!-- Próximas citas -->
+      <div class="panel">
+        <h3>📅 Próximas citas</h3>
+
+        <div class="panel-lista" id="lista-citas">
+
+          <div class="panel-item">
+            <p class="panel-item-nombre">Juan Pérez</p>
+            <p class="panel-item-sub">29/04 - 10:00</p>
+          </div>
+
+          <div class="panel-item">
+            <p class="panel-item-nombre">María García</p>
+            <p class="panel-item-sub">29/04 - 11:30</p>
+          </div>
+
+          <div class="panel-item">
+            <p class="panel-item-nombre">Carlos Méndez</p>
+            <p class="panel-item-sub">30/04 - 09:00</p>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Pedidos recientes -->
+      <div class="panel">
+        <h3>📦 Pedidos recientes</h3>
+
+        <div class="panel-lista" id="lista-pedidos">
+
+          <div class="panel-item panel-item-row">
+            <div>
+              <p class="panel-item-nombre">Ana Martínez</p>
+              <p class="panel-item-sub">Gafas deportivas</p>
+            </div>
+            <span class="pedido-tag">#0004</span>
+          </div>
+
+          <div class="panel-item panel-item-row">
+            <div>
+              <p class="panel-item-nombre">Luis Rodríguez</p>
+              <p class="panel-item-sub">Montura clásica</p>
+            </div>
+            <span class="pedido-tag">#0005</span>
+          </div>
+
+          <div class="panel-item panel-item-row">
+            <div>
+              <p class="panel-item-nombre">Sara Ospina</p>
+              <p class="panel-item-sub">Lentes de contacto</p>
+            </div>
+            <span class="pedido-tag">#0006</span>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ── BOTONES DE ACCESO RÁPIDO ── -->
+    <div class="accesos">
+      <button class="btn-acceso btn-clientes"   onclick="irA('clientes')">Clientes</button>
+      <button class="btn-acceso btn-agenda"     onclick="irA('citas.html')">Agenda</button>
+      <button class="btn-acceso btn-inventario" onclick="irA('inventario')">Inventario</button>
+      <button class="btn-acceso btn-reportes"   onclick="irA('reportes')">Reportes</button>
+    </div>
+
+  </div>
+
+  <!-- ── MENÚ INFERIOR ── -->
+  <div class="menu-nav">
+    <a href="login.html">🏠</a>
+    <a href="citas.html">📅</a>
+    <a href="pago.html">💳</a>
+    <a href="pedidos.html">📦</a>
+  </div>
+
+  <script src="js/admin.js"></script>
+
+</body>
+</html>

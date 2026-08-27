@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Óptica Alemana - Agendar Cita</title>
+  <link rel="stylesheet" href="css/citas.css">
+</head>
+<body>
+
+  <div class="pagina">
+
+    <!-- ── ENCABEZADO ── -->
+    <div class="encabezado">
+      <h1>ÓPTICA ALEMANA</h1>
+      <h2>Agendar Cita</h2>
+      <p>Reserva tu consulta con nuestros optometristas</p>
+    </div>
+
+    <!-- ── PASO 1: Elegir optometrista ── -->
+    <div class="seccion">
+      <h3>Paso 1 — Elige tu optometrista</h3>
+
+      <div class="doctores">
+
+        <div class="doctor" onclick="seleccionarDoctor(this, 'Dra. María López')">
+          <span class="doctor-icono">👩‍⚕️</span>
+          <p class="doctor-nombre">Dra. María López</p>
+          <p class="doctor-esp">Optometrista General</p>
+          <p class="doctor-disp">⭐ 4.9</p>
+        </div>
+
+        <div class="doctor" onclick="seleccionarDoctor(this, 'Dr. Carlos Ruiz')">
+          <span class="doctor-icono">👨‍⚕️</span>
+          <p class="doctor-nombre">Dr. Carlos Ruiz</p>
+          <p class="doctor-esp">Especialista en Contactología</p>
+          <p class="doctor-disp">⭐ 4.8</p>
+        </div>
+
+        <div class="doctor" onclick="seleccionarDoctor(this, 'Dra. Ana Torres')">
+          <span class="doctor-icono">👩‍⚕️</span>
+          <p class="doctor-nombre">Dra. Ana Torres</p>
+          <p class="doctor-esp">Baja Visión</p>
+          <p class="doctor-disp">⭐ 5.0</p>
+        </div>
+
+      </div>
+      <p class="error" id="error-doctor">Selecciona un optometrista.</p>
+    </div>
+
+    <!-- ── PASO 2: Elegir fecha ── -->
+    <div class="seccion">
+      <h3>Paso 2 — Selecciona la fecha</h3>
+
+      <label for="fecha">Fecha de la consulta</label>
+      <input type="date" id="fecha">
+      <p class="error" id="error-fecha">Selecciona una fecha.</p>
+    </div>
+
+    <!-- ── PASO 3: Elegir hora ── -->
+    <div class="seccion">
+      <h3>Paso 3 — Selecciona la hora</h3>
+
+      <div class="horas">
+        <div class="hora" onclick="seleccionarHora(this, '8:00 AM')">8:00 AM</div>
+        <div class="hora" onclick="seleccionarHora(this, '9:00 AM')">9:00 AM</div>
+        <div class="hora" onclick="seleccionarHora(this, '10:00 AM')">10:00 AM</div>
+        <div class="hora" onclick="seleccionarHora(this, '11:00 AM')">11:00 AM</div>
+        <div class="hora" onclick="seleccionarHora(this, '2:00 PM')">2:00 PM</div>
+        <div class="hora" onclick="seleccionarHora(this, '3:00 PM')">3:00 PM</div>
+        <div class="hora" onclick="seleccionarHora(this, '4:00 PM')">4:00 PM</div>
+        <div class="hora" onclick="seleccionarHora(this, '5:00 PM')">5:00 PM</div>
+      </div>
+      <p class="error" id="error-hora">Selecciona una hora.</p>
+    </div>
+
+    <!-- ── PASO 4: Motivo ── -->
+    <div class="seccion">
+      <h3>Paso 4 — Motivo de la consulta</h3>
+
+      <div class="motivos">
+
+        <div class="motivo" onclick="seleccionarMotivo(this, 'Examen de visión')">
+          👁️ Examen de visión
+        </div>
+
+        <div class="motivo" onclick="seleccionarMotivo(this, 'Control de lentes')">
+          👓 Control de lentes
+        </div>
+
+        <div class="motivo" onclick="seleccionarMotivo(this, 'Lentes de contacto')">
+          🔵 Lentes de contacto
+        </div>
+
+        <div class="motivo" onclick="seleccionarMotivo(this, 'Primera consulta')">
+          📋 Primera consulta
+        </div>
+
+      </div>
+      <p class="error" id="error-motivo">Selecciona el motivo.</p>
+    </div>
+
+    <!-- ── BOTÓN ── -->
+    <button onclick="agendarCita()">Confirmar Cita ✔</button>
+
+    <!-- ── CONFIRMACIÓN ── -->
+    <div class="confirmacion" id="confirmacion">
+      <h3>📅 Cita Agendada</h3>
+      <p>👩‍⚕️ Optometrista: <span id="c-doctor"></span></p>
+      <p>📅 Fecha: <span id="c-fecha"></span></p>
+      <p>🕐 Hora: <span id="c-hora"></span></p>
+      <p>📋 Motivo: <span id="c-motivo"></span></p>
+      <p>🔢 N° Cita: <span id="c-numero"></span></p>
+      <p class="guardado">✅ Tu cita ha sido registrada con éxito.</p>
+    </div>
+
+  </div>
+
+  <!-- ── MENÚ INFERIOR ── -->
+  <div class="menu-nav">
+    <a href="login.html">🏠</a>
+    <a href="citas.html" class="activo">📅</a>
+    <a href="pago.html">💳</a>
+    <a href="promociones.html">🎁</a>
+  </div>
+
+  <script src="js/citas.js"></script>
+
+</body>
+</html>

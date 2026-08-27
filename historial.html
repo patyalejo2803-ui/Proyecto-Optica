@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Óptica Alemana - Historial del Cliente</title>
+  <link rel="stylesheet" href="css/historial.css">
+</head>
+<body>
+
+  <div class="pagina">
+
+    <!-- ── ENCABEZADO ── -->
+    <div class="encabezado">
+      <div class="encabezado-icono">👤</div>
+      <h1>ÓPTICA ALEMANA</h1>
+      <h2>Historial del Cliente</h2>
+      <p>Consulta tu historial de citas y fórmula óptica</p>
+    </div>
+
+    <!-- ── TARJETA DEL CLIENTE ── -->
+    <div class="tarjeta-cliente">
+
+      <div class="cliente-nombre">
+        <span class="cliente-icono">👤</span>
+        <span>Cliente: <strong>Claudia Díaz</strong></span>
+      </div>
+
+      <div class="cliente-datos">
+        <p>📅 Última cita: <strong>15/04/2026</strong></p>
+        <p>👁️ Fórmula: <strong>-1.25 / -0.75</strong></p>
+      </div>
+
+      <div class="cliente-divider"></div>
+
+      <div class="cliente-proximo">
+        📆 Próximo control: <strong>15/10/2026</strong>
+      </div>
+
+    </div>
+
+    <!-- ── HISTORIAL DE CITAS ── -->
+    <div class="seccion">
+      <h3>Historial de citas</h3>
+
+      <div class="citas-lista" id="citas-lista">
+
+        <div class="cita-item">
+          <div class="cita-numero">1</div>
+          <div class="cita-info">
+            <p class="cita-fecha">10/01/2026</p>
+            <p class="cita-motivo">Examen visual</p>
+          </div>
+        </div>
+
+        <div class="cita-item">
+          <div class="cita-numero">2</div>
+          <div class="cita-info">
+            <p class="cita-fecha">15/04/2026</p>
+            <p class="cita-motivo">Cambio de lentes</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ── AVISO ── -->
+    <div class="aviso">
+      💡 Recuerda programar tu próxima cita de control
+    </div>
+
+    <!-- ── BOTÓN ── -->
+    <button onclick="window.location.href='citas.html'">📅 Agendar nueva cita</button>
+
+  </div>
+
+  <!-- ── MENÚ INFERIOR ── -->
+  <div class="menu-nav">
+    <a href="login.html">🏠</a>
+    <a href="citas.html">📅</a>
+    <a href="pago.html">💳</a>
+    <a href="pedidos.html">📦</a>
+  </div>
+
+  <script src="js/historial.js"></script>
+
+</body>
+</html>

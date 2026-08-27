@@ -1,0 +1,251 @@
+/* ── General ── */
+body {
+  background-color: #0d1117;
+  color: #ffffff;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 20px 20px 80px 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.pagina {
+  width: 100%;
+  max-width: 900px;
+}
+
+/* ── Encabezado ── */
+.encabezado {
+  background-color: #0f2044;
+  border: 1px solid #1f6feb;
+  border-radius: 12px;
+  padding: 24px;
+  text-align: center;
+  margin-bottom: 14px;
+}
+
+.encabezado-icono {
+  width: 52px;
+  height: 52px;
+  background: linear-gradient(135deg, #1f6feb, #388bfd);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  margin: 0 auto 12px auto;
+}
+
+.encabezado h1 {
+  font-size: 20px;
+  letter-spacing: 2px;
+  margin: 0 0 4px 0;
+  color: #ffffff;
+}
+
+.encabezado h2 {
+  font-size: 22px;
+  font-weight: bold;
+  margin: 0 0 6px 0;
+  color: #ffffff;
+}
+
+.encabezado p {
+  font-size: 13px;
+  color: #8b949e;
+  margin: 0;
+}
+
+/* ── Secciones ── */
+.seccion {
+  background-color: #0f2044;
+  border: 1px solid #1f3a6e;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 14px;
+}
+
+.seccion h3 {
+  font-size: 13px;
+  color: #8b949e;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin: 0 0 16px 0;
+  border-bottom: 1px solid #1f3a6e;
+  padding-bottom: 8px;
+}
+
+/* ── Lista de pedidos ── */
+.pedidos-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.pedido-card {
+  background-color: #162035;
+  border: 2px solid #1f3a6e;
+  border-radius: 10px;
+  padding: 16px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.pedido-card:hover {
+  border-color: #388bfd;
+}
+
+.pedido-card.activo {
+  border-color: #1f6feb;
+  background-color: #1a3060;
+}
+
+.pedido-card-info p {
+  margin: 0 0 4px 0;
+  font-size: 14px;
+  color: #ffffff;
+  font-weight: bold;
+}
+
+.pedido-card-info span {
+  font-size: 12px;
+  color: #8b949e;
+}
+
+/* ── Filas del detalle ── */
+.fila {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 0;
+  border-bottom: 1px solid #1f3a6e;
+}
+
+.fila:last-child {
+  border-bottom: none;
+}
+
+.fila-label {
+  font-size: 14px;
+  color: #8b949e;
+}
+
+.fila-valor {
+  font-size: 14px;
+  color: #ffffff;
+  font-weight: bold;
+}
+
+/* ── Badges ── */
+.badge {
+  display: inline-block;
+  padding: 5px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.badge-proceso {
+  background-color: #2d2a1f;
+  color: #e3b341;
+  border: 1px solid #5a4a1a;
+}
+
+.badge-pendiente {
+  background-color: #2d1f1f;
+  color: #f85149;
+  border: 1px solid #5a1f1f;
+}
+
+.badge-completado {
+  background-color: #122d22;
+  color: #3fb950;
+  border: 1px solid #1a5c35;
+}
+
+.badge-pagado {
+  background-color: #122d22;
+  color: #3fb950;
+  border: 1px solid #1a5c35;
+}
+
+/* ── Botones ── */
+.botones {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.btn-pagar {
+  flex: 1;
+  padding: 14px;
+  background: linear-gradient(135deg, #1f6feb, #388bfd);
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.btn-pagar:hover {
+  background: linear-gradient(135deg, #388bfd, #58a6ff);
+}
+
+.btn-estado {
+  flex: 1;
+  padding: 14px;
+  background-color: #162035;
+  color: #c9d1d9;
+  border: 2px solid #1f3a6e;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.btn-estado:hover {
+  border-color: #388bfd;
+  color: #ffffff;
+}
+
+/* ── Panel de estado ── */
+.panel-estado {
+  background-color: #0d2137;
+  border: 1px solid #238636;
+  border-radius: 12px;
+  padding: 20px;
+  display: none;
+}
+
+.panel-estado h3 {
+  color: #3fb950;
+  font-size: 16px;
+  margin: 0 0 14px 0;
+}
+
+/* ── Menú inferior ── */
+.menu-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #0f2044;
+  border-top: 1px solid #1f3a6e;
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  padding: 14px 0;
+}
+
+.menu-nav a {
+  font-size: 22px;
+  text-decoration: none;
+  opacity: 0.4;
+}
+
+.menu-nav a.activo {
+  opacity: 1;
+}
