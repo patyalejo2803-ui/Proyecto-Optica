@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Óptica Alemana - Pago</title>
+
+  <!-- Enlace al archivo de estilos -->
+  <link rel="stylesheet" href="css/pago.css">
+</head>
+<body>
+
+  <div class="tarjeta">
+
+    <!-- Encabezado -->
+    <div class="encabezado">
+      <h1>ÓPTICA ALEMANA</h1>
+      <h2>Medios de Pago</h2>
+    </div>
+
+    <!-- Paso 1: Elegir producto -->
+    <div class="seccion">
+      <h3>Paso 1 — Elige tu producto</h3>
+
+      <div class="productos">
+
+        <div class="producto" onclick="seleccionarProducto(this, 'Lentes de sol', 120000)">
+          <span class="icono">🕶️</span>
+          <p>Lentes de sol</p>
+          <p class="precio">$120.000</p>
+        </div>
+
+        <div class="producto" onclick="seleccionarProducto(this, 'Montura clásica', 85000)">
+          <span class="icono">👓</span>
+          <p>Montura clásica</p>
+          <p class="precio">$85.000</p>
+        </div>
+
+        <div class="producto" onclick="seleccionarProducto(this, 'Lentes de contacto', 60000)">
+          <span class="icono">👁️</span>
+          <p>Lentes de contacto</p>
+          <p class="precio">$60.000</p>
+        </div>
+
+      </div>
+      <p class="error" id="error-producto">Selecciona un producto.</p>
+    </div>
+
+    <!-- Paso 2: Elegir medio de pago -->
+    <div class="seccion">
+      <h3>Paso 2 — Elige el medio de pago</h3>
+
+      <div class="medios">
+
+        <div class="medio" onclick="seleccionarMedio(this, 'Tarjeta')">
+          <span class="icono">💳</span>
+          <p>TARJETA</p>
+        </div>
+
+        <div class="medio" onclick="seleccionarMedio(this, 'Transferencia')">
+          <span class="icono">🔄</span>
+          <p>TRANSFERENCIA</p>
+        </div>
+
+        <div class="medio" onclick="seleccionarMedio(this, 'Efectivo')">
+          <span class="icono">💵</span>
+          <p>EFECTIVO</p>
+        </div>
+
+      </div>
+      <p class="error" id="error-medio">Selecciona un medio de pago.</p>
+    </div>
+
+    <!-- Botón pagar -->
+    <button onclick="procesarPago()">¡Haz tu pedido ahora! ✔</button>
+
+    <!-- Factura (se muestra al pagar) -->
+    <div class="factura" id="factura">
+      <h3>📄 Resumen de Compra</h3>
+      <p>🛍️ Producto: <span id="f-producto"></span></p>
+      <p>💳 Medio de pago: <span id="f-medio"></span></p>
+      <p>💰 Total: <span id="f-total"></span></p>
+      <p>🔢 N° Pedido: <span id="f-pedido"></span></p>
+      <p class="guardado">✅ Pedido guardado en tu historial.</p>
+    </div>
+
+  </div>
+
+  <!-- Enlace al archivo JavaScript -->
+  <script src="js/pago.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Óptica Alemana - Registro</title>
+  <link rel="stylesheet" href="css/registro.css">
+</head>
+<body>
+
+  <div class="tarjeta">
+
+    <h1>Óptica Alemana</h1>
+    <p class="subtitulo">Crea tu cuenta para acceder a compras y citas</p>
+
+    <form id="formRegistro">
+
+      <!-- Nombre -->
+      <label for="nombre">Nombre completo</label>
+      <input type="text" id="nombre" placeholder="Jana Martín">
+      <p class="error" id="error-nombre">Escribe tu nombre completo.</p>
+      
+      <!-- Campo Fecha de Nacimiento -->
+      <label for="fecha">Fecha de Nacimiento</label>
+      <input type="date" id="fecha" placeholder="dd/mm/aaaa">
+      <p class="error" id="error-fecha">Selecciona tu fecha de nacimiento.</p>
+
+      <!-- Correo -->
+      <label for="correo">Correo electrónico</label>
+      <input type="email" id="correo" placeholder="hola@ejemplo.com">
+      <p class="error" id="error-correo">Escribe un correo válido.</p>
+
+      <!-- Contraseña -->
+      <label for="contrasena">Contraseña</label>
+      <input type="password" id="contrasena" placeholder="Mínimo 6 caracteres">
+      <p class="error" id="error-contrasena">La contraseña debe tener mínimo 6 caracteres.</p>
+
+      <!-- Confirmar contraseña -->
+      <label for="confirmar">Confirmar contraseña</label>
+      <input type="password" id="confirmar" placeholder="Repite tu contraseña">
+      <p class="error" id="error-confirmar">Las contraseñas no coinciden.</p>
+
+      <!-- Botón -->
+      <button type="button" onclick="registrarUsuario()">Crear Cuenta</button>
+
+    </form>
+
+    <!-- Mensaje de éxito -->
+    <p class="mensaje-exito" id="mensaje-exito">
+      ✅ ¡Cuenta creada exitosamente! Ya puedes iniciar sesión.
+    </p>
+
+    <!-- Link al login -->
+    <div class="link-login">
+      ¿Ya tienes cuenta? <a href="index.html">Inicia sesión aquí</a>
+    </div>
+
+  </div>
+
+  <script src="js/registro.js"></script>
+
+</body>
+</html>
