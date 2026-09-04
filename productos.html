@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Óptica Alemana - Productos</title>
+
+  <link rel="stylesheet" href="css/nav.css">
+  <link rel="stylesheet" href="css/productos.css">
+</head>
+<body>
+
+  <!-- Menú de navegación estandarizado (lo dibuja js/nav.js) -->
+  <div id="nav-placeholder"></div>
+
+  <main class="contenedor-productos">
+
+    <div class="encabezado-productos">
+      <div>
+        <h1>Productos</h1>
+        <p class="subtitulo">Catálogo de productos de Óptica Alemana</p>
+      </div>
+    </div>
+
+    <div id="mensajeEstado" class="mensaje-estado" style="display:none;"></div>
+
+    <!-- Pestañas -->
+    <div class="pestanas">
+      <button class="pestana pestana--activa" id="tabProductos" data-tab="productos">Productos</button>
+      <button class="pestana" id="tabCategorias" data-tab="categorias">Categorías</button>
+    </div>
+
+    <!-- Sección: Productos -->
+    <section id="seccionProductos" class="seccion-tab">
+      <div class="acciones-seccion">
+        <button class="btn btn--dorado" id="btnNuevoProducto">+ Nuevo producto</button>
+      </div>
+
+      <table class="tabla-productos">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Categoría</th>
+            <th>Marca</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody id="cuerpoTablaProductos">
+          <tr><td colspan="6" class="fila-vacia">Cargando productos…</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- Sección: Categorías -->
+    <section id="seccionCategorias" class="seccion-tab" style="display:none;">
+      <div class="acciones-seccion">
+        <button class="btn btn--dorado" id="btnNuevaCategoria">+ Nueva categoría</button>
+      </div>
+
+      <table class="tabla-productos">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody id="cuerpoTablaCategorias">
+          <tr><td colspan="3" class="fila-vacia">Cargando categorías…</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+  </main>
+
+  <!-- Modal para crear / editar producto -->
+  <div class="modal-fondo" id="modalFondo">
+    <div class="modal-caja">
+      <h2 id="modalTitulo">Nuevo producto</h2>
+
+      <form id="formProducto">
+        <input type="hidden" id="productoId">
+
+        <label for="nombreProducto">Nombre</label>
+        <input type="text" id="nombreProducto" placeholder="Ej. Montura Clásica" required>
+
+        <label for="categoriaProducto">Categoría</label>
+        <select id="categoriaProducto" required>
+          <option value="">Selecciona una categoría…</option>
+        </select>
+
+        <label for="marcaProducto">Marca</label>
+        <input type="text" id="marcaProducto" placeholder="Ej. Rayban" required>
+
+        <label for="estadoProducto">Estado</label>
+        <select id="estadoProducto" required>
+          <option value="Disponible">Disponible</option>
+          <option value="Agotado">Agotado</option>
+        </select>
+
+        <div class="modal-acciones">
+          <button type="button" class="btn btn--gris" id="btnCancelarModal">Cancelar</button>
+          <button type="submit" class="btn btn--dorado">Guardar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal para crear / editar categoría -->
+  <div class="modal-fondo" id="modalFondoCategoria">
+    <div class="modal-caja">
+      <h2 id="modalTituloCategoria">Nueva categoría</h2>
+
+      <form id="formCategoria">
+        <input type="hidden" id="categoriaId">
+
+        <label for="nombreCategoria">Nombre</label>
+        <input type="text" id="nombreCategoria" placeholder="Ej. Monturas" required>
+
+        <div class="modal-acciones">
+          <button type="button" class="btn btn--gris" id="btnCancelarModalCategoria">Cancelar</button>
+          <button type="submit" class="btn btn--dorado">Guardar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="js/nav.js"></script>
+  <script src="js/productos.js"></script>
+</body>
+</html>

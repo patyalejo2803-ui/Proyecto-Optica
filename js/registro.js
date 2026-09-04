@@ -1,56 +1,71 @@
-// Función para registrar el usuario
+import { enviarPeticion, ir } from './herramientas.js';
+
+document.addEventListener("click", (e) => {
+  if (e.target && e.target.id == "btn-registrar") {
+    e.preventDefault();
+    registrarUsuario();
+  }
+});
+
 function registrarUsuario() {
 
-  // 1. Leemos los valores
   var nombre     = document.getElementById("nombre").value;
   var correo     = document.getElementById("correo").value;
   var contrasena = document.getElementById("contrasena").value;
   var confirmar  = document.getElementById("confirmar").value;
   var fecha      = document.getElementById("fecha").value;
 
-  // 2. Ocultamos todos los errores
   document.getElementById("error-nombre").style.display     = "none";
   document.getElementById("error-correo").style.display     = "none";
   document.getElementById("error-contrasena").style.display = "none";
   document.getElementById("error-confirmar").style.display  = "none";
-  document.getElementById("error-fecha").style.display  = "none";
+  document.getElementById("error-fecha").style.display      = "none";
   document.getElementById("mensaje-exito").style.display    = "none";
 
-  // 3. Variable para errores
   var hayError = false;
 
-  // 4. Validar nombre
   if (nombre == "") {
     document.getElementById("error-nombre").style.display = "block";
     hayError = true;
   }
 
-  // 5. Validar correo
   if (correo == "" || !correo.includes("@") || !correo.includes(".")) {
     document.getElementById("error-correo").style.display = "block";
     hayError = true;
   }
 
-  // 6. Validar contraseña mínimo 6 caracteres
   if (contrasena.length < 6) {
     document.getElementById("error-contrasena").style.display = "block";
     hayError = true;
   }
 
-  // 7. Validar que las contraseñas coincidan
   if (contrasena != confirmar) {
     document.getElementById("error-confirmar").style.display = "block";
     hayError = true;
   }
-  
-  // 7. Validar fecha: no puede estar vacía
+
   if (fecha == "") {
     document.getElementById("error-fecha").style.display = "block";
     hayError = true;
   }
 
-  // 8. Si no hay errores, mostramos el éxito
   if (hayError == false) {
-    document.getElementById("mensaje-exito").style.display = "block";
+    registrarUsuarioBackend(nombre, correo, contrasena);
   }
+}
+
+async function registrarUsuarioBackend(nombre, correo, contrasena) {
+  await enviarPeticion({
+    url: "php/registro_procesar.php",
+    method: "POST",
+    param: { nombre: nombre, correo: correo, contrasena: contrasena },
+    fSuccess: (resp) => {
+      if (resp.code == 200) {
+        document.getElementById("mensaje-exito").style.display = "block";
+        setTimeout(() => ir("login.html"), 1500);
+      } else {
+        alert(resp.msg);
+      }
+    }
+  });
 }

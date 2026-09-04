@@ -1,0 +1,88 @@
+/* =========================================================
+   ÓPTICA ALEMANA — nav.css
+   ========================================================= */
+
+.nav-oa {
+  background: #1B3A57;
+  color: #fff;
+  width: 240px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: 24px 16px;
+  box-sizing: border-box;
+  font-family: inherit;
+}
+
+.nav-oa__marca {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 1.2rem;
+  margin-bottom: 24px;
+}
+
+.nav-oa__logo {
+  font-size: 1.4rem;
+}
+
+.nav-oa__marca strong {
+  color: #B08D57;
+}
+
+.nav-oa__usuario {
+  font-size: 0.85rem;
+  opacity: 0.75;
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(255,255,255,0.15);
+}
+
+.nav-oa__lista {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  flex: 1;
+}
+
+.nav-oa__lista li {
+  margin-bottom: 4px;
+}
+
+.nav-oa__lista a {
+  display: block;
+  color: #fff;
+  text-decoration: none;
+  padding: 10px 12px;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  opacity: 0.85;
+  transition: background 0.15s ease, opacity 0.15s ease;
+}
+
+.nav-oa__lista a:hover {
+  background: rgba(255,255,255,0.08);
+  opacity: 1;
+}
+
+.nav-oa__lista a.is-activo {
+  background: #B08D57;
+  opacity: 1;
+  font-weight: 600;
+}
+
+.nav-oa__salir {
+  margin-top: 16px;
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.3);
+  color: #fff;
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background 0.15s ease;
+}
+
+.nav-oa__salir:hover {
+  background: rgba(255,255,255,0.1);
+}

@@ -1,48 +1,44 @@
-Función para registrar el usuario
-function registrarUsuario() {
+<?php
+    require_once 'usuario/UsuarioController.php';
+    header('Access-Control-Allow-Origin: *');
+    header('Content-Type: application/json');
 
-  // 1. Leemos los valores
-  var nombre     = document.getElementById("nombre").value;
-  var correo     = document.getElementById("correo").value;
-  var contrasena = document.getElementById("contrasena").value;
-  var confirmar  = document.getElementById("confirmar").value;
+    try {
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            try {
+                $_POST = json_decode(file_get_contents('php://input'), true);
 
-  // 2. Ocultamos todos los errores
-  document.getElementById("error-nombre").style.display     = "none";
-  document.getElementById("error-correo").style.display     = "none";
-  document.getElementById("error-contrasena").style.display = "none";
-  document.getElementById("error-confirmar").style.display  = "none";
-  document.getElementById("mensaje-exito").style.display    = "none";
+                if (!empty($_POST['nombre']) && !empty($_POST['correo']) && !empty($_POST['contrasena'])) {
+                    $nombre     = htmlspecialchars(trim($_POST['nombre']));
+                    $correo     = htmlspecialchars(trim($_POST['correo']));
+                    $contrasena = trim($_POST['contrasena']); // no se limpia con htmlspecialchars, se hashea tal cual
 
-  // 3. Variable para errores
-  var hayError = false;
+                    $controller = new UsuarioController();
+                    $resultado = $controller->registrar($nombre, $correo, $contrasena);
 
-  // 4. Validar nombre
-  if (nombre == "") {
-    document.getElementById("error-nombre").style.display = "block";
-    hayError = true;
-  }
+                    if ($resultado) {
+                        http_response_code(200);
+                        echo json_encode(["code" => 200, "msg" => "Usuario registrado correctamente"]);
+                    } else {
+                        http_response_code(409);
+                        echo json_encode(["code" => 409, "msg" => "El correo ya está registrado"]);
+                    }
 
-  // 5. Validar correo
-  if (correo == "" || !correo.includes("@") || !correo.includes(".")) {
-    document.getElementById("error-correo").style.display = "block";
-    hayError = true;
-  }
+                } else {
+                    http_response_code(402);
+                    echo json_encode(["code" => 402, "msg" => "Error, faltan parámetros necesarios"]);
+                }
 
-  // 6. Validar contraseña mínimo 6 caracteres
-  if (contrasena.length < 6) {
-    document.getElementById("error-contrasena").style.display = "block";
-    hayError = true;
-  }
-
-  // 7. Validar que las contraseñas coincidan
-  if (contrasena != confirmar) {
-    document.getElementById("error-confirmar").style.display = "block";
-    hayError = true;
-  }
-
-  // 8. Si no hay errores, mostramos el éxito
-  if (hayError == false) {
-    document.getElementById("mensaje-exito").style.display = "block";
-  }
-}
+            } catch (Exception $e) {
+                http_response_code(500);
+                echo json_encode(["code" => 500, "msg" => "Error en el servidor \n" . $e->getMessage()]);
+            }
+        } else {
+            http_response_code(401);
+            echo json_encode(["code" => 401, "msg" => "No autorizado"]);
+        }
+    } catch (Exception $e) {
+        http_response_code(500);
+        echo json_encode(["code" => 500, "msg" => "Error en el servidor \n" . $e->getMessage()]);
+    }
+?>

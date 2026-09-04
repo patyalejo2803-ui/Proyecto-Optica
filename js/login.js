@@ -11,42 +11,33 @@ document.addEventListener("click", (e) => {
   }
 });
 
-// Función que valida el formulario y, si todo está bien, llama al backend
 function validarFormulario() {
 
-  // 1. Obtenemos los valores que el usuario escribió
   var correo = document.getElementById("correo").value;
   var clave  = document.getElementById("clave").value;
 
-  // 2. Ocultamos todos los errores antes de validar
   document.getElementById("error-correo").style.display = "none";
   document.getElementById("error-clave").style.display  = "none";
   document.getElementById("mensaje").style.display = "none";
 
-  // 3. Variable para saber si hay algún error
   var hayError = false;
 
-  // 4. Validar correo: debe tener @ y un punto
   if (correo == "" || !correo.includes("@") || !correo.includes(".")) {
     document.getElementById("error-correo").style.display = "block";
     hayError = true;
   }
 
-  // 5. Validar clave: mínimo 6 caracteres
   if (clave.length < 6) {
     document.getElementById("error-clave").style.display = "block";
     hayError = true;
   }
 
-  // 6. Si no hay errores, encriptamos y enviamos
   if (hayError == false) {
-    let claveEncriptada = md5(clave);
     document.getElementById("mensaje").style.display = "block";
-    validarLogin(correo, claveEncriptada);
+    validarLogin(correo, clave);
   }
 }
 
-// Función que habla con el backend
 async function validarLogin(correo, clave) {
 
   await enviarPeticion({
@@ -55,6 +46,8 @@ async function validarLogin(correo, clave) {
     param: { usuario: correo, clave: clave },
     fSuccess: (resp) => {
       if (resp.code == 200) {
+        localStorage.setItem("nombreUsuario", resp.user);
+        localStorage.setItem("idRol", resp.id_rol);
         alert("El usuario ha iniciado sesión correctamente.");
         ir("dashboard.html");
       } else {

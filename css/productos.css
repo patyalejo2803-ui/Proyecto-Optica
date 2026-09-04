@@ -1,0 +1,228 @@
+/* =========================================================
+   ÓPTICA ALEMANA — MÓDULO DE PRODUCTOS
+   ========================================================= */
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background-color: #F5F6F8;
+}
+
+.contenedor-productos {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.encabezado-productos {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.encabezado-productos h1 {
+  margin: 0;
+  color: #1B3A57;
+}
+
+.subtitulo {
+  margin: 4px 0 0;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.btn {
+  border: none;
+  border-radius: 6px;
+  padding: 10px 18px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: opacity 0.15s ease;
+}
+
+.btn:hover {
+  opacity: 0.85;
+}
+
+.btn--dorado {
+  background-color: #B08D57;
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.btn--gris {
+  background-color: #e2e2e2;
+  color: #333;
+}
+
+.btn--rojo {
+  background-color: #c0392b;
+  color: #ffffff;
+}
+
+.btn--pequeno {
+  padding: 6px 10px;
+  font-size: 0.8rem;
+  margin-right: 6px;
+}
+
+.mensaje-estado {
+  padding: 10px 14px;
+  border-radius: 6px;
+  margin-bottom: 16px;
+  font-size: 0.9rem;
+}
+
+.mensaje-estado--ok {
+  background-color: #e6f4ea;
+  color: #1e7e34;
+}
+
+.mensaje-estado--error {
+  background-color: #fdecea;
+  color: #c0392b;
+}
+
+.pestanas {
+  display: flex;
+  gap: 4px;
+  border-bottom: 2px solid #e2e2e2;
+  margin-bottom: 20px;
+}
+
+.pestana {
+  border: none;
+  background: none;
+  padding: 10px 18px;
+  font-size: 0.92rem;
+  color: #666;
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+  margin-bottom: -2px;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+.pestana:hover {
+  color: #1B3A57;
+}
+
+.pestana--activa {
+  color: #1B3A57;
+  font-weight: 600;
+  border-bottom-color: #B08D57;
+}
+
+.acciones-seccion {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 14px;
+}
+
+.tabla-productos {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #ffffff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+}
+
+.tabla-productos th {
+  background-color: #1B3A57;
+  color: #ffffff;
+  text-align: left;
+  padding: 12px 14px;
+  font-size: 0.82rem;
+  text-transform: uppercase;
+}
+
+.tabla-productos td {
+  padding: 12px 14px;
+  border-bottom: 1px solid #eee;
+  font-size: 0.92rem;
+  color: #333;
+}
+
+.tabla-productos tr:last-child td {
+  border-bottom: none;
+}
+
+.fila-vacia {
+  text-align: center;
+  color: #999;
+  padding: 24px !important;
+}
+
+.badge-estado {
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.badge-estado--disponible {
+  background-color: #e6f4ea;
+  color: #1e7e34;
+}
+
+.badge-estado--agotado {
+  background-color: #fdecea;
+  color: #c0392b;
+}
+
+/* ---------------------------------------------------------
+   Modal
+   --------------------------------------------------------- */
+.modal-fondo {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0,0,0,0.45);
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.modal-fondo.is-abierto {
+  display: flex;
+}
+
+.modal-caja {
+  background-color: #ffffff;
+  border-radius: 10px;
+  padding: 24px;
+  width: 100%;
+  max-width: 420px;
+}
+
+.modal-caja h2 {
+  margin-top: 0;
+  color: #1B3A57;
+}
+
+.modal-caja label {
+  display: block;
+  margin: 12px 0 4px;
+  font-size: 0.85rem;
+  color: #444;
+}
+
+.modal-caja input,
+.modal-caja select {
+  width: 100%;
+  padding: 9px 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  box-sizing: border-box;
+}
+
+.modal-acciones {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+}
