@@ -1,71 +1,81 @@
 <?php
-    include_once __DIR__ . '/../conexion.php';
+require_once __DIR__ . '/../conexion.php';
 
-    class UsuarioController{
+class UsuarioController {
 
-        public function __construct() {
-            // Constructor vacío o inicialización si es necesario
-        }
+    private $db;
 
-        public function autenticar($usuario, $clave) {
-            try {
-                $db = ConexionBD::getInstancia()->getConexion();
-
-                // Buscamos al usuario SOLO por el correo
-                $stmt = $db->prepare("SELECT * FROM usuario WHERE EMAIL = :usuario");
-                $stmt->bindParam(':usuario', $usuario);
-                $stmt->execute();
-
-                $user = $stmt->fetch(PDO::FETCH_ASSOC);
-
-                if (!$user) {
-                    return [];
-                }
-
-                // Comparamos la clave en texto plano contra el hash guardado (bcrypt)
-                if (password_verify($clave, $user['PASSWORD'])) {
-                    return [$user]; // Login correcto
-                } else {
-                    return []; // Clave incorrecta
-                }
-
-            } catch (Exception $e) {
-                throw new Exception("Error al realizar la autenticación: " . $e->getMessage());
-            }
-        }
-
-        public function registrar($nombre, $correo, $contrasena) {
-            try {
-                $db = ConexionBD::getInstancia()->getConexion();
-
-                // Verificamos que el correo no exista ya
-                $check = $db->prepare("SELECT ID_USUARIO FROM usuario WHERE EMAIL = :correo");
-                $check->bindParam(':correo', $correo);
-                $check->execute();
-
-                if ($check->fetch()) {
-                    return false; // correo ya registrado
-                }
-
-                // Hasheamos la contraseña con bcrypt antes de guardarla
-                $hash = password_hash($contrasena, PASSWORD_DEFAULT);
-
-                // Generamos un valor único temporal para IDENTIFICACION (no se pide aún en el formulario)
-                $identificacionTemporal = 'TEMP-' . uniqid();
-
-                // Insertamos el nuevo usuario. ID_ROL = 1 (CLIENTE), ID_LOCALIDAD = 1 (KENNEDY)
-                $stmt = $db->prepare("INSERT INTO usuario (NOMBRES, EMAIL, PASSWORD, ID_ROL, ID_LOCALIDAD, IDENTIFICACION) VALUES (:nombre, :correo, :hash, 1, 1, :identificacion)");
-                $stmt->bindParam(':nombre', $nombre);
-                $stmt->bindParam(':correo', $correo);
-                $stmt->bindParam(':hash', $hash);
-                $stmt->bindParam(':identificacion', $identificacionTemporal);
-                $stmt->execute();
-
-                return true;
-
-            } catch (Exception $e) {
-                throw new Exception("Error al registrar el usuario: " . $e->getMessage());
-            }
-        }
+    public function __construct() {
+        $this->db = ConexionBD::getInstancia()->getConexion();
     }
-?>
+
+    /**
+     * Registra un nuevo usuario.
+     */
+    public function registrar($nombre, $correo, $contrasena) {
+
+        $sqlVerifica = "SELECT ID_USUARIO FROM usuario WHERE EMAIL = :email";
+        $stmtVerifica = $this->db->prepare($sqlVerifica);
+        $stmtVerifica->execute([':email' => $correo]);
+
+        if ($stmtVerifica->rowCount() > 0) {
+            return false;
+        }
+
+        $hash = password_hash($contrasena, PASSWORD_DEFAULT);
+        $identificacionTemp = 'TEMP-' . uniqid();
+
+        $sqlInsert = "INSERT INTO usuario (IDENTIFICACION, NOMBRES, TELEFONO, EMAIL, PASSWORD, ID_LOCALIDAD, ID_ROL, DIRECCION)
+                      VALUES (:identificacion, :nombre, :telefono, :email, :password, :id_localidad, :id_rol, :direccion)";
+        $stmtInsert = $this->db->prepare($sqlInsert);
+
+        return $stmtInsert->execute([
+            ':identificacion' => $identificacionTemp,
+            ':nombre'         => $nombre,
+            ':telefono'       => '',
+            ':email'          => $correo,
+            ':password'       => $hash,
+            ':id_localidad'   => 1,
+            ':id_rol'         => 2,
+            ':direccion'      => ''
+        ]);
+    }
+
+    /**
+     * Autentica un usuario por correo y contraseña.
+     */
+    public function autenticar($correo, $contrasena) {
+
+        error_log("=== AUTENTICAR LLAMADO ===");
+        error_log("Correo recibido: [" . $correo . "] longitud=" . strlen($correo));
+        error_log("Password recibido: [" . $contrasena . "] longitud=" . strlen($contrasena));
+
+        $sql = "SELECT ID_USUARIO, NOMBRES, EMAIL, PASSWORD, ID_ROL
+                FROM usuario
+                WHERE EMAIL = :email";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute([':email' => $correo]);
+
+        $usuario = $stmt->fetch();
+
+        error_log("Fetch devolvio: " . ($usuario ? "UNA FILA (ID=" . $usuario['ID_USUARIO'] . ")" : "FALSE (nada)"));
+
+        if (!$usuario) {
+            error_log("=== SALIENDO: no se encontro el usuario ===");
+            return [];
+        }
+
+        error_log("Hash guardado en BD: [" . $usuario['PASSWORD'] . "]");
+        $resultadoVerify = password_verify($contrasena, $usuario['PASSWORD']);
+        error_log("password_verify resultado: " . ($resultadoVerify ? "TRUE" : "FALSE"));
+
+        if ($resultadoVerify) {
+            unset($usuario['PASSWORD']);
+            error_log("=== LOGIN EXITOSO ===");
+            return [$usuario];
+        }
+
+        error_log("=== SALIENDO: password_verify fallo ===");
+        return [];
+    }
+}

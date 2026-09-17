@@ -2,6 +2,25 @@
    ÓPTICA ALEMANA — nav.css
    ========================================================= */
 
+/* -------------------------------------------------------
+   LAYOUT: acomoda el sidebar (.nav-oa) junto al contenido
+   Se aplica a TODAS las páginas que usan #nav-placeholder + <main>
+   ------------------------------------------------------- */
+body {
+  margin: 0;
+  display: flex;
+  min-height: 100vh;
+}
+
+#nav-placeholder {
+  flex-shrink: 0; /* el sidebar no se encoge */
+}
+
+body > main {
+  flex: 1;        /* el contenido ocupa el resto del ancho */
+  min-width: 0;   /* evita que las tablas anchas rompan el layout */
+}
+
 .nav-oa {
   background: #1B3A57;
   color: #fff;
@@ -85,4 +104,19 @@
 
 .nav-oa__salir:hover {
   background: rgba(255,255,255,0.1);
+}
+
+/* -------------------------------------------------------
+   RESPONSIVE: en pantallas angostas el sidebar pasa a ser
+   una barra horizontal arriba, no un panel lateral fijo
+   ------------------------------------------------------- */
+@media (max-width: 720px) {
+  body {
+    flex-direction: column;
+  }
+
+  .nav-oa {
+    width: 100%;
+    min-height: auto;
+  }
 }

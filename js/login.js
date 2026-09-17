@@ -33,7 +33,6 @@ function validarFormulario() {
   }
 
   if (hayError == false) {
-    document.getElementById("mensaje").style.display = "block";
     validarLogin(correo, clave);
   }
 }
@@ -41,18 +40,16 @@ function validarFormulario() {
 async function validarLogin(correo, clave) {
 
   await enviarPeticion({
-    url: "php/usuario/index.php",
+    url: "php/login_procesar.php",
     method: "POST",
-    param: { usuario: correo, clave: clave },
+    param: { correo: correo, contrasena: clave },
     fSuccess: (resp) => {
       if (resp.code == 200) {
-        localStorage.setItem("nombreUsuario", resp.user);
-        localStorage.setItem("idRol", resp.id_rol);
-        alert("El usuario ha iniciado sesión correctamente.");
+        localStorage.setItem("nombreUsuario", resp.usuario.NOMBRES);
+        localStorage.setItem("idRol", resp.usuario.ID_ROL);
         ir("dashboard.html");
       } else {
         alert(resp.msg);
-        document.getElementById("mensaje").style.display = "none";
       }
     }
   });

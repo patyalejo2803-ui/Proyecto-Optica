@@ -1,5 +1,5 @@
 <?php
-    require_once 'UsuarioController.php';
+    require_once 'usuario/UsuarioController.php';
     header('Access-Control-Allow-Origin: *');
     header('Content-Type: application/json');
 
@@ -8,19 +8,21 @@
             try{
                 $_POST = json_decode(file_get_contents('php://input'), true);
 
-                if (!empty($_POST['usuario']) && !empty($_POST['clave'])) {
-                    $usuario = htmlspecialchars(trim($_POST['usuario']));
-                    $clave = trim($_POST['clave']); // sin htmlspecialchars: no se debe alterar antes de password_verify()
+                if (!empty($_POST['correo']) && !empty($_POST['contrasena'])) {
+                    $correo = htmlspecialchars(trim($_POST['correo']));
+                    $clave  = trim($_POST['contrasena']); // sin htmlspecialchars: no se debe alterar antes de password_verify()
                     $controller = new UsuarioController();
-                    $result = $controller->autenticar($usuario, $clave);
+                    $result = $controller->autenticar($correo, $clave);
 
                     if(count($result) > 0){
                         http_response_code(200);
                         echo json_encode(array(
                             "code" => 200,
                             "msg" => "Usuario OK",
-                            "user" => $result[0]["NOMBRES"],
-                            "id_rol" => $result[0]["ID_ROL"]
+                            "usuario" => array(
+                                "NOMBRES" => $result[0]["NOMBRES"],
+                                "ID_ROL"  => $result[0]["ID_ROL"]
+                            )
                         ));
                     } else {
                         http_response_code(203);
