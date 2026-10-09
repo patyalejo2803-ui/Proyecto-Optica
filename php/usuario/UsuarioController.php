@@ -36,7 +36,7 @@ class UsuarioController {
             ':email'          => $correo,
             ':password'       => $hash,
             ':id_localidad'   => 1,
-            ':id_rol'         => 1, // CLIENTE — antes decía 2 (ADMINISTRADOR) por error
+            ':id_rol'         => 1, // CLIENTE
             ':direccion'      => ''
         ]);
     }
@@ -46,10 +46,6 @@ class UsuarioController {
      */
     public function autenticar($correo, $contrasena) {
 
-        error_log("=== AUTENTICAR LLAMADO ===");
-        error_log("Correo recibido: [" . $correo . "] longitud=" . strlen($correo));
-        error_log("Password recibido: [" . $contrasena . "] longitud=" . strlen($contrasena));
-
         $sql = "SELECT ID_USUARIO, NOMBRES, EMAIL, PASSWORD, ID_ROL
                 FROM usuario
                 WHERE EMAIL = :email";
@@ -58,29 +54,20 @@ class UsuarioController {
 
         $usuario = $stmt->fetch();
 
-        error_log("Fetch devolvio: " . ($usuario ? "UNA FILA (ID=" . $usuario['ID_USUARIO'] . ")" : "FALSE (nada)"));
-
         if (!$usuario) {
-            error_log("=== SALIENDO: no se encontro el usuario ===");
             return [];
         }
 
-        error_log("Hash guardado en BD: [" . $usuario['PASSWORD'] . "]");
-        $resultadoVerify = password_verify($contrasena, $usuario['PASSWORD']);
-        error_log("password_verify resultado: " . ($resultadoVerify ? "TRUE" : "FALSE"));
-
-        if ($resultadoVerify) {
+        if (password_verify($contrasena, $usuario['PASSWORD'])) {
             unset($usuario['PASSWORD']);
-            error_log("=== LOGIN EXITOSO ===");
             return [$usuario];
         }
 
-        error_log("=== SALIENDO: password_verify fallo ===");
         return [];
     }
 
     /* =====================================================
-       NUEVO: Recuperación de contraseña
+       Recuperación de contraseña
        ===================================================== */
 
     /**

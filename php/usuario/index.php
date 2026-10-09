@@ -1,6 +1,6 @@
 <?php
+    session_start();
     require_once 'UsuarioController.php';
-    header('Access-Control-Allow-Origin: *');
     header('Content-Type: application/json');
 
     try{
@@ -15,6 +15,12 @@
                     $result = $controller->autenticar($usuario, $clave);
 
                     if(count($result) > 0){
+                        // Guarda la sesión en el servidor (la usan Pedidos y otros módulos)
+                        session_regenerate_id(true);
+                        $_SESSION['id_usuario'] = (int)$result[0]["ID_USUARIO"];
+                        $_SESSION['nombre']     = $result[0]["NOMBRES"];
+                        $_SESSION['id_rol']     = (int)$result[0]["ID_ROL"];
+
                         http_response_code(200);
                         echo json_encode(array(
                             "code" => 200,
