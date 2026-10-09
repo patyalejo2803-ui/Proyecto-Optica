@@ -1,0 +1,138 @@
+/* =========================================================
+   ÓPTICA ALEMANA — Mejoras visuales del dashboard
+   ========================================================= */
+
+/* --- Entrada animada de las tarjetas de estadísticas --- */
+.stat-card {
+  opacity: 0;
+  transform: translateY(16px);
+  animation: entrarTarjeta 0.5s ease forwards;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.stat-card:nth-child(1) { animation-delay: 0.05s; }
+.stat-card:nth-child(2) { animation-delay: 0.15s; }
+.stat-card:nth-child(3) { animation-delay: 0.25s; }
+.stat-card:nth-child(4) { animation-delay: 0.35s; }
+
+@keyframes entrarTarjeta {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.stat-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 24px rgba(27, 58, 87, 0.12);
+}
+
+/* --- Paneles con entrada suave --- */
+.panel {
+  opacity: 0;
+  animation: entrarPanel 0.5s ease forwards;
+  animation-delay: 0.3s;
+}
+@keyframes entrarPanel {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- Filas nuevas en la tabla, resaltadas --- */
+.data-table tbody tr.is-new {
+  animation: resaltarFila 1.6s ease;
+}
+@keyframes resaltarFila {
+  0%   { background: rgba(176, 141, 87, 0.18); }
+  100% { background: transparent; }
+}
+
+.data-table tbody tr {
+  transition: background 0.15s ease;
+}
+.data-table tbody tr:hover {
+  background: rgba(27, 58, 87, 0.04);
+}
+
+/* --- Botón de refrescar con giro suave --- */
+.icon-btn.is-spinning svg {
+  animation: girar 0.7s linear;
+}
+@keyframes girar {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* --- Punto de estado "conectado" con pulso en vivo --- */
+.db-dot.is-online {
+  position: relative;
+}
+.db-dot.is-online::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: inherit;
+  animation: pulsoConexion 1.8s ease-out infinite;
+}
+@keyframes pulsoConexion {
+  0%   { transform: scale(1);   opacity: 0.6; }
+  100% { transform: scale(2.4); opacity: 0; }
+}
+
+/* --- Sidebar: transición suave al colapsar --- */
+.sidebar {
+  transition: width 0.25s ease;
+}
+.nav-link {
+  transition: background 0.15s ease, padding-left 0.15s ease;
+}
+.nav-link:hover {
+  padding-left: 4px;
+}
+
+/* --- Contenedor del gráfico nuevo (donut Chart.js) --- */
+.chart-donut-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+  height: 220px;
+}
+.chart-donut-wrap canvas {
+  max-width: 220px;
+  max-height: 220px;
+}
+
+/* --- Sistema de notificaciones tipo "toast" --- */
+#toastContainer {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.toast {
+  min-width: 260px;
+  max-width: 340px;
+  padding: 14px 16px;
+  border-radius: 10px;
+  color: #fff;
+  font-size: 0.9rem;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.18);
+  animation: entrarToast 0.3s ease, salirToast 0.3s ease 2.7s forwards;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.toast--ok     { background: #1a7f4b; }
+.toast--error  { background: #b3261e; }
+.toast--info   { background: #1B3A57; }
+
+@keyframes entrarToast {
+  from { opacity: 0; transform: translateX(40px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes salirToast {
+  to { opacity: 0; transform: translateX(40px); }
+}ss

@@ -142,6 +142,7 @@ function cacheEls() {
   els.eyeLogo = document.querySelector('.eye-logo');
   els.eyePupil = document.getElementById('eyePupil');
   els.viewAllBtn = document.getElementById('viewAllBtn');
+  els.logoutBtn = document.getElementById('logoutBtn');
 }
 
 function bindUI() {
@@ -160,10 +161,25 @@ function bindUI() {
     });
   });
 
-  if (els.refreshBtn) els.refreshBtn.addEventListener('click', () => refreshAll(false));
+  if (els.refreshBtn) {
+    els.refreshBtn.addEventListener('click', () => {
+      refreshAll(false);
+      mostrarToast('Datos actualizados', 'ok');
+    });
+  }
+
   if (els.viewAllBtn) els.viewAllBtn.addEventListener('click', () => {
     document.querySelector('.panel--wide').scrollIntoView({ behavior: 'smooth', block: 'start' });
   });
+
+  if (els.logoutBtn) {
+    els.logoutBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      localStorage.removeItem('idRol');
+      localStorage.removeItem('nombreUsuario');
+      window.location.href = 'login.html';
+    });
+  }
 }
 
 /* ---------------------------------------------------------
@@ -231,7 +247,7 @@ async function renderStats() {
   for (const key of keysConTarjeta) {
     const rows = await fetchTable(key);
     const el = document.querySelector(`[data-value="${key}"]`);
-    if (el) el.textContent = rows.length;
+    if (el) animarContador(el, rows.length);
   }
 
   // Todos los contadores del menú lateral (incluye los módulos nuevos)
@@ -315,6 +331,7 @@ async function refreshAll(isFirstLoad) {
   // 2. Pintamos las distintas partes de la pantalla con esos datos ya descargados
   renderStats();
   renderBars();
+  renderChartDonut();
   state.currentModule === 'resumen' ? renderTable('ordenes') : renderTable(currentTableKey());
 
   updateDbStatus();
@@ -364,3 +381,82 @@ document.addEventListener('mousemove', (e) => {
   els.eyePupil.setAttribute('cx', 60 + offsetX);
   els.eyePupil.setAttribute('cy', 35 + offsetY);
 });
+
+/* ---------------------------------------------------------
+   NUEVO: contador animado en las tarjetas de estadísticas
+   --------------------------------------------------------- */
+function animarContador(el, valorFinal) {
+  const valorInicial = Number(el.dataset.actual || 0);
+  if (valorInicial === valorFinal) return;
+  const duracion = 600;
+  const inicio = performance.now();
+
+  function paso(ahora) {
+    const progreso = Math.min((ahora - inicio) / duracion, 1);
+    const valorActual = Math.round(valorInicial + (valorFinal - valorInicial) * progreso);
+    el.textContent = valorActual;
+    if (progreso < 1) requestAnimationFrame(paso);
+    else el.dataset.actual = valorFinal;
+  }
+  requestAnimationFrame(paso);
+}
+
+/* ---------------------------------------------------------
+   NUEVO: gráfico de dona con Chart.js (productos por categoría)
+   --------------------------------------------------------- */
+let chartCategoriasInstancia = null;
+
+async function renderChartDonut() {
+  const canvas = document.getElementById('chartCategorias');
+  if (!canvas || typeof Chart === 'undefined') return;
+
+  const productos = await fetchTable('productos');
+  const counts = {};
+  productos.forEach(p => { counts[p.categoria] = (counts[p.categoria] || 0) + 1; });
+
+  const etiquetas = Object.keys(counts);
+  const valores = Object.values(counts);
+  const colores = ['#1B3A57', '#B08D57', '#4A7C9B', '#D9B173', '#6E8FA6', '#8C6F45'];
+
+  if (chartCategoriasInstancia) {
+    chartCategoriasInstancia.data.labels = etiquetas;
+    chartCategoriasInstancia.data.datasets[0].data = valores;
+    chartCategoriasInstancia.update();
+    return;
+  }
+
+  chartCategoriasInstancia = new Chart(canvas, {
+    type: 'doughnut',
+    data: {
+      labels: etiquetas,
+      datasets: [{
+        data: valores,
+        backgroundColor: colores,
+        borderWidth: 2,
+        borderColor: '#ffffff'
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: { position: 'bottom', labels: { boxWidth: 12, font: { size: 11 } } }
+      },
+      animation: { animateRotate: true, duration: 800 }
+    }
+  });
+}
+
+/* ---------------------------------------------------------
+   NUEVO: sistema de notificaciones toast
+   --------------------------------------------------------- */
+function mostrarToast(mensaje, tipo = 'info') {
+  const contenedor = document.getElementById('toastContainer');
+  if (!contenedor) return;
+
+  const toast = document.createElement('div');
+  toast.className = `toast toast--${tipo}`;
+  toast.textContent = mensaje;
+  contenedor.appendChild(toast);
+
+  setTimeout(() => toast.remove(), 3100);
+}

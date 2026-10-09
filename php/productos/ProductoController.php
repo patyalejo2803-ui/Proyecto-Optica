@@ -1,5 +1,5 @@
 <?php
-    include_once '../conexion.php';
+    require_once __DIR__ . '/../conexion.php';
 
     class ProductoController {
 
@@ -10,7 +10,8 @@
                            p.ID_CATEGORIA AS id_categoria,
                            c.NOMBRE       AS categoria,
                            p.MARCA        AS marca,
-                           p.ESTADO       AS estado
+                           p.ESTADO       AS estado,
+                           p.imagen       AS imagen
                     FROM productos p
                     LEFT JOIN categorias c ON p.ID_CATEGORIA = c.ID_CATEGORIAS
                     ORDER BY p.id_PRODUCTOS DESC";

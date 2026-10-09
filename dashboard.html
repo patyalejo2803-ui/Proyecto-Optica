@@ -7,6 +7,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/dashboard.css">
+<link rel="stylesheet" href="css/dashboard-mejoras.css">
+<link rel="stylesheet" href="css/dashboard-pro.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.4/chart.umd.min.js"></script>
 </head>
 <body>
 
@@ -100,6 +103,10 @@
         <span class="db-dot" id="dbDot"></span>
         <span id="dbStatusText">Conectando a db_optica…</span>
       </div>
+      <a href="#" class="nav-link" id="logoutBtn">
+        <svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></svg>
+        <span>Cerrar sesión</span>
+      </a>
     </div>
   </aside>
 
@@ -190,6 +197,9 @@
             <h2>Productos por categoría</h2>
             <span class="panel-tag">Tiempo real</span>
           </div>
+          <div class="chart-donut-wrap">
+            <canvas id="chartCategorias"></canvas>
+          </div>
           <div class="bars" id="categoryBars"><!-- filled by JS --></div>
         </article>
 
@@ -217,6 +227,9 @@
   </div>
 </div>
 
+<div id="toastContainer"></div>
+
 <script src="js/dashboard.js"></script>
+<script src="js/dashboard-pro.js"></script>
 </body>
 </html>

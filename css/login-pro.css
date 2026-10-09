@@ -1,0 +1,198 @@
+/* =========================================================
+   ÓPTICA ALEMANA — login-pro.css
+   Rediseño con paleta de marca (navy/dorado) en dos paneles,
+   como una tarjeta compacta y centrada (no pantalla completa).
+   Se carga DESPUÉS de login.css, así que sobreescribe lo
+   necesario sin tocar la lógica de login.js.
+   ========================================================= */
+
+:root {
+  --oa-navy: #1B3A57;
+  --oa-navy-light: #2a5178;
+  --oa-gold: #B08D57;
+  --oa-gold-light: #d9b173;
+}
+
+/* -------------------------------------------------------
+   LAYOUT GENERAL: centra una tarjeta compacta en la pantalla
+   ------------------------------------------------------- */
+body {
+  background: #f4f6f8 !important;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 24px;
+  box-sizing: border-box;
+  color: initial;
+}
+
+.login-page {
+  display: flex;
+  width: 100%;
+  max-width: 820px;
+  min-height: 0;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 20px 50px rgba(27, 58, 87, 0.18);
+  background: #fff;
+}
+
+/* -------------------------------------------------------
+   PANEL IZQUIERDO: marca
+   ------------------------------------------------------- */
+.login-branding {
+  position: relative;
+  overflow: hidden;
+  flex: 1 1 40%;
+  background: linear-gradient(150deg, var(--oa-navy) 0%, var(--oa-navy-light) 55%, var(--oa-gold) 140%);
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 36px 32px;
+  animation: entrarPanel 0.6s ease;
+}
+
+.login-branding::before,
+.login-branding::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.07);
+}
+.login-branding::before { width: 200px; height: 200px; top: -80px; left: -50px; }
+.login-branding::after  { width: 130px; height: 130px; bottom: -50px; right: -30px; }
+
+.login-branding__eye {
+  width: 60px;
+  height: auto;
+  margin-bottom: 16px;
+  overflow: visible;
+}
+.login-branding__eye .eye-lid { fill: none; stroke: #fff; stroke-width: 3; stroke-linecap: round; }
+.login-branding__eye .eye-iris { fill: none; stroke: var(--oa-gold-light); stroke-width: 2.5; }
+.login-branding__eye .eye-pupil { fill: #fff; }
+.login-branding__eye .eye-glint { fill: rgba(255,255,255,0.8); }
+
+.login-branding__title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0 0 6px;
+  color: #fff !important;
+  text-align: left !important;
+}
+.login-branding__title strong { color: var(--oa-gold-light); }
+
+.login-branding__slogan {
+  font-size: 0.88rem;
+  opacity: 0.9;
+  margin: 0 0 22px;
+  max-width: 260px;
+  color: #fff !important;
+  text-align: left !important;
+}
+
+.login-branding__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: 0.82rem;
+  opacity: 0.92;
+}
+
+/* -------------------------------------------------------
+   PANEL DERECHO: formulario
+   ------------------------------------------------------- */
+.login-form-side {
+  flex: 1 1 60%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 28px;
+  animation: entrarFormulario 0.6s ease 0.1s both;
+}
+
+@keyframes entrarPanel {
+  from { opacity: 0; transform: translateX(-16px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes entrarFormulario {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Oculta el título/eslogan duplicados dentro de la tarjeta
+   (ya están en el panel izquierdo) */
+.login-form-side .tarjeta > h1,
+.login-form-side .tarjeta > .subtitulo {
+  display: none;
+}
+
+/* -------------------------------------------------------
+   TARJETA: sin sombra ni borde propio (ya la da .login-page)
+   ------------------------------------------------------- */
+.tarjeta {
+  background: transparent !important;
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  width: 100%;
+  max-width: 300px;
+}
+
+label {
+  color: var(--oa-navy) !important;
+  font-weight: 600;
+  opacity: 0.75;
+  font-size: 0.85rem;
+}
+
+input {
+  background: #f7f9fb !important;
+  border: 1.5px solid #dde3e9 !important;
+  color: var(--oa-navy) !important;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+input::placeholder { color: #9aa7b4 !important; }
+input:focus {
+  border-color: var(--oa-gold) !important;
+  box-shadow: 0 0 0 3px rgba(176, 141, 87, 0.18);
+}
+
+button {
+  background: linear-gradient(120deg, var(--oa-navy), var(--oa-navy-light)) !important;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+button:hover {
+  background: linear-gradient(120deg, var(--oa-navy-light), var(--oa-gold)) !important;
+  transform: translateY(-1px);
+  box-shadow: 0 8px 18px rgba(27, 58, 87, 0.28);
+}
+
+.link-registro { color: #7c8a98; font-size: 0.85rem; }
+.link-registro a { color: var(--oa-gold) !important; font-weight: 600; }
+
+/* El loader usa colores de marca en vez del verde original */
+.loader::before,
+.loader::after {
+  --c: no-repeat radial-gradient(farthest-side, var(--oa-gold) 92%, #0000);
+}
+
+/* -------------------------------------------------------
+   RESPONSIVE: apila los paneles en pantallas angostas
+   ------------------------------------------------------- */
+@media (max-width: 700px) {
+  .login-page { flex-direction: column; max-width: 380px; }
+  .login-branding {
+    flex: none;
+    padding: 26px 24px;
+    text-align: left;
+  }
+  .login-branding__list { display: none; } /* ahorra espacio en móvil */
+  .login-form-side { flex: none; padding: 24px; }
+}

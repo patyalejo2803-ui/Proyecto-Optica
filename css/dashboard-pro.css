@@ -1,0 +1,173 @@
+/* =========================================================
+   ÓPTICA ALEMANA — dashboard-pro.css
+   Mejoras visuales: banner de bienvenida, color, profesionalismo
+   ========================================================= */
+
+/* -------------------------------------------------------
+   BANNER DE BIENVENIDA (va arriba de las tarjetas de stats)
+   ------------------------------------------------------- */
+.welcome-banner {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, #1B3A57 0%, #2a5178 55%, #B08D57 130%);
+  border-radius: 16px;
+  padding: 28px 32px;
+  margin-bottom: 24px;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  box-shadow: 0 12px 28px rgba(27, 58, 87, 0.25);
+}
+
+.welcome-banner__text h2 {
+  margin: 0 0 6px;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.welcome-banner__text p {
+  margin: 0;
+  opacity: 0.88;
+  font-size: 0.95rem;
+  max-width: 480px;
+}
+
+.welcome-banner__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.25);
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  margin-top: 10px;
+  backdrop-filter: blur(4px);
+}
+
+.welcome-banner__badge .dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #4ade80;
+  box-shadow: 0 0 0 3px rgba(74, 222, 128, 0.25);
+}
+
+/* Ilustración decorativa (gafas abstractas) a la derecha del banner */
+.welcome-banner__art {
+  flex-shrink: 0;
+  width: 120px;
+  height: 90px;
+  opacity: 0.9;
+}
+
+/* Formas decorativas flotantes de fondo */
+.welcome-banner::before,
+.welcome-banner::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.08);
+}
+.welcome-banner::before {
+  width: 180px;
+  height: 180px;
+  top: -80px;
+  right: 60px;
+}
+.welcome-banner::after {
+  width: 100px;
+  height: 100px;
+  bottom: -50px;
+  right: 200px;
+}
+
+@media (max-width: 720px) {
+  .welcome-banner { flex-direction: column; align-items: flex-start; }
+  .welcome-banner__art { display: none; }
+}
+
+/* -------------------------------------------------------
+   TARJETAS DE ESTADÍSTICAS — íconos con degradado a color
+   ------------------------------------------------------- */
+.stat-icon--blue {
+  background: linear-gradient(135deg, #4a90d9, #1B3A57) !important;
+}
+.stat-icon--blue svg { stroke: #fff !important; }
+
+.stat-icon--navy {
+  background: linear-gradient(135deg, #2a5178, #10253b) !important;
+}
+.stat-icon--navy svg { stroke: #fff !important; }
+
+.stat-icon--red {
+  background: linear-gradient(135deg, #ef6d6d, #b3261e) !important;
+}
+.stat-icon--red svg { stroke: #fff !important; }
+
+.stat-icon--gold {
+  background: linear-gradient(135deg, #d9b173, #B08D57) !important;
+}
+.stat-icon--gold svg { stroke: #fff !important; }
+
+.stat-card {
+  border-left: 4px solid transparent;
+  transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+.stat-card[data-stat="productos"]:hover { border-left-color: #4a90d9; }
+.stat-card[data-stat="ordenes"]:hover   { border-left-color: #2a5178; }
+.stat-card[data-stat="usuario"]:hover   { border-left-color: #b3261e; }
+.stat-card[data-stat="servicios"]:hover { border-left-color: #B08D57; }
+
+/* -------------------------------------------------------
+   SIDEBAR: acento dorado en el módulo activo
+   ------------------------------------------------------- */
+.nav-link.is-active {
+  background: linear-gradient(90deg, rgba(176,141,87,0.25), transparent) !important;
+  border-left: 3px solid #B08D57;
+  padding-left: calc(1rem - 3px) !important;
+}
+
+/* -------------------------------------------------------
+   PANELES: encabezado con acento de color
+   ------------------------------------------------------- */
+.panel-head h2 {
+  position: relative;
+  padding-left: 14px;
+}
+.panel-head h2::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 3px;
+  bottom: 3px;
+  width: 4px;
+  border-radius: 4px;
+  background: linear-gradient(180deg, #1B3A57, #B08D57);
+}
+
+/* -------------------------------------------------------
+   AVATAR con degradado (en vez de sólido plano)
+   ------------------------------------------------------- */
+.user-avatar {
+  background: linear-gradient(135deg, #1B3A57, #B08D57) !important;
+  box-shadow: 0 2px 8px rgba(27, 58, 87, 0.35);
+}
+
+/* -------------------------------------------------------
+   BADGES con más color (reforzando los ya existentes)
+   ------------------------------------------------------- */
+.badge--ok {
+  background: rgba(74, 222, 128, 0.15) !important;
+  color: #157347 !important;
+}
+.badge--pending {
+  background: rgba(250, 204, 21, 0.18) !important;
+  color: #92650a !important;
+}
+.badge--alert {
+  background: rgba(239, 68, 68, 0.15) !important;
+  color: #b3261e !important;
+}

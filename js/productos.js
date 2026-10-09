@@ -16,40 +16,39 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('btnCancelarModal').addEventListener('click', cerrarModal);
   document.getElementById('formProducto').addEventListener('submit', guardarProducto);
 
-  // Pestañas
   document.getElementById('tabProductos').addEventListener('click', () => cambiarTab('productos'));
   document.getElementById('tabCategorias').addEventListener('click', () => cambiarTab('categorias'));
 
-  // Categorías
   document.getElementById('btnNuevaCategoria').addEventListener('click', abrirModalNuevaCategoria);
   document.getElementById('btnCancelarModalCategoria').addEventListener('click', cerrarModalCategoria);
   document.getElementById('formCategoria').addEventListener('submit', guardarCategoria);
+
+  document.getElementById('imagenProducto').addEventListener('change', (e) => {
+    const archivo = e.target.files[0];
+    const preview = document.getElementById('previewImagen');
+    if (!archivo) {
+      preview.style.display = 'none';
+      return;
+    }
+    preview.src = URL.createObjectURL(archivo);
+    preview.style.display = 'block';
+  });
 });
 
-/* ---------------------------------------------------------
-   Pestañas
-   --------------------------------------------------------- */
 function cambiarTab(tab) {
   const esProductos = tab === 'productos';
-
   document.getElementById('tabProductos').classList.toggle('pestana--activa', esProductos);
   document.getElementById('tabCategorias').classList.toggle('pestana--activa', !esProductos);
-
   document.getElementById('seccionProductos').style.display = esProductos ? 'block' : 'none';
   document.getElementById('seccionCategorias').style.display = esProductos ? 'none' : 'block';
-
   if (!esProductos) cargarTablaCategorias();
 }
 
-/* ---------------------------------------------------------
-   Cargar categorías para el <select> del formulario
-   --------------------------------------------------------- */
 async function cargarCategorias() {
   try {
     const res = await fetch(API_CATEGORIAS);
     const data = await res.json();
     categoriasDisponibles = data.data || [];
-
     const select = document.getElementById('categoriaProducto');
     categoriasDisponibles.forEach(cat => {
       const opt = document.createElement('option');
@@ -62,31 +61,29 @@ async function cargarCategorias() {
   }
 }
 
-/* ---------------------------------------------------------
-   LEER: cargar y pintar la tabla de productos
-   --------------------------------------------------------- */
 async function cargarProductos() {
   const cuerpo = document.getElementById('cuerpoTablaProductos');
-  cuerpo.innerHTML = '<tr><td colspan="6" class="fila-vacia">Cargando productos…</td></tr>';
+  cuerpo.innerHTML = '<tr><td colspan="7" class="fila-vacia">Cargando productos…</td></tr>';
 
   try {
     const res = await fetch(API_PRODUCTOS);
     const data = await res.json();
 
     if (data.code !== 200) {
-      cuerpo.innerHTML = `<tr><td colspan="6" class="fila-vacia">Error: ${data.msg}</td></tr>`;
+      cuerpo.innerHTML = `<tr><td colspan="7" class="fila-vacia">Error: ${data.msg}</td></tr>`;
       return;
     }
 
     const productos = data.data;
 
     if (productos.length === 0) {
-      cuerpo.innerHTML = '<tr><td colspan="6" class="fila-vacia">Aún no hay productos registrados</td></tr>';
+      cuerpo.innerHTML = '<tr><td colspan="7" class="fila-vacia">Aún no hay productos registrados</td></tr>';
       return;
     }
 
     cuerpo.innerHTML = productos.map(p => `
       <tr>
+        <td><img src="${p.imagen || 'img/sin-imagen.png'}" alt="${p.nombre}" style="width:48px;height:48px;object-fit:cover;border-radius:6px;"></td>
         <td>${p.id_producto}</td>
         <td>${p.nombre}</td>
         <td>${p.categoria ?? '—'}</td>
@@ -100,7 +97,7 @@ async function cargarProductos() {
     `).join('');
 
   } catch (err) {
-    cuerpo.innerHTML = '<tr><td colspan="6" class="fila-vacia">No se pudo conectar con el servidor</td></tr>';
+    cuerpo.innerHTML = '<tr><td colspan="7" class="fila-vacia">No se pudo conectar con el servidor</td></tr>';
     console.error(err);
   }
 }
@@ -109,13 +106,11 @@ function escaparComillas(texto) {
   return String(texto).replace(/'/g, "\\'");
 }
 
-/* ---------------------------------------------------------
-   Modal: abrir para crear / abrir para editar / cerrar
-   --------------------------------------------------------- */
 function abrirModalNuevo() {
   document.getElementById('modalTitulo').textContent = 'Nuevo producto';
   document.getElementById('productoId').value = '';
   document.getElementById('formProducto').reset();
+  document.getElementById('previewImagen').style.display = 'none';
   document.getElementById('modalFondo').classList.add('is-abierto');
 }
 
@@ -126,6 +121,8 @@ function abrirModalEditar(id, nombre, idCategoria, marca, estado) {
   document.getElementById('categoriaProducto').value = idCategoria;
   document.getElementById('marcaProducto').value = marca;
   document.getElementById('estadoProducto').value = estado;
+  document.getElementById('imagenProducto').value = '';
+  document.getElementById('previewImagen').style.display = 'none';
   document.getElementById('modalFondo').classList.add('is-abierto');
 }
 
@@ -133,9 +130,30 @@ function cerrarModal() {
   document.getElementById('modalFondo').classList.remove('is-abierto');
 }
 
-/* ---------------------------------------------------------
-   CREAR o ACTUALIZAR (según si hay un ID en el formulario)
-   --------------------------------------------------------- */
+async function subirImagenProducto(idProducto) {
+  const input = document.getElementById('imagenProducto');
+  const archivo = input.files[0];
+  if (!archivo) return;
+
+  const formData = new FormData();
+  formData.append('imagen', archivo);
+  formData.append('id_producto', idProducto);
+
+  try {
+    const res = await fetch('php/productos/subir_imagen.php', {
+      method: 'POST',
+      body: formData
+    });
+    const data = await res.json();
+    if (data.code !== 200) {
+      mostrarMensaje('Producto guardado, pero la imagen no se pudo subir: ' + data.msg, 'error');
+    }
+  } catch (err) {
+    mostrarMensaje('Producto guardado, pero hubo un error al subir la imagen', 'error');
+    console.error(err);
+  }
+}
+
 async function guardarProducto(e) {
   e.preventDefault();
 
@@ -159,6 +177,10 @@ async function guardarProducto(e) {
     const data = await res.json();
 
     if (data.code === 200) {
+      const idParaImagen = esEdicion ? id : data.id;
+      if (idParaImagen) {
+        await subirImagenProducto(idParaImagen);
+      }
       mostrarMensaje(data.msg, 'ok');
       cerrarModal();
       cargarProductos();
@@ -171,9 +193,6 @@ async function guardarProducto(e) {
   }
 }
 
-/* ---------------------------------------------------------
-   ELIMINAR
-   --------------------------------------------------------- */
 async function eliminarProducto(id) {
   const confirmar = confirm('¿Seguro que quieres eliminar este producto? Esta acción no se puede deshacer.');
   if (!confirmar) return;
@@ -198,9 +217,6 @@ async function eliminarProducto(id) {
   }
 }
 
-/* ---------------------------------------------------------
-   Mensajes de estado (éxito / error)
-   --------------------------------------------------------- */
 function mostrarMensaje(texto, tipo) {
   const el = document.getElementById('mensajeEstado');
   el.textContent = texto;
@@ -209,13 +225,6 @@ function mostrarMensaje(texto, tipo) {
   setTimeout(() => { el.style.display = 'none'; }, 3500);
 }
 
-/* =========================================================
-   CATEGORÍAS — CRUD completo
-   ========================================================= */
-
-/* ---------------------------------------------------------
-   LEER: cargar y pintar la tabla de categorías
-   --------------------------------------------------------- */
 async function cargarTablaCategorias() {
   const cuerpo = document.getElementById('cuerpoTablaCategorias');
   cuerpo.innerHTML = '<tr><td colspan="3" class="fila-vacia">Cargando categorías…</td></tr>';
@@ -253,9 +262,6 @@ async function cargarTablaCategorias() {
   }
 }
 
-/* ---------------------------------------------------------
-   Modal de categoría: abrir para crear / editar / cerrar
-   --------------------------------------------------------- */
 function abrirModalNuevaCategoria() {
   document.getElementById('modalTituloCategoria').textContent = 'Nueva categoría';
   document.getElementById('categoriaId').value = '';
@@ -274,9 +280,6 @@ function cerrarModalCategoria() {
   document.getElementById('modalFondoCategoria').classList.remove('is-abierto');
 }
 
-/* ---------------------------------------------------------
-   CREAR o ACTUALIZAR categoría
-   --------------------------------------------------------- */
 async function guardarCategoria(e) {
   e.preventDefault();
 
@@ -296,7 +299,7 @@ async function guardarCategoria(e) {
       mostrarMensaje(data.msg, 'ok');
       cerrarModalCategoria();
       cargarTablaCategorias();
-      await recargarSelectCategorias(); // actualiza el <select> del formulario de productos
+      await recargarSelectCategorias();
     } else {
       mostrarMensaje(data.msg, 'error');
     }
@@ -306,9 +309,6 @@ async function guardarCategoria(e) {
   }
 }
 
-/* ---------------------------------------------------------
-   ELIMINAR categoría
-   --------------------------------------------------------- */
 async function eliminarCategoria(id) {
   const confirmar = confirm('¿Seguro que quieres eliminar esta categoría?');
   if (!confirmar) return;
@@ -326,7 +326,6 @@ async function eliminarCategoria(id) {
       cargarTablaCategorias();
       await recargarSelectCategorias();
     } else {
-      // Aquí llega, por ejemplo, el mensaje de "hay productos usando esta categoría"
       mostrarMensaje(data.msg, 'error');
     }
   } catch (err) {
@@ -335,9 +334,6 @@ async function eliminarCategoria(id) {
   }
 }
 
-/* ---------------------------------------------------------
-   Refresca el <select> de categorías del formulario de productos
-   --------------------------------------------------------- */
 async function recargarSelectCategorias() {
   const select = document.getElementById('categoriaProducto');
   const valorActual = select.value;
@@ -356,8 +352,8 @@ async function recargarSelectCategorias() {
       select.appendChild(opt);
     });
 
-    select.value = valorActual; // conserva la selección si aún existe
+    select.value = valorActual;
   } catch (err) {
     console.error('No se pudo actualizar el listado de categorías:', err);
   }
-}
+}SSSSSS

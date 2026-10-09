@@ -1,0 +1,39 @@
+/* css/responsive.css - Óptica Alemana: base para móvil */
+*, *::before, *::after { box-sizing: border-box; }
+
+img, svg, video { max-width: 100%; height: auto; }
+body { overflow-x: hidden; }
+
+/* Tablas: scroll horizontal en vez de romper la página */
+.tabla-responsive {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+table { width: 100%; }
+
+/* Campos y botones cómodos para el dedo (16px evita el zoom en iPhone) */
+button, input, select, textarea {
+  font-size: 16px;
+  min-height: 44px;
+}
+
+/* Ventanas (modales) que quepan en el celular */
+.modal-caja {
+  width: 92%;
+  max-width: 480px;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+/* Celulares y tabletas pequeñas */
+@media (max-width: 768px) {
+  h1 { font-size: 1.6rem; }
+  h2 { font-size: 1.3rem; }
+
+  main, .container {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  form { width: 100%; }
+}

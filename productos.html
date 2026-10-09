@@ -7,6 +7,9 @@
 
   <link rel="stylesheet" href="css/nav.css">
   <link rel="stylesheet" href="css/productos.css">
+  <link rel="stylesheet" href="css/productos-pro.css">
+  <!-- Debe ir al final para que tenga prioridad -->
+  <link rel="stylesheet" href="css/responsive.css">
 </head>
 <body>
 
@@ -15,9 +18,25 @@
 
   <main class="contenedor-productos">
 
+    <!-- ===== Banner superior ===== -->
+    <div class="productos-banner">
+      <div class="productos-banner__icon">
+        <svg viewBox="0 0 24 24"><path d="M21 8l-9-5-9 5 9 5 9-5z"/><path d="M3 8v8l9 5 9-5V8"/><path d="M12 13v8"/></svg>
+      </div>
+      <div class="productos-banner__text">
+        <h1>Catálogo de Productos</h1>
+        <p>Administra el inventario y las categorías de Óptica Alemana en un solo lugar.</p>
+      </div>
+    </div>
+
+    <!-- ===== Chips de resumen ===== -->
+    <div class="productos-chips">
+      <span class="productos-chip"><span class="dot"></span> <strong id="chipTotalProductos">–</strong> productos en catálogo</span>
+      <span class="productos-chip"><span class="dot"></span> <strong id="chipTotalCategorias">–</strong> categorías activas</span>
+    </div>
+
     <div class="encabezado-productos">
       <div>
-        <h1>Productos</h1>
         <p class="subtitulo">Catálogo de productos de Óptica Alemana</p>
       </div>
     </div>
@@ -36,21 +55,24 @@
         <button class="btn btn--dorado" id="btnNuevoProducto">+ Nuevo producto</button>
       </div>
 
-      <table class="tabla-productos">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Nombre</th>
-            <th>Categoría</th>
-            <th>Marca</th>
-            <th>Estado</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody id="cuerpoTablaProductos">
-          <tr><td colspan="6" class="fila-vacia">Cargando productos…</td></tr>
-        </tbody>
-      </table>
+      <div class="tabla-responsive">
+        <table class="tabla-productos">
+          <thead>
+            <tr>
+              <th>Imagen</th>
+              <th>ID</th>
+              <th>Nombre</th>
+              <th>Categoría</th>
+              <th>Marca</th>
+              <th>Estado</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="cuerpoTablaProductos">
+            <tr><td colspan="7" class="fila-vacia">Cargando productos…</td></tr>
+          </tbody>
+        </table>
+      </div>
     </section>
 
     <!-- Sección: Categorías -->
@@ -59,18 +81,20 @@
         <button class="btn btn--dorado" id="btnNuevaCategoria">+ Nueva categoría</button>
       </div>
 
-      <table class="tabla-productos">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Nombre</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody id="cuerpoTablaCategorias">
-          <tr><td colspan="3" class="fila-vacia">Cargando categorías…</td></tr>
-        </tbody>
-      </table>
+      <div class="tabla-responsive">
+        <table class="tabla-productos">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Nombre</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="cuerpoTablaCategorias">
+            <tr><td colspan="3" class="fila-vacia">Cargando categorías…</td></tr>
+          </tbody>
+        </table>
+      </div>
     </section>
 
   </main>
@@ -80,22 +104,26 @@
     <div class="modal-caja">
       <h2 id="modalTitulo">Nuevo producto</h2>
 
-      <form id="formProducto">
+      <form id="formProducto" method="POST" enctype="multipart/form-data">
         <input type="hidden" id="productoId">
 
         <label for="nombreProducto">Nombre</label>
-        <input type="text" id="nombreProducto" placeholder="Ej. Montura Clásica" required>
+        <input type="text" id="nombreProducto" name="nombre" placeholder="Ej. Montura Clásica" required>
 
         <label for="categoriaProducto">Categoría</label>
-        <select id="categoriaProducto" required>
+        <select id="categoriaProducto" name="id_categoria" required>
           <option value="">Selecciona una categoría…</option>
         </select>
 
         <label for="marcaProducto">Marca</label>
-        <input type="text" id="marcaProducto" placeholder="Ej. Rayban" required>
+        <input type="text" id="marcaProducto" name="marca" placeholder="Ej. Rayban" required>
+
+        <label for="imagenProducto">Imagen del producto</label>
+        <input type="file" id="imagenProducto" name="imagen" accept="image/png, image/jpeg, image/webp">
+        <img id="previewImagen" src="" alt="Vista previa" style="display:none; max-width:120px; margin-top:8px; border-radius:8px;">
 
         <label for="estadoProducto">Estado</label>
-        <select id="estadoProducto" required>
+        <select id="estadoProducto" name="estado" required>
           <option value="Disponible">Disponible</option>
           <option value="Agotado">Agotado</option>
         </select>
@@ -129,5 +157,41 @@
 
   <script src="js/nav.js"></script>
   <script src="js/productos.js"></script>
+  <script>
+    // Llena los chips de resumen contando filas reales
+    // (ignora la fila de "Cargando..." que trae la clase en el <td>, no en el <tr>)
+    const contarFilasReales = (idTbody) => {
+      const tbody = document.getElementById(idTbody);
+      if (!tbody) return 0;
+      const filas = [...tbody.querySelectorAll('tr')];
+      return filas.filter(fila => !fila.querySelector('.fila-vacia')).length;
+    };
+
+    const observarConteo = () => {
+      const totalProductos = contarFilasReales('cuerpoTablaProductos');
+      const chipP = document.getElementById('chipTotalProductos');
+      if (chipP) chipP.textContent = totalProductos;
+
+      // Las categorías se cargan de una vez en el <select> del modal
+      // (no depende de que el usuario haya abierto la pestaña "Categorías")
+      const selectCategorias = document.getElementById('categoriaProducto');
+      const chipC = document.getElementById('chipTotalCategorias');
+      if (selectCategorias && chipC) {
+        const totalCategorias = selectCategorias.options.length - 1; // -1 por la opción "Selecciona..."
+        chipC.textContent = Math.max(totalCategorias, 0);
+      }
+    };
+
+    const cuerpoProductos = document.getElementById('cuerpoTablaProductos');
+    const cuerpoCategorias = document.getElementById('cuerpoTablaCategorias');
+    const selectCategoriaModal = document.getElementById('categoriaProducto');
+
+    if (cuerpoProductos) new MutationObserver(observarConteo).observe(cuerpoProductos, { childList: true });
+    if (cuerpoCategorias) new MutationObserver(observarConteo).observe(cuerpoCategorias, { childList: true });
+    if (selectCategoriaModal) new MutationObserver(observarConteo).observe(selectCategoriaModal, { childList: true });
+
+    // Primer intento por si las categorías ya estaban cargadas al momento de ejecutar este script
+    observarConteo();
+  </script>
 </body>
 </html>

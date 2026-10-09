@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Óptica Alemana - Nueva contraseña</title>
+  <link rel="stylesheet" href="css/login.css">
+  <link rel="stylesheet" href="css/login-pro.css">
+</head>
+<body>
+
+  <div class="login-page">
+
+    <aside class="login-branding">
+      <svg viewBox="0 0 120 70" class="login-branding__eye" role="img" aria-label="Óptica Alemana">
+        <path class="eye-lid eye-lid--top" d="M6 35 C 30 6, 90 6, 114 35" />
+        <path class="eye-lid eye-lid--bottom" d="M6 35 C 30 64, 90 64, 114 35" />
+        <circle class="eye-iris" cx="60" cy="35" r="15" />
+        <circle class="eye-pupil" cx="60" cy="35" r="6.4" />
+        <circle class="eye-glint" cx="55" cy="30" r="2.2" />
+      </svg>
+      <h1 class="login-branding__title">Óptica<strong>Alemana</strong></h1>
+      <p class="login-branding__slogan">Precisión que se ve, confianza que se siente</p>
+      <ul class="login-branding__list">
+        <li>✓ Elige una contraseña segura</li>
+        <li>✓ Mínimo 6 caracteres</li>
+        <li>✓ Se guarda encriptada con bcrypt</li>
+      </ul>
+    </aside>
+
+    <main class="login-form-side">
+      <div class="tarjeta">
+
+        <h1>Óptica Alemana</h1>
+        <p class="subtitulo">Crea tu nueva contraseña</p>
+
+        <form id="formRestablecer">
+          <label for="nueva">Nueva contraseña</label>
+          <input type="password" id="nueva" placeholder="Mínimo 6 caracteres" required>
+          <p class="error" id="error-nueva" style="display:none;">La contraseña debe tener mínimo 6 caracteres.</p>
+
+          <label for="confirmar">Confirmar contraseña</label>
+          <input type="password" id="confirmar" placeholder="Repite tu contraseña" required>
+          <p class="error" id="error-confirmar" style="display:none;">Las contraseñas no coinciden.</p>
+
+          <button type="button" id="btn-restablecer">Guardar nueva contraseña</button>
+        </form>
+
+        <div id="resultado" style="display:none; margin-top:18px;"></div>
+
+        <div class="link-login">
+          <a href="login.html">← Volver a iniciar sesión</a>
+        </div>
+
+      </div>
+    </main>
+
+  </div>
+
+  <script src="js/restablecer.js" type="module"></script>
+</body>
+</html>

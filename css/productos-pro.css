@@ -1,0 +1,221 @@
+/* =========================================================
+   ÓPTICA ALEMANA — productos-pro.css
+   Mejoras visuales: banner, botones, tabla y modal con más color
+   Se carga DESPUÉS de productos.css — solo suma, no reemplaza.
+   ========================================================= */
+
+/* -------------------------------------------------------
+   BANNER superior (nuevo bloque, se agrega en el HTML)
+   ------------------------------------------------------- */
+.productos-banner {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, #1B3A57 0%, #2a5178 55%, #B08D57 140%);
+  border-radius: 16px;
+  padding: 26px 30px;
+  margin-bottom: 22px;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  box-shadow: 0 12px 28px rgba(27, 58, 87, 0.22);
+  animation: entrarBanner 0.5s ease;
+}
+
+.productos-banner::before {
+  content: '';
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.08);
+  top: -90px;
+  right: -30px;
+}
+
+.productos-banner__icon {
+  flex-shrink: 0;
+  width: 52px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255,255,255,0.15);
+  border-radius: 12px;
+}
+.productos-banner__icon svg { width: 28px; height: 28px; stroke: #fff; fill: none; stroke-width: 1.8; }
+
+.productos-banner__text h1 {
+  margin: 0 0 4px;
+  color: #fff !important;
+  font-size: 1.4rem;
+}
+.productos-banner__text p {
+  margin: 0;
+  color: rgba(255,255,255,0.85) !important;
+  font-size: 0.9rem;
+}
+
+@keyframes entrarBanner {
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* -------------------------------------------------------
+   CHIPS de resumen (conteo de productos/categorías)
+   ------------------------------------------------------- */
+.productos-chips {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+.productos-chip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #fff;
+  border: 1px solid #e6e9ed;
+  border-radius: 999px;
+  padding: 8px 16px;
+  font-size: 0.85rem;
+  color: #445;
+  box-shadow: 0 2px 6px rgba(27,58,87,0.05);
+}
+.productos-chip strong { color: #1B3A57; }
+.productos-chip .dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: #B08D57;
+}
+
+/* -------------------------------------------------------
+   BOTONES: degradado + elevación al pasar el mouse
+   ------------------------------------------------------- */
+.btn--dorado {
+  background: linear-gradient(120deg, #B08D57, #d9b173) !important;
+  box-shadow: 0 4px 12px rgba(176, 141, 87, 0.35);
+}
+.btn--dorado:hover {
+  opacity: 1 !important;
+  transform: translateY(-1px);
+  box-shadow: 0 8px 18px rgba(176, 141, 87, 0.45);
+}
+.btn--rojo {
+  background: linear-gradient(120deg, #c0392b, #e05f4f) !important;
+}
+.btn {
+  transition: opacity 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease !important;
+}
+
+/* -------------------------------------------------------
+   PESTAÑAS con acento animado
+   ------------------------------------------------------- */
+.pestana--activa {
+  position: relative;
+}
+.pestana--activa::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0; bottom: -2px;
+  height: 3px;
+  border-radius: 3px;
+  background: linear-gradient(90deg, #1B3A57, #B08D57);
+}
+
+/* -------------------------------------------------------
+   TABLA: encabezado con degradado, filas con cebra y hover
+   ------------------------------------------------------- */
+.tabla-productos th {
+  background: linear-gradient(120deg, #1B3A57, #2a5178) !important;
+}
+
+.tabla-productos tbody tr {
+  transition: background 0.15s ease;
+  animation: entrarFila 0.35s ease both;
+}
+.tabla-productos tbody tr:nth-child(odd) { background: #fafbfc; }
+.tabla-productos tbody tr:hover { background: #f1f5f8 !important; }
+
+.tabla-productos tbody tr:nth-child(1) { animation-delay: 0.02s; }
+.tabla-productos tbody tr:nth-child(2) { animation-delay: 0.06s; }
+.tabla-productos tbody tr:nth-child(3) { animation-delay: 0.10s; }
+.tabla-productos tbody tr:nth-child(4) { animation-delay: 0.14s; }
+.tabla-productos tbody tr:nth-child(5) { animation-delay: 0.18s; }
+.tabla-productos tbody tr:nth-child(n+6) { animation-delay: 0.20s; }
+
+@keyframes entrarFila {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* -------------------------------------------------------
+   MINIATURAS de producto en la tabla
+   ------------------------------------------------------- */
+.tabla-productos td img {
+  width: 44px;
+  height: 44px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid #e6e9ed;
+  box-shadow: 0 2px 6px rgba(27,58,87,0.08);
+}
+
+/* -------------------------------------------------------
+   BADGES de estado con puntico indicador
+   ------------------------------------------------------- */
+.badge-estado {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.badge-estado::before {
+  content: '';
+  width: 6px; height: 6px;
+  border-radius: 50%;
+}
+.badge-estado--disponible::before { background: #1e7e34; }
+.badge-estado--agotado::before    { background: #c0392b; }
+
+/* -------------------------------------------------------
+   MODAL: fondo con blur + entrada animada
+   ------------------------------------------------------- */
+.modal-fondo.is-abierto {
+  backdrop-filter: blur(2px);
+  animation: entrarFondo 0.2s ease;
+}
+@keyframes entrarFondo {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.modal-caja {
+  box-shadow: 0 20px 50px rgba(27, 58, 87, 0.25);
+  animation: entrarModal 0.25s ease;
+  position: relative;
+  overflow: hidden;
+}
+.modal-caja::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 5px;
+  background: linear-gradient(90deg, #1B3A57, #B08D57);
+}
+@keyframes entrarModal {
+  from { opacity: 0; transform: translateY(10px) scale(0.98); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.modal-caja input:focus,
+.modal-caja select:focus {
+  outline: none;
+  border-color: #B08D57 !important;
+  box-shadow: 0 0 0 3px rgba(176, 141, 87, 0.15);
+}
+
+/* -------------------------------------------------------
+   RESPONSIVE: banner se apila en pantallas angostas
+   ------------------------------------------------------- */
+@media (max-width: 620px) {
+  .productos-banner { flex-direction: column; text-align: center; }
+}
