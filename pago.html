@@ -18,32 +18,14 @@
       <h2>Medios de Pago</h2>
     </div>
 
-    <!-- Paso 1: Elegir producto -->
+    <!-- Paso 1: Elegir servicio (lo llena js/pago.js desde la base de datos) -->
     <div class="seccion">
-      <h3>Paso 1 — Elige tu producto</h3>
+      <h3>Paso 1 — Elige tu servicio</h3>
 
-      <div class="productos">
-
-        <div class="producto" onclick="seleccionarProducto(this, 'Lentes de sol', 120000)">
-          <span class="icono">🕶️</span>
-          <p>Lentes de sol</p>
-          <p class="precio">$120.000</p>
-        </div>
-
-        <div class="producto" onclick="seleccionarProducto(this, 'Montura clásica', 85000)">
-          <span class="icono">👓</span>
-          <p>Montura clásica</p>
-          <p class="precio">$85.000</p>
-        </div>
-
-        <div class="producto" onclick="seleccionarProducto(this, 'Lentes de contacto', 60000)">
-          <span class="icono">👁️</span>
-          <p>Lentes de contacto</p>
-          <p class="precio">$60.000</p>
-        </div>
-
+      <div class="productos" id="listaServicios">
+        <p>Cargando servicios…</p>
       </div>
-      <p class="error" id="error-producto">Selecciona un producto.</p>
+      <p class="error" id="error-producto">Selecciona un servicio.</p>
     </div>
 
     <!-- Paso 2: Elegir medio de pago -->
@@ -72,16 +54,18 @@
     </div>
 
     <!-- Botón pagar -->
-    <button onclick="procesarPago()">¡Haz tu pedido ahora! ✔</button>
+    <button id="btnPagar" onclick="procesarPago()">¡Haz tu pedido ahora! ✔</button>
+    <p class="error" id="error-general"></p>
 
     <!-- Factura (se muestra al pagar) -->
     <div class="factura" id="factura">
       <h3>📄 Resumen de Compra</h3>
-      <p>🛍️ Producto: <span id="f-producto"></span></p>
+      <p>🛍️ Servicio: <span id="f-producto"></span></p>
       <p>💳 Medio de pago: <span id="f-medio"></span></p>
       <p>💰 Total: <span id="f-total"></span></p>
       <p>🔢 N° Pedido: <span id="f-pedido"></span></p>
       <p class="guardado">✅ Pedido guardado en tu historial.</p>
+      <p><a href="pedidos.html">Ver mis pedidos</a> · <a href="pago.html">Hacer otro pedido</a></p>
     </div>
 
   </div>

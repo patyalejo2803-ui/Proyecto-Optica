@@ -1,116 +1,152 @@
-// Variables para guardar lo que el usuario elige
-var doctorSeleccionado = "";
-var horaSeleccionada   = "";
-var motivoSeleccionado = "";
+const API_CITAS = 'php/citas/index.php';
 
-// ── Seleccionar un optometrista ──
-function seleccionarDoctor(elemento, nombre) {
+let horaElegida = '';
+let todasLasHoras = [];
 
-  // Quitamos "seleccionado" a todos los doctores
-  var doctores = document.getElementsByClassName("doctor");
-  for (var i = 0; i < doctores.length; i++) {
-    doctores[i].classList.remove("seleccionado");
-  }
+document.addEventListener('DOMContentLoaded', () => {
+  const fecha = document.getElementById('fecha');
+  fecha.min = hoyISO();
+  fecha.addEventListener('change', cargarHoras);
+  document.getElementById('servicio').addEventListener('change', validar);
+  document.getElementById('btnConfirmar').addEventListener('click', confirmarCita);
+  cargarHoras();
+});
 
-  // Marcamos el que se eligió
-  elemento.classList.add("seleccionado");
-
-  // Guardamos el nombre
-  doctorSeleccionado = nombre;
-
-  // Ocultamos el error
-  document.getElementById("error-doctor").style.display = "none";
+function hoyISO() {
+  const d = new Date();
+  d.setMinutes(d.getMinutes() - d.getTimezoneOffset());
+  return d.toISOString().slice(0, 10);
 }
 
-// ── Seleccionar una hora ──
-function seleccionarHora(elemento, hora) {
+function formatoPesos(v) { return '$' + Number(v || 0).toLocaleString('es-CO'); }
 
-  // Quitamos "seleccionado" a todas las horas
-  var horas = document.getElementsByClassName("hora");
-  for (var i = 0; i < horas.length; i++) {
-    horas[i].classList.remove("seleccionado");
+function mostrarAviso(texto, tipo, enlace) {
+  const el = document.getElementById('aviso');
+  el.className = 'aviso ' + tipo;
+  el.textContent = texto + ' ';
+  if (enlace) {
+    const a = document.createElement('a');
+    a.href = enlace.href;
+    a.textContent = enlace.texto;
+    el.appendChild(a);
   }
-
-  // Marcamos la elegida
-  elemento.classList.add("seleccionado");
-
-  // Guardamos la hora
-  horaSeleccionada = hora;
-
-  // Ocultamos el error
-  document.getElementById("error-hora").style.display = "none";
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-// ── Seleccionar el motivo ──
-function seleccionarMotivo(elemento, motivo) {
+async function cargarHoras() {
+  const fecha = document.getElementById('fecha').value;
+  horaElegida = '';
 
-  // Quitamos "seleccionado" a todos los motivos
-  var motivos = document.getElementsByClassName("motivo");
-  for (var i = 0; i < motivos.length; i++) {
-    motivos[i].classList.remove("seleccionado");
+  try {
+    const res = await fetch(API_CITAS + (fecha ? '?fecha=' + fecha : ''));
+    const data = await res.json();
+
+    if (data.code === 401) {
+      document.getElementById('servicio').innerHTML = '<option value="">—</option>';
+      mostrarAviso(data.msg + '.', 'error', { href: 'login.html', texto: 'Ir al login' });
+      return;
+    }
+    if (data.code !== 200) {
+      mostrarAviso('Error: ' + data.msg, 'error');
+      return;
+    }
+
+    llenarServicios(data.servicios);
+    todasLasHoras = data.horas;
+    dibujarHoras(data.ocupadas, fecha);
+  } catch (err) {
+    mostrarAviso('No se pudo conectar con el servidor.', 'error');
+    console.error(err);
   }
-
-  // Marcamos el elegido
-  elemento.classList.add("seleccionado");
-
-  // Guardamos el motivo
-  motivoSeleccionado = motivo;
-
-  // Ocultamos el error
-  document.getElementById("error-motivo").style.display = "none";
 }
 
-// ── Agendar la cita ──
-function agendarCita() {
+function llenarServicios(servicios) {
+  const sel = document.getElementById('servicio');
+  if (sel.options.length > 1) return; // ya cargados
+  const previo = sel.value;
+  sel.innerHTML = '';
+  const base = document.createElement('option');
+  base.value = '';
+  base.textContent = 'Selecciona un servicio…';
+  sel.appendChild(base);
+  servicios.forEach(s => {
+    const o = document.createElement('option');
+    o.value = s.id;
+    o.textContent = s.nombre + ' — ' + formatoPesos(s.precio);
+    sel.appendChild(o);
+  });
+  sel.value = previo;
+}
 
-  // Leemos la fecha
-  var fecha = document.getElementById("fecha").value;
+function dibujarHoras(ocupadas, fecha) {
+  const cont = document.getElementById('horas');
+  cont.innerHTML = '';
+  const nota = document.getElementById('notaHoras');
 
-  // Ocultamos todos los errores
-  document.getElementById("error-doctor").style.display = "none";
-  document.getElementById("error-fecha").style.display  = "none";
-  document.getElementById("error-hora").style.display   = "none";
-  document.getElementById("error-motivo").style.display = "none";
-  document.getElementById("confirmacion").style.display = "none";
+  if (!fecha) { nota.textContent = 'Primero elige una fecha.'; validar(); return; }
 
-  // Variable para detectar errores
-  var hayError = false;
-
-  // Validamos cada campo
-  if (doctorSeleccionado == "") {
-    document.getElementById("error-doctor").style.display = "block";
-    hayError = true;
+  if (new Date(fecha + 'T12:00:00').getDay() === 0) {
+    nota.textContent = 'No atendemos los domingos. Elige otra fecha.';
+    validar();
+    return;
   }
+  nota.textContent = 'Las horas tachadas ya están reservadas.';
 
-  if (fecha == "") {
-    document.getElementById("error-fecha").style.display = "block";
-    hayError = true;
+  const ahora = new Date();
+  todasLasHoras.forEach(h => {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'hora';
+    b.textContent = h;
+    const pasada = new Date(fecha + 'T' + h + ':00') < ahora;
+    b.disabled = ocupadas.includes(h) || pasada;
+    b.addEventListener('click', () => {
+      horaElegida = h;
+      cont.querySelectorAll('.hora').forEach(x => x.classList.remove('activo'));
+      b.classList.add('activo');
+      validar();
+    });
+    cont.appendChild(b);
+  });
+  validar();
+}
+
+function validar() {
+  const ok = document.getElementById('servicio').value &&
+             document.getElementById('fecha').value && horaElegida;
+  document.getElementById('btnConfirmar').disabled = !ok;
+}
+
+async function confirmarCita() {
+  const btn = document.getElementById('btnConfirmar');
+  btn.disabled = true;
+  btn.textContent = 'Guardando…';
+
+  try {
+    const res = await fetch(API_CITAS, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        id_servicio: document.getElementById('servicio').value,
+        fecha: document.getElementById('fecha').value,
+        hora: horaElegida
+      })
+    });
+    const data = await res.json();
+
+    if (data.code === 200) {
+      mostrarAviso('Cita agendada. Tu número es #' + String(data.id).padStart(4, '0') + '.', 'ok',
+        { href: 'estado.html?orden=' + data.id, texto: 'Ver estado' });
+      horaElegida = '';
+      await cargarHoras();
+    } else {
+      mostrarAviso(data.msg, 'error');
+      await cargarHoras();
+    }
+  } catch (err) {
+    mostrarAviso('No se pudo conectar con el servidor.', 'error');
+    console.error(err);
   }
-
-  if (horaSeleccionada == "") {
-    document.getElementById("error-hora").style.display = "block";
-    hayError = true;
-  }
-
-  if (motivoSeleccionado == "") {
-    document.getElementById("error-motivo").style.display = "block";
-    hayError = true;
-  }
-
-  // Si no hay errores, mostramos la confirmación
-  if (hayError == false) {
-
-    // Generamos un número de cita
-    var numeroCita = "CITA-" + Math.floor(Math.random() * 90000 + 10000);
-
-    // Llenamos los datos de la confirmación
-    document.getElementById("c-doctor").textContent = doctorSeleccionado;
-    document.getElementById("c-fecha").textContent  = fecha;
-    document.getElementById("c-hora").textContent   = horaSeleccionada;
-    document.getElementById("c-motivo").textContent = motivoSeleccionado;
-    document.getElementById("c-numero").textContent = numeroCita;
-
-    // Mostramos la confirmación
-    document.getElementById("confirmacion").style.display = "block";
-  }
+  btn.textContent = 'Confirmar cita';
+  validar();
 }

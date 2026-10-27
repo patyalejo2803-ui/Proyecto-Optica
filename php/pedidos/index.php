@@ -26,16 +26,19 @@
                        o.FECHA AS fecha,
                        o.VALOR_ORDEN AS total,
                        u.NOMBRES AS cliente,
-                       COALESCE(e.NOMBRE, o.ESTADO_SERVICIO) AS estado,
-                       COALESCE(ep.NOMBRE, o.ESTADO_PAGO_) AS pago,
-                       (SELECT GROUP_CONCAT(CONCAT(p.NOMBRE, ' x', op.CANTIDAD) SEPARATOR ', ')
-                          FROM orden_producto op
-                          JOIN productos p ON p.id_PRODUCTOS = op.ID_PRODUCTO
-                         WHERE op.ID_ORDEN = o.ID_ORDEN) AS productos
+                       e.NOMBRE AS estado,
+                       o.ESTADO_PAGO_ AS pago,
+                       COALESCE(
+                         (SELECT GROUP_CONCAT(CONCAT(p.NOMBRE, ' x', op.CANTIDAD) SEPARATOR ', ')
+                            FROM orden_producto op
+                            JOIN productos p ON p.id_PRODUCTOS = op.ID_PRODUCTO
+                           WHERE op.ID_ORDEN = o.ID_ORDEN),
+                         s.NOMBRE
+                       ) AS productos
                 FROM ordenes o
                 LEFT JOIN usuario u ON u.ID_USUARIO = o.ID_USUARIO
                 LEFT JOIN estados e ON e.ID_ESTADO = o.ESTADO_SERVICIO
-                LEFT JOIN estados ep ON ep.ID_ESTADO = o.ESTADO_PAGO_";
+                LEFT JOIN servicios s ON s.ID_SERVICIOS = o.ID_TIPO_SERVICIO";
 
         // El cliente (rol 1) solo ve sus pedidos; el personal ve todos
         if ($idRol === 1) {

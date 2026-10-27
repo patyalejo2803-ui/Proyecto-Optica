@@ -10,7 +10,7 @@
 
   <div class="pagina">
 
-    <!-- ── ENCABEZADO ── -->
+    <!-- ENCABEZADO -->
     <div class="encabezado">
       <div class="encabezado-icono">📦</div>
       <h1>ÓPTICA ALEMANA</h1>
@@ -18,75 +18,51 @@
       <p>Consulta el estado de tus pedidos</p>
     </div>
 
-    <!-- ── LISTA DE PEDIDOS ── -->
+    <!-- LISTA DE PEDIDOS (la llena js/pedidos.js) -->
     <div class="seccion">
       <h3>Mis Pedidos</h3>
-      <div class="pedidos-lista">
-
-        <div class="pedido-card activo" onclick="seleccionarPedido(this, '0001', 'Montura clásica', 'En proceso', 'Pendiente', '$180.000')">
-          <div class="pedido-card-info">
-            <p>Pedido #0001</p>
-            <span>Lentes de contacto x6</span>
-          </div>
-          <span class="badge badge-proceso">En proceso</span>
-        </div>
-
-        <div class="pedido-card" onclick="seleccionarPedido(this, '0002', 'Lentes de contacto x6', 'Completado', 'Pagado', '$95.000')">
-          <div class="pedido-card-info">
-            <p>Pedido #0002</p>
-            <span>Lentes de contacto x6</span>
-          </div>
-          <span class="badge badge-completado">Completado</span>
-        </div>
-
-        <div class="pedido-card" onclick="seleccionarPedido(this, '0003', 'Gafas de sol premium', 'En proceso', 'Pendiente', '$320.000')">
-          <div class="pedido-card-info">
-            <p>Pedido #0003</p>
-            <span>Gafas de sol premium</span>
-          </div>
-          <span class="badge badge-proceso">En proceso</span>
-        </div>
-
+      <div class="pedidos-lista" id="listaPedidos">
+        <p>Cargando pedidos…</p>
       </div>
     </div>
 
-    <!-- ── DETALLE DEL PEDIDO ── -->
+    <!-- DETALLE DEL PEDIDO -->
     <div class="seccion" id="detalle-seccion">
       <h3>Detalle del Pedido</h3>
 
       <div class="fila">
         <span class="fila-label">Pedido #:</span>
-        <span class="fila-valor" id="d-numero">0001</span>
+        <span class="fila-valor" id="d-numero">—</span>
       </div>
 
       <div class="fila">
-        <span class="fila-label">Producto:</span>
-        <span class="fila-valor" id="d-producto">Montura clásica</span>
+        <span class="fila-label">Servicio / producto:</span>
+        <span class="fila-valor" id="d-producto">—</span>
       </div>
 
       <div class="fila">
         <span class="fila-label">Estado:</span>
-        <span id="d-estado-badge" class="badge badge-proceso">En proceso</span>
+        <span id="d-estado-badge" class="badge">—</span>
       </div>
 
       <div class="fila">
         <span class="fila-label">Pago:</span>
-        <span id="d-pago-badge" class="badge badge-pendiente">Pendiente</span>
+        <span id="d-pago-badge" class="badge">—</span>
       </div>
 
       <div class="fila">
         <span class="fila-label">Total:</span>
-        <span class="fila-valor" id="d-total">$180.000</span>
+        <span class="fila-valor" id="d-total">—</span>
       </div>
     </div>
 
-    <!-- ── BOTONES ── -->
+    <!-- BOTONES -->
     <div class="botones">
-      <button class="btn-pagar" onclick="irAPagar()">[ Pagar ]</button>
-      <button class="btn-estado" onclick="verEstado()">[ Ver estado ]</button>
+      <button class="btn-pagar" onclick="irAPagar()">Nuevo pedido</button>
+      <button class="btn-estado" onclick="verEstado()">Ver estado</button>
     </div>
 
-    <!-- ── PANEL DE ESTADO ── -->
+    <!-- PANEL DE ESTADO -->
     <div class="panel-estado" id="panel-estado">
       <h3>📦 Estado del Pedido</h3>
       <div class="fila">
@@ -94,7 +70,7 @@
         <span class="fila-valor" id="e-numero">—</span>
       </div>
       <div class="fila">
-        <span class="fila-label">Producto</span>
+        <span class="fila-label">Servicio / producto</span>
         <span class="fila-valor" id="e-producto">—</span>
       </div>
       <div class="fila">
@@ -109,7 +85,7 @@
 
   </div>
 
-  <!-- ── MENÚ INFERIOR ── -->
+  <!-- MENÚ INFERIOR -->
   <div class="menu-nav">
     <a href="login.html">🏠</a>
     <a href="citas.html">📅</a>

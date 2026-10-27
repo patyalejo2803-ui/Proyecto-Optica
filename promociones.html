@@ -10,124 +10,35 @@
 
   <div class="pagina">
 
-    <!-- ── PERFIL ── -->
-    <div class="perfil">
-      <div class="perfil-izquierda">
-        <div class="avatar">👤</div>
-        <div class="perfil-info">
-          <p class="perfil-nombre">Alba Castro</p>
-          <p class="perfil-correo">alba@opticaalemana.com</p>
-        </div>
-      </div>
-      <span class="engranaje">⚙️</span>
+    <div class="encabezado">
+      <div class="encabezado-icono">🎁</div>
+      <h1>ÓPTICA ALEMANA</h1>
+      <h2>Promociones</h2>
+      <p>Ofertas vigentes para ti</p>
     </div>
 
-    <!-- ── ESTADÍSTICAS ── -->
-    <div class="estadisticas">
-      <div class="stat">
-        <span class="stat-icono">🎁</span>
-        <p class="stat-numero">5</p>
-        <p class="stat-label">Promociones totales</p>
-      </div>
-      <div class="stat">
-        <span class="stat-icono">✅</span>
-        <p class="stat-numero">3</p>
-        <p class="stat-label">Activas</p>
-      </div>
-      <div class="stat">
-        <span class="stat-icono">👓</span>
-        <p class="stat-numero">12</p>
-        <p class="stat-label">Productos en oferta</p>
-      </div>
+    <div class="resumen">
+      <div class="chip"><strong id="totalPromos">0</strong><span>Promociones vigentes</span></div>
     </div>
 
-    <!-- ── ÚLTIMAS PROMOCIONES (tarjetas mini) ── -->
     <div class="seccion">
-      <div class="seccion-header">
-        <p class="seccion-titulo">Últimas Promociones</p>
-        <span class="ver-todos">Ver todas</span>
-      </div>
-
-      <div class="tarjetas-mini">
-
-        <div class="tarjeta-mini">
-          <span class="mini-icono">🕶️</span>
-          <p class="mini-titulo">Lentes de sol</p>
-          <p class="mini-desc">30% OFF</p>
-        </div>
-
-        <div class="tarjeta-mini">
-          <span class="mini-icono">👓</span>
-          <p class="mini-titulo">Monturas clásicas</p>
-          <p class="mini-desc">2x1</p>
-        </div>
-
-        <div class="tarjeta-mini">
-          <span class="mini-icono">💎</span>
-          <p class="mini-titulo">Lentes premium</p>
-          <p class="mini-desc">20% OFF</p>
-        </div>
-
-      </div>
+      <h3>Ofertas disponibles</h3>
+      <div id="lista"><p class="vacio">Cargando…</p></div>
     </div>
 
-    <!-- ── NOVEDADES (tarjetas grandes) ── -->
-    <div class="seccion">
-      <div class="seccion-header">
-        <p class="seccion-titulo">Novedades</p>
-        <span class="ver-todos">Ver todas</span>
-      </div>
-
-      <!-- Novedad 1 -->
-      <div class="tarjeta-novedad">
-        <div class="novedad-imagen">🕶️</div>
-        <div class="novedad-contenido">
-          <p class="novedad-titulo">Mes del Padre</p>
-          <p class="novedad-desc">APROVECHA DESCUENTOS EN LENTES Y MONTURAS</p>
-          <div class="novedad-stats">
-            <span>👥 256</span>
-            <span>⭐ 354</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Novedad 2 -->
-      <div class="tarjeta-novedad">
-        <div class="novedad-imagen">👓</div>
-        <div class="novedad-contenido">
-          <p class="novedad-titulo">2x1 en Monturas</p>
-          <p class="novedad-desc">LLEVA DOS MONTURAS AL PRECIO DE UNA</p>
-          <div class="novedad-stats">
-            <span>👥 180</span>
-            <span>⭐ 210</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Novedad 3 -->
-      <div class="tarjeta-novedad">
-        <div class="novedad-imagen">👁️</div>
-        <div class="novedad-contenido">
-          <p class="novedad-titulo">Lentes de Contacto</p>
-          <p class="novedad-desc">PRIMER PAR GRATIS CON TU CONSULTA</p>
-          <div class="novedad-stats">
-            <span>👥 98</span>
-            <span>⭐ 142</span>
-          </div>
-        </div>
-      </div>
-
-    </div>
+    <a class="btn-agendar" href="citas.html">Agendar una cita</a>
 
   </div>
 
-  <!-- ── MENÚ INFERIOR ── -->
   <div class="menu-nav">
     <a href="login.html">🏠</a>
+    <a href="citas.html">📅</a>
     <a href="pago.html">💳</a>
-    <a href="promociones.html" class="activo">🎁</a>
-    <a href="#">🔔</a>
+    <a href="pedidos.html">📦</a>
+    <a href="estado.html">🔎</a>
   </div>
+
+  <script src="js/promociones.js"></script>
 
 </body>
 </html>

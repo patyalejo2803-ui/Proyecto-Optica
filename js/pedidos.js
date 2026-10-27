@@ -17,7 +17,7 @@ function numeroPedido(id) {
 
 function claseEstado(estado) {
   const t = String(estado ?? '').toLowerCase();
-  const terminado = t.includes('complet') || t.includes('entreg') || t.includes('termin');
+  const terminado = t.startsWith('asisti') || t.includes('complet') || t.includes('entreg') || t.includes('termin');
   return terminado ? 'badge-completado' : 'badge-proceso';
 }
 

@@ -1,86 +1,171 @@
-// Variables globales para guardar lo que el usuario elige
-var productoSeleccionado = "";
-var precioSeleccionado   = 0;
-var medioSeleccionado    = "";
+// ── Conexión con el servidor ──
+const API_PAGO = 'php/pago/index.php';
 
-// ── Función para seleccionar un producto ──
-function seleccionarProducto(elemento, nombre, precio) {
+// Lo que el usuario elige
+let servicioSeleccionado = null;   // { id_servicio, nombre, precio }
+let medioSeleccionado    = '';
 
-  // Quitamos la clase "seleccionado" de todos los productos
-  var productos = document.getElementsByClassName("producto");
-  for (var i = 0; i < productos.length; i++) {
-    productos[i].classList.remove("seleccionado");
-  }
+document.addEventListener('DOMContentLoaded', cargarServicios);
 
-  // Le ponemos la clase "seleccionado" al que se hizo clic
-  elemento.classList.add("seleccionado");
-
-  // Guardamos el nombre y precio del producto elegido
-  productoSeleccionado = nombre;
-  precioSeleccionado   = precio;
-
-  // Ocultamos el error si estaba visible
-  document.getElementById("error-producto").style.display = "none";
+// ── Utilidades ──
+function formatoPesos(valor) {
+  return '$' + Number(valor || 0).toLocaleString('es-CO');
 }
 
-// ── Función para seleccionar el medio de pago ──
+function numeroPedido(id) {
+  return '#' + String(id).padStart(4, '0');
+}
+
+function mostrar(id) { document.getElementById(id).style.display = 'block'; }
+function ocultar(id) { document.getElementById(id).style.display = 'none'; }
+
+function errorGeneral(texto) {
+  const el = document.getElementById('error-general');
+  el.textContent = texto;
+  el.style.display = 'block';
+}
+
+// ── Mensaje dentro de la lista de servicios (cargando, vacío o error) ──
+function mensajeServicios(texto, conLogin) {
+  const contenedor = document.getElementById('listaServicios');
+  contenedor.innerHTML = '';
+  const p = document.createElement('p');
+  p.textContent = texto + ' ';
+  if (conLogin) {
+    const a = document.createElement('a');
+    a.href = 'login.html';
+    a.textContent = 'Ir al login';
+    p.appendChild(a);
+  }
+  contenedor.appendChild(p);
+}
+
+// ── Cargar los servicios desde la base de datos ──
+async function cargarServicios() {
+  mensajeServicios('Cargando servicios…');
+
+  try {
+    const res = await fetch(API_PAGO);
+    const data = await res.json();
+
+    if (data.code === 401) {
+      mensajeServicios(data.msg + '.', true);
+      return;
+    }
+    if (data.code !== 200) {
+      mensajeServicios('Error: ' + data.msg);
+      return;
+    }
+    if (data.data.length === 0) {
+      mensajeServicios('Aún no hay servicios disponibles.');
+      return;
+    }
+
+    const contenedor = document.getElementById('listaServicios');
+    contenedor.innerHTML = '';
+    data.data.forEach(s => contenedor.appendChild(crearTarjetaServicio(s)));
+
+  } catch (err) {
+    mensajeServicios('No se pudo conectar con el servidor.');
+    console.error(err);
+  }
+}
+
+// ── Crear la tarjeta de un servicio ──
+function crearTarjetaServicio(s) {
+  const card = document.createElement('div');
+  card.className = 'producto';
+  card.title = s.descripcion || '';
+
+  const icono = document.createElement('span');
+  icono.className = 'icono';
+  icono.textContent = '👓';
+
+  const nombre = document.createElement('p');
+  nombre.textContent = s.nombre;
+
+  const precio = document.createElement('p');
+  precio.className = 'precio';
+  precio.textContent = formatoPesos(s.precio);
+
+  card.appendChild(icono);
+  card.appendChild(nombre);
+  card.appendChild(precio);
+  card.addEventListener('click', () => seleccionarServicio(card, s));
+
+  return card;
+}
+
+// ── Seleccionar un servicio ──
+function seleccionarServicio(card, s) {
+  document.querySelectorAll('.producto').forEach(c => c.classList.remove('seleccionado'));
+  card.classList.add('seleccionado');
+
+  servicioSeleccionado = { id_servicio: s.id_servicio, nombre: s.nombre, precio: s.precio };
+  ocultar('error-producto');
+}
+
+// ── Seleccionar el medio de pago ──
 function seleccionarMedio(elemento, medio) {
+  document.querySelectorAll('.medio').forEach(m => m.classList.remove('seleccionado'));
+  elemento.classList.add('seleccionado');
 
-  // Quitamos la clase "seleccionado" de todos los medios
-  var medios = document.getElementsByClassName("medio");
-  for (var i = 0; i < medios.length; i++) {
-    medios[i].classList.remove("seleccionado");
-  }
-
-  // Le ponemos la clase "seleccionado" al que se hizo clic
-  elemento.classList.add("seleccionado");
-
-  // Guardamos el medio de pago elegido
   medioSeleccionado = medio;
-
-  // Ocultamos el error si estaba visible
-  document.getElementById("error-medio").style.display = "none";
+  ocultar('error-medio');
 }
 
-// ── Función principal: procesar el pago ──
-function procesarPago() {
+// ── Procesar el pedido ──
+async function procesarPago() {
+  ocultar('error-producto');
+  ocultar('error-medio');
+  ocultar('error-general');
+  ocultar('factura');
 
-  // Ocultamos los errores antes de validar
-  document.getElementById("error-producto").style.display = "none";
-  document.getElementById("error-medio").style.display    = "none";
-  document.getElementById("factura").style.display        = "none";
+  let hayError = false;
 
-  // Variable para saber si hay errores
-  var hayError = false;
-
-  // Validar que eligió un producto
-  if (productoSeleccionado == "") {
-    document.getElementById("error-producto").style.display = "block";
+  if (!servicioSeleccionado) {
+    mostrar('error-producto');
     hayError = true;
   }
-
-  // Validar que eligió un medio de pago
-  if (medioSeleccionado == "") {
-    document.getElementById("error-medio").style.display = "block";
+  if (medioSeleccionado === '') {
+    mostrar('error-medio');
     hayError = true;
   }
+  if (hayError) return;
 
-  // Si no hay errores, mostramos la factura
-  if (hayError == false) {
+  // Se desactiva el botón para no crear el mismo pedido dos veces
+  const boton = document.getElementById('btnPagar');
+  boton.disabled = true;
 
-    // Generamos un número de pedido aleatorio
-    var numeroPedido = "OA-" + Math.floor(Math.random() * 90000 + 10000);
+  try {
+    const res = await fetch(API_PAGO, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        id_servicio: servicioSeleccionado.id_servicio,
+        medio: medioSeleccionado
+      })
+    });
+    const data = await res.json();
 
-    // Formatear el precio con puntos
-    var totalFormato = "$" + precioSeleccionado.toLocaleString("es-CO");
+    if (data.code !== 200) {
+      errorGeneral(data.msg);
+      boton.disabled = false;
+      return;
+    }
 
-    // Llenamos los datos de la factura
-    document.getElementById("f-producto").textContent = productoSeleccionado;
-    document.getElementById("f-medio").textContent    = medioSeleccionado;
-    document.getElementById("f-total").textContent    = totalFormato;
-    document.getElementById("f-pedido").textContent   = numeroPedido;
+    // Factura con los datos reales
+    document.getElementById('f-producto').textContent = data.servicio;
+    document.getElementById('f-medio').textContent    = medioSeleccionado;
+    document.getElementById('f-total').textContent    = formatoPesos(data.total);
+    document.getElementById('f-pedido').textContent   = numeroPedido(data.id_orden);
 
-    // Mostramos la factura
-    document.getElementById("factura").style.display = "block";
+    mostrar('factura');
+    document.getElementById('factura').scrollIntoView({ behavior: 'smooth' });
+
+  } catch (err) {
+    errorGeneral('No se pudo conectar con el servidor');
+    boton.disabled = false;
+    console.error(err);
   }
 }

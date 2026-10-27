@@ -3,104 +3,80 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Óptica Alemana - Estado de Mi Pedido</title>
+  <title>Óptica Alemana - Estado del pedido</title>
   <link rel="stylesheet" href="css/estado.css">
 </head>
 <body>
 
   <div class="pagina">
 
-    <!-- ── ENCABEZADO ── -->
+    <!-- ENCABEZADO -->
     <div class="encabezado">
-      <div class="encabezado-icono">🔍</div>
+      <div class="encabezado-icono">🔎</div>
       <h1>ÓPTICA ALEMANA</h1>
-      <h2>Estado de Mi Pedido</h2>
-      <p>Sigue el progreso de tu pedido en tiempo real</p>
+      <h2>Estado de mi pedido</h2>
+      <p>Sigue el progreso de tu pedido</p>
     </div>
 
-    <!-- ── RESUMEN DEL PEDIDO ── -->
+    <!-- ELEGIR PEDIDO -->
     <div class="seccion">
-      <h3>Información del Pedido</h3>
+      <h3>Elige un pedido</h3>
+      <div class="selector">
+        <label for="selectorPedido">Pedido</label>
+        <select id="selectorPedido">
+          <option>Cargando…</option>
+        </select>
+      </div>
+      <p class="mensaje" id="mensaje"></p>
+    </div>
 
-      <div class="resumen">
-        <p class="resumen-linea">
-          <span class="resumen-label">Pedido #:</span>
-          <span class="resumen-valor">0001</span>
-        </p>
-        <p class="resumen-linea">
-          <span class="resumen-label">Producto:</span>
-          <span class="resumen-valor">Montura Azul</span>
-        </p>
-        <p class="resumen-linea">
-          <span class="resumen-label">Estado:</span>
-          <span class="resumen-estado">EN PROCESO</span>
-        </p>
-        <p class="resumen-linea">
-          <span class="resumen-label">Fecha estimada:</span>
-          <span class="resumen-valor">30/04/2026</span>
-        </p>
+    <!-- INFORMACIÓN DEL PEDIDO -->
+    <div class="seccion" id="seccionInfo" style="display:none;">
+      <h3>Información del pedido</h3>
+
+      <div class="fila">
+        <span class="fila-label">Pedido #:</span>
+        <span class="fila-valor" id="i-numero">—</span>
+      </div>
+      <div class="fila">
+        <span class="fila-label">Servicio / producto:</span>
+        <span class="fila-valor" id="i-producto">—</span>
+      </div>
+      <div class="fila">
+        <span class="fila-label">Fecha:</span>
+        <span class="fila-valor" id="i-fecha">—</span>
+      </div>
+      <div class="fila">
+        <span class="fila-label">Estado:</span>
+        <span class="badge" id="i-estado">—</span>
+      </div>
+      <div class="fila">
+        <span class="fila-label">Pago:</span>
+        <span class="badge" id="i-pago">—</span>
+      </div>
+      <div class="fila">
+        <span class="fila-label">Total:</span>
+        <span class="fila-valor" id="i-total">—</span>
       </div>
     </div>
 
-    <!-- ── SEGUIMIENTO ── -->
-    <div class="seccion">
+    <!-- SEGUIMIENTO -->
+    <div class="seccion" id="seccionSeguimiento" style="display:none;">
       <h3>Seguimiento</h3>
-
-      <div class="pasos">
-
-        <div class="paso completado">
-          <div class="paso-icono">✔</div>
-          <div class="paso-info">
-            <p class="paso-nombre">Pedido recibido</p>
-            <p class="paso-fecha">15/04/2026 — 10:30 AM</p>
-          </div>
-        </div>
-
-        <div class="paso completado">
-          <div class="paso-icono">✔</div>
-          <div class="paso-info">
-            <p class="paso-nombre">Pago confirmado</p>
-            <p class="paso-fecha">15/04/2026 — 11:00 AM</p>
-          </div>
-        </div>
-
-        <div class="paso en-proceso">
-          <div class="paso-icono">🕐</div>
-          <div class="paso-info">
-            <p class="paso-nombre">En proceso</p>
-            <p class="paso-fecha">En preparación...</p>
-          </div>
-        </div>
-
-        <div class="paso pendiente">
-          <div class="paso-icono"></div>
-          <div class="paso-info">
-            <p class="paso-nombre">Entregado</p>
-            <p class="paso-fecha">Fecha estimada: 30/04/2026</p>
-          </div>
-        </div>
-
-      </div>
-
-      <!-- ── BARRA DE PROGRESO ── -->
-      <div class="barra-contenedor">
-        <div class="barra-progreso" style="width: 60%;"></div>
-      </div>
-      <p class="barra-label">Progreso: 60%</p>
-
+      <div class="progreso"><div class="progreso-barra" id="barra"></div></div>
+      <p class="progreso-texto" id="textoProgreso">Progreso: 0%</p>
+      <ul class="linea" id="linea"></ul>
     </div>
-
-    <!-- ── BOTÓN VOLVER ── -->
-    <button onclick="window.location.href='pedidos.html'">← Volver a mis pedidos</button>
 
   </div>
 
-  <!-- ── MENÚ INFERIOR ── -->
+  <!-- MENÚ INFERIOR -->
   <div class="menu-nav">
     <a href="login.html">🏠</a>
     <a href="citas.html">📅</a>
     <a href="pago.html">💳</a>
-    <a href="pedidos.html" class="activo">📦</a>
+    <a href="pedidos.html">📦</a>
+    <a href="estado.html" class="activo">🔎</a>
   </div>
 
   <script src="js/estado.js"></script>

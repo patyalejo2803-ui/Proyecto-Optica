@@ -1,261 +1,53 @@
-/* ── General ── */
-body {
-  background-color: #0d1117;
-  color: #ffffff;
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 20px 20px 80px 20px;
-  display: flex;
-  justify-content: center;
-}
+@import url('pedidos.css');
 
-.pagina {
+.selector label { display: block; margin-bottom: 6px; font-size: 0.85rem; color: var(--texto-suave); }
+.selector select {
   width: 100%;
-  max-width: 900px;
-}
-
-/* ── Encabezado ── */
-.encabezado {
-  background-color: #0f2044;
-  border: 1px solid #1f6feb;
+  padding: 12px 14px;
+  font-size: 1rem;
+  color: var(--texto);
+  background: var(--blanco);
+  border: 2px solid var(--borde);
   border-radius: 12px;
-  padding: 24px;
-  text-align: center;
-  margin-bottom: 14px;
 }
+.selector select:focus { outline: none; border-color: var(--azul); }
 
-.encabezado-icono {
-  width: 52px;
-  height: 52px;
-  background: linear-gradient(135deg, #1f6feb, #388bfd);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 24px;
-  margin: 0 auto 12px auto;
-}
+.mensaje { margin: 10px 0 0; font-size: 0.9rem; color: var(--texto-suave); }
 
-.encabezado h1 {
-  font-size: 20px;
-  letter-spacing: 2px;
-  margin: 0 0 4px 0;
-  color: #ffffff;
-}
+.badge-cancelado { color: var(--rojo); background: var(--rojo-fondo); }
 
-.encabezado h2 {
-  font-size: 22px;
-  font-weight: bold;
-  margin: 0 0 6px 0;
-  color: #ffffff;
-}
-
-.encabezado p {
-  font-size: 13px;
-  color: #8b949e;
-  margin: 0;
-}
-
-/* ── Secciones ── */
-.seccion {
-  background-color: #0f2044;
-  border: 1px solid #1f3a6e;
-  border-radius: 12px;
-  padding: 20px;
-  margin-bottom: 14px;
-}
-
-.seccion h3 {
-  font-size: 13px;
-  color: #8b949e;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  margin: 0 0 16px 0;
-  border-bottom: 1px solid #1f3a6e;
-  padding-bottom: 8px;
-}
-
-/* ── Resumen ── */
-.resumen {
-  background-color: #162035;
-  border: 1px solid #1f3a6e;
-  border-radius: 10px;
-  padding: 16px;
-}
-
-.resumen-linea {
-  margin: 0 0 10px 0;
-  font-size: 14px;
-}
-
-.resumen-linea:last-child {
-  margin-bottom: 0;
-}
-
-.resumen-label {
-  color: #8b949e;
-  margin-right: 6px;
-}
-
-.resumen-valor {
-  color: #ffffff;
-  font-weight: bold;
-}
-
-.resumen-estado {
-  color: #388bfd;
-  font-weight: bold;
-  font-size: 15px;
-  letter-spacing: 1px;
-}
-
-/* ── Pasos de seguimiento ── */
-.pasos {
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-  margin-bottom: 20px;
-}
-
-.paso {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  padding: 16px 0;
-  border-bottom: 1px solid #1f3a6e;
-  position: relative;
-}
-
-.paso:last-child {
-  border-bottom: none;
-}
-
-/* ── Ícono del paso ── */
-.paso-icono {
-  width: 34px;
-  height: 34px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 16px;
-  flex-shrink: 0;
-  font-weight: bold;
-}
-
-.paso.completado .paso-icono {
-  background-color: #122d22;
-  border: 2px solid #3fb950;
-  color: #3fb950;
-}
-
-.paso.en-proceso .paso-icono {
-  background-color: #1a2d44;
-  border: 2px solid #388bfd;
-  color: #388bfd;
-  font-size: 18px;
-}
-
-.paso.pendiente .paso-icono {
-  background-color: #162035;
-  border: 2px solid #30363d;
-  color: transparent;
-}
-
-/* ── Texto del paso ── */
-.paso-info {
-  flex: 1;
-}
-
-.paso-nombre {
-  margin: 0 0 3px 0;
-  font-size: 15px;
-  font-weight: bold;
-}
-
-.paso.completado .paso-nombre {
-  color: #3fb950;
-}
-
-.paso.en-proceso .paso-nombre {
-  color: #388bfd;
-}
-
-.paso.pendiente .paso-nombre {
-  color: #484f58;
-}
-
-.paso-fecha {
-  margin: 0;
-  font-size: 12px;
-  color: #8b949e;
-}
-
-.paso.pendiente .paso-fecha {
-  color: #30363d;
-}
-
-/* ── Barra de progreso ── */
-.barra-contenedor {
-  background-color: #162035;
-  border-radius: 20px;
-  height: 10px;
-  overflow: hidden;
-  margin-top: 4px;
-}
-
-.barra-progreso {
+.progreso { height: 10px; margin: 6px 0 4px; overflow: hidden; background: var(--borde); border-radius: 999px; }
+.progreso-barra {
+  width: 0;
   height: 100%;
-  background: linear-gradient(90deg, #1f6feb, #388bfd);
-  border-radius: 20px;
-  transition: width 1s ease;
+  background: linear-gradient(90deg, var(--dorado), var(--azul));
+  border-radius: 999px;
+  transition: width 0.5s ease;
 }
+.progreso-texto { margin: 0 0 6px; font-size: 0.8rem; text-align: right; color: var(--texto-suave); }
 
-.barra-label {
-  font-size: 12px;
-  color: #8b949e;
-  text-align: right;
-  margin: 6px 0 0 0;
-}
+.linea { margin: 16px 0 0; padding: 0; list-style: none; }
+.paso { display: flex; gap: 14px; padding: 14px 0; border-bottom: 1px solid var(--borde); }
+.paso:last-child { border-bottom: none; }
 
-/* ── Botón ── */
-button {
-  width: 100%;
-  padding: 14px;
-  background: linear-gradient(135deg, #1f6feb, #388bfd);
-  color: #ffffff;
-  border: none;
-  border-radius: 8px;
-  font-size: 16px;
-  font-weight: bold;
-  cursor: pointer;
-  margin-bottom: 14px;
-}
-
-button:hover {
-  background: linear-gradient(135deg, #388bfd, #58a6ff);
-}
-
-/* ── Menú inferior ── */
-.menu-nav {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background-color: #0f2044;
-  border-top: 1px solid #1f3a6e;
+.paso-icono {
   display: flex;
+  flex: 0 0 36px;
+  align-items: center;
   justify-content: center;
-  gap: 40px;
-  padding: 14px 0;
+  height: 36px;
+  font-weight: 700;
+  color: var(--texto-suave);
+  background: var(--blanco);
+  border: 2px solid var(--borde);
+  border-radius: 50%;
 }
+.paso-titulo { margin: 0; font-weight: 700; color: var(--texto-suave); }
+.paso-detalle { margin: 2px 0 0; font-size: 0.85rem; color: var(--texto-suave); }
 
-.menu-nav a {
-  font-size: 22px;
-  text-decoration: none;
-  opacity: 0.4;
-}
-
-.menu-nav a.activo {
-  opacity: 1;
-}
+.paso.hecho .paso-icono { color: var(--verde); background: var(--verde-fondo); border-color: var(--verde); }
+.paso.hecho .paso-titulo { color: var(--verde); }
+.paso.actual .paso-icono { color: var(--azul); background: var(--azul-claro); border-color: var(--azul); }
+.paso.actual .paso-titulo { color: var(--azul); }
+.paso.error .paso-icono { color: var(--rojo); background: var(--rojo-fondo); border-color: var(--rojo); }
+.paso.error .paso-titulo { color: var(--rojo); }

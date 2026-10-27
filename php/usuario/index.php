@@ -1,3 +1,4 @@
+cat > php/usuario/index.php <<'EOF'
 <?php
     session_start();
     require_once 'UsuarioController.php';
@@ -15,7 +16,7 @@
                     $result = $controller->autenticar($usuario, $clave);
 
                     if(count($result) > 0){
-                        // Guarda la sesión en el servidor (la usan Pedidos y otros módulos)
+                        // Guarda la sesión en el servidor (la usan Pedidos y Pago)
                         session_regenerate_id(true);
                         $_SESSION['id_usuario'] = (int)$result[0]["ID_USUARIO"];
                         $_SESSION['nombre']     = $result[0]["NOMBRES"];
@@ -51,3 +52,6 @@
         echo json_encode(["code"=>500,"msg"=>"Error en el servidor \n".$e->getMessage()]);
     }
 ?>
+EOF
+/c/xampp/php/php.exe -l php/usuario/index.php
+grep -n "fetch\|php/" js/login.js
