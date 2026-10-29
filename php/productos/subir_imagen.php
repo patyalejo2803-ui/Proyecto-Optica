@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . '/../auth.php'; requerirRol([2, 3]);
 require_once __DIR__ . '/../conexion.php';
 header('Access-Control-Allow-Origin: *');
 header('Content-Type: application/json');

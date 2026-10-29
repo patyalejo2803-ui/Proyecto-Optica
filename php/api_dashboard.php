@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . '/auth.php'; requerirRol([2, 3]);
 /* =========================================================
    ÓPTICA ALEMANA — api_dashboard.php
    ---------------------------------------------------------
@@ -13,7 +14,7 @@
    http://localhost/Proyecto-Optica/optica-alemana/php/api_dashboard.php
    ========================================================= */
 
-require_once 'conexion.php';
+require_once __DIR__ . '/conexion.php';
 header('Content-Type: application/json');
 
 try {
