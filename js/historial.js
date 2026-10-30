@@ -1,6 +1,12 @@
 const API_HISTORIAL = 'php/historial/index.php';
+let primeraCarga = true;
 
 document.addEventListener('DOMContentLoaded', cargarHistorial);
+
+// Actualización automática cada 15 segundos (solo si la pestaña está visible)
+setInterval(() => {
+  if (!document.hidden) cargarHistorial();
+}, 15000);
 
 function formatoFecha(f) {
   const p = String(f || '').split('-');
@@ -41,7 +47,6 @@ async function cargarHistorial() {
     document.getElementById('nombreCliente').textContent = data.cliente || 'cliente';
     document.getElementById('rTotal').textContent = registros.length;
 
-    // Última atención (más reciente ya atendida) y próxima cita (la más cercana pendiente)
     const atendidas = registros.filter(r => tipoEstado(r.estado) === 'atendida');
     const futuras = registros
       .filter(r => tipoEstado(r.estado) === 'pendiente' && r.fecha >= data.hoy)
@@ -52,6 +57,7 @@ async function cargarHistorial() {
 
     if (registros.length === 0) {
       mostrarVacio('Aún no tienes citas ni pedidos.');
+      primeraCarga = false;
       return;
     }
 
@@ -82,8 +88,10 @@ async function cargarHistorial() {
       item.appendChild(b);
       lista.appendChild(item);
     });
+    primeraCarga = false;
   } catch (err) {
-    mostrarVacio('No se pudo conectar con el servidor.');
+    // En recargas automáticas no borramos lo que ya se ve
+    if (primeraCarga) mostrarVacio('No se pudo conectar con el servidor.');
     console.error(err);
   }
 }

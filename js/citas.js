@@ -12,6 +12,26 @@ document.addEventListener('DOMContentLoaded', () => {
   cargarHoras();
 });
 
+// Refresca las horas ocupadas cada 15 segundos sin borrar la hora elegida
+setInterval(async () => {
+  const fecha = document.getElementById('fecha').value;
+  if (document.hidden || !fecha) return;
+  try {
+    const res = await fetch(API_CITAS + '?fecha=' + fecha);
+    const data = await res.json();
+    if (data.code !== 200) return;
+    document.querySelectorAll('#horas .hora').forEach(b => {
+      const pasada = new Date(fecha + 'T' + b.textContent + ':00') < new Date();
+      b.disabled = data.ocupadas.includes(b.textContent) || pasada;
+      if (b.disabled && b.classList.contains('activo')) {
+        b.classList.remove('activo');
+        horaElegida = '';
+      }
+    });
+    validar();
+  } catch (e) { /* se reintenta en el siguiente ciclo */ }
+}, 15000);
+
 function hoyISO() {
   const d = new Date();
   d.setMinutes(d.getMinutes() - d.getTimezoneOffset());

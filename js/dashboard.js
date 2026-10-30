@@ -175,6 +175,7 @@ function bindUI() {
   if (els.logoutBtn) {
     els.logoutBtn.addEventListener('click', (e) => {
       e.preventDefault();
+    fetch("php/usuario/logout.php", { method: "POST", keepalive: true });
       localStorage.removeItem('idRol');
       localStorage.removeItem('nombreUsuario');
       window.location.href = 'login.html';

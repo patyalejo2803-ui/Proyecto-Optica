@@ -25,6 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'msg'  => 'Si el correo está registrado, se generó un enlace de recuperación.'
         ];
 
+        if (!in_array($_SERVER["REMOTE_ADDR"], ["127.0.0.1", "::1"], true)) { $token = null; }
         if ($token) {
             // MODO DESARROLLO: como XAMPP no tiene correo configurado,
             // mostramos el enlace directo en pantalla en vez de enviarlo

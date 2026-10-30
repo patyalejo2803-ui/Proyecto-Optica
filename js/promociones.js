@@ -1,6 +1,12 @@
 const API_PROMOCIONES = 'php/promociones/index.php';
+let primeraCarga = true;
 
 document.addEventListener('DOMContentLoaded', cargarPromociones);
+
+// Actualización automática cada 15 segundos (solo si la pestaña está visible)
+setInterval(() => {
+  if (!document.hidden) cargarPromociones();
+}, 15000);
 
 function formatoFecha(fecha) {
   const p = String(fecha || '').split('-');
@@ -34,6 +40,7 @@ async function cargarPromociones() {
 
     if (data.data.length === 0) {
       mostrarVacio('Por ahora no hay promociones vigentes.');
+      primeraCarga = false;
       return;
     }
 
@@ -73,8 +80,9 @@ async function cargarPromociones() {
       card.appendChild(e);
       lista.appendChild(card);
     });
+    primeraCarga = false;
   } catch (err) {
-    mostrarVacio('No se pudo conectar con el servidor.');
+    if (primeraCarga) mostrarVacio('No se pudo conectar con el servidor.');
     console.error(err);
   }
 }

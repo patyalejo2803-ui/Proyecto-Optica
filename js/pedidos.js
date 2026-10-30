@@ -3,8 +3,14 @@ const API_PEDIDOS = 'php/pedidos/index.php';
 
 // Pedido seleccionado en pantalla
 let pedidoActual = null;
+let primeraCarga = true;
 
 document.addEventListener('DOMContentLoaded', cargarPedidos);
+
+// Actualización automática cada 15 segundos (solo si la pestaña está visible)
+setInterval(() => {
+  if (!document.hidden) cargarPedidos();
+}, 15000);
 
 // ── Utilidades ──
 function formatoPesos(valor) {
@@ -43,7 +49,8 @@ function mensajeLista(texto, enlaceLogin) {
 
 // ── Cargar los pedidos desde la base de datos ──
 async function cargarPedidos() {
-  mensajeLista('Cargando pedidos…');
+  // El mensaje "Cargando" solo se muestra la primera vez, para que no parpadee
+  if (primeraCarga) mensajeLista('Cargando pedidos…');
 
   try {
     const res = await fetch(API_PEDIDOS);
@@ -64,17 +71,38 @@ async function cargarPedidos() {
       return;
     }
 
+    // Recordamos qué pedido estaba elegido y si el panel de estado estaba abierto
+    const idElegido = pedidoActual ? String(pedidoActual.id_orden) : null;
+    const panel = document.getElementById('panel-estado');
+    const panelAbierto = panel.style.display === 'block';
+
     const lista = document.getElementById('listaPedidos');
     lista.innerHTML = '';
+
+    let cardElegida = null;
+    let pedidoElegido = null;
 
     data.data.forEach((p, i) => {
       const card = crearCard(p, data.rol);
       lista.appendChild(card);
-      if (i === 0) seleccionarPedido(card, p);
+      if (String(p.id_orden) === idElegido || (!idElegido && i === 0)) {
+        cardElegida = card;
+        pedidoElegido = p;
+      }
     });
 
+    // Si el pedido elegido ya no existe, se vuelve al primero
+    if (!cardElegida) {
+      cardElegida = lista.firstChild;
+      pedidoElegido = data.data[0];
+    }
+
+    seleccionarPedido(cardElegida, pedidoElegido, panelAbierto && !primeraCarga);
+    primeraCarga = false;
+
   } catch (err) {
-    mensajeLista('No se pudo conectar con el servidor.');
+    // En las recargas automáticas no borramos lo que ya se ve si falla la red
+    if (primeraCarga) mensajeLista('No se pudo conectar con el servidor.');
     console.error(err);
   }
 }
@@ -105,13 +133,13 @@ function crearCard(p, rol) {
 
   card.appendChild(info);
   card.appendChild(badge);
-  card.addEventListener('click', () => seleccionarPedido(card, p));
+  card.addEventListener('click', () => seleccionarPedido(card, p, false));
 
   return card;
 }
 
 // ── Seleccionar un pedido de la lista ──
-function seleccionarPedido(card, p) {
+function seleccionarPedido(card, p, mantenerPanel) {
   document.querySelectorAll('.pedido-card').forEach(c => c.classList.remove('activo'));
   card.classList.add('activo');
 
@@ -129,8 +157,20 @@ function seleccionarPedido(card, p) {
   badgePago.textContent = p.pago ?? '—';
   badgePago.className   = 'badge ' + clasePago(p.pago);
 
-  // Ocultamos el panel de estado al cambiar de pedido
-  document.getElementById('panel-estado').style.display = 'none';
+  if (mantenerPanel) {
+    // Recarga automática: se actualiza el panel abierto sin moverle la pantalla
+    llenarPanelEstado(p);
+  } else {
+    // Cambio de pedido: se oculta el panel de estado
+    document.getElementById('panel-estado').style.display = 'none';
+  }
+}
+
+function llenarPanelEstado(p) {
+  document.getElementById('e-numero').textContent   = '#' + numeroPedido(p.id_orden);
+  document.getElementById('e-producto').textContent = p.productos || 'Sin productos registrados';
+  document.getElementById('e-estado').textContent   = p.estado ?? '—';
+  document.getElementById('e-pago').textContent     = p.pago ?? '—';
 }
 
 // ── Ir a pagar ──
@@ -143,10 +183,7 @@ function irAPagar() {
 function verEstado() {
   if (!pedidoActual) return;
 
-  document.getElementById('e-numero').textContent   = '#' + numeroPedido(pedidoActual.id_orden);
-  document.getElementById('e-producto').textContent = pedidoActual.productos || 'Sin productos registrados';
-  document.getElementById('e-estado').textContent   = pedidoActual.estado ?? '—';
-  document.getElementById('e-pago').textContent     = pedidoActual.pago ?? '—';
+  llenarPanelEstado(pedidoActual);
 
   const panel = document.getElementById('panel-estado');
   panel.style.display = 'block';

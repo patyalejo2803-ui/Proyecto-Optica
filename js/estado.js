@@ -2,8 +2,14 @@
 const API_PEDIDOS = 'php/pedidos/index.php';
 
 let pedidos = [];
+let selectorListo = false;
 
 document.addEventListener('DOMContentLoaded', cargarPedidos);
+
+// Actualización automática cada 15 segundos (solo si la pestaña está visible)
+setInterval(() => {
+  if (!document.hidden) cargarPedidos();
+}, 15000);
 
 // ── Utilidades ──
 function numeroPedido(id) {
@@ -45,6 +51,9 @@ function mostrarMensaje(texto, conLogin) {
 // ── Cargar los pedidos desde la base de datos ──
 async function cargarPedidos() {
   const selector = document.getElementById('selectorPedido');
+  const idActual = pedidos.length && selector.value !== '' && pedidos[selector.value]
+    ? pedidos[selector.value].id_orden
+    : null;
 
   try {
     const res = await fetch(API_PEDIDOS);
@@ -78,17 +87,24 @@ async function cargarPedidos() {
       selector.appendChild(opcion);
     });
 
-    selector.addEventListener('change', () => mostrarPedido(pedidos[selector.value]));
+    if (!selectorListo) {
+      selector.addEventListener('change', () => mostrarPedido(pedidos[selector.value]));
+      selectorListo = true;
+    }
 
-    // Si llega ?orden=ID en la dirección, se abre ese pedido
+    // Conserva el pedido elegido; en la primera carga usa ?orden= o el primero
     const idUrl = new URLSearchParams(window.location.search).get('orden');
-    const indice = pedidos.findIndex(p => String(p.id_orden) === idUrl);
+    const buscado = idActual ?? idUrl;
+    const indice = pedidos.findIndex(p => String(p.id_orden) === String(buscado));
     selector.value = indice >= 0 ? indice : 0;
     mostrarPedido(pedidos[selector.value]);
 
   } catch (err) {
-    selector.innerHTML = '';
-    mostrarMensaje('No se pudo conectar con el servidor.');
+    // En recargas automáticas no borramos lo que ya se ve
+    if (!pedidos.length) {
+      selector.innerHTML = '';
+      mostrarMensaje('No se pudo conectar con el servidor.');
+    }
     console.error(err);
   }
 }
@@ -148,17 +164,14 @@ function dibujarSeguimiento(p, pagado) {
   const linea = document.getElementById('linea');
   linea.innerHTML = '';
 
-  // Paso 1: pedido recibido
   linea.appendChild(crearPaso('hecho', '✓', 'Pedido recibido', formatoFecha(p.fecha)));
 
-  // Paso 2: pago
   if (pagado) {
     linea.appendChild(crearPaso('hecho', '✓', 'Pago confirmado', 'Pago registrado'));
   } else {
     linea.appendChild(crearPaso('actual', '2', 'Pago pendiente', 'Aún no se registra el pago'));
   }
 
-  // Paso 3: atención del servicio
   if (asistio) {
     linea.appendChild(crearPaso('hecho', '✓', 'Servicio atendido', 'La atención se realizó'));
   } else if (cancelado) {
@@ -169,11 +182,9 @@ function dibujarSeguimiento(p, pagado) {
     linea.appendChild(crearPaso('actual', '3', 'Atención pendiente', 'Tu servicio está por atenderse'));
   }
 
-  // Paso 4: finalizado
   linea.appendChild(crearPaso(asistio ? 'hecho' : '', asistio ? '✓' : '4', 'Finalizado',
     asistio ? 'Pedido completado' : 'Se completa cuando se atiende el servicio'));
 
-  // Barra de progreso
   let pct = 25;
   if (pagado) pct += 25;
   if (asistio) pct = 100;

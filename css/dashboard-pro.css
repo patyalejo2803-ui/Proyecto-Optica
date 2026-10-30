@@ -171,3 +171,7 @@
   background: rgba(239, 68, 68, 0.15) !important;
   color: #b3261e !important;
 }
+/* Barra lateral: el menu se desplaza y el pie siempre visible (Cerrar sesion) */
+.sidebar { overflow: hidden; }
+.sidebar > nav { flex: 1 1 auto; min-height: 0; overflow-y: auto; overflow-x: hidden; }
+.sidebar-foot { flex: 0 0 auto; }

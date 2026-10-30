@@ -74,6 +74,7 @@ function pintarNav() {
   `;
 
   document.getElementById('btnCerrarSesion').addEventListener('click', () => {
+    fetch("php/usuario/logout.php", { method: "POST", keepalive: true });
     localStorage.removeItem('nombreUsuario');
     localStorage.removeItem('idRol');
     window.location.href = 'login.html';
