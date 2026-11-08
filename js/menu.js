@@ -1,4 +1,5 @@
-// Menú inferior único del área del cliente
+// Menú inferior único del área del cliente.
+// Reemplaza el contenido de .menu-nav (o lo crea si la página no lo tiene).
 (function () {
   const ICONOS = {
     citas: '<rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/>',
@@ -25,7 +26,9 @@
       nav.className = 'menu-nav';
       document.body.appendChild(nav);
     }
+
     const actual = window.location.pathname.split('/').pop();
+
     nav.innerHTML = OPCIONES.map(o => `
       <a href="${o.href}" class="${actual === o.href ? 'activo' : ''}" aria-label="${o.texto}">
         <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor"
@@ -36,6 +39,7 @@
       </a>
     `).join('');
 
+    // Páginas sin .pagina (como Pago): deja espacio para que el menú no tape el contenido
     if (!document.querySelector('.pagina')) {
       const espacio = document.createElement('div');
       espacio.style.height = '90px';

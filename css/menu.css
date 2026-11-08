@@ -1,8 +1,10 @@
+/* Menú inferior del cliente: íconos SVG y enlace activo en dorado */
 .menu-nav {
   display: flex;
   justify-content: space-around;
   align-items: stretch;
 }
+
 .menu-nav a {
   display: flex;
   flex: 1;
@@ -18,6 +20,7 @@
   color: rgba(255, 255, 255, 0.6);
   transition: color 0.2s;
 }
+
 .menu-nav a:hover { color: #fff; }
 .menu-nav a.activo { color: #B08D57; }
 .menu-nav a svg { flex: 0 0 auto; }
