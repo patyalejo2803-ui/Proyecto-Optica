@@ -17,7 +17,7 @@ const MENUS = {
     { texto: "Servicios", href: "estado.html" },
     { texto: "Órdenes", href: "pedidos.html" },
     { texto: "Citas", href: "citas.html" },
-    { texto: "Usuarios", href: "admin.html" },
+    { texto: "Panel", href: "dashboard.html" },
     { texto: "Promociones", href: "promociones.html" }
   ],
   3: [ // GERENTE

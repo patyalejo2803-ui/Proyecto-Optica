@@ -5,14 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Óptica Alemana - Pago</title>
 
-  <!-- Enlace al archivo de estilos -->
   <link rel="stylesheet" href="css/pago.css">
+  <link rel="stylesheet" href="css/menu.css">
 </head>
 <body>
 
   <div class="tarjeta">
 
-    <!-- Encabezado -->
     <div class="encabezado">
       <h1>ÓPTICA ALEMANA</h1>
       <h2>Medios de Pago</h2>
@@ -35,17 +34,23 @@
       <div class="medios">
 
         <div class="medio" onclick="seleccionarMedio(this, 'Tarjeta')">
-          <span class="icono">💳</span>
+          <span class="icono">
+            <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>
+          </span>
           <p>TARJETA</p>
         </div>
 
         <div class="medio" onclick="seleccionarMedio(this, 'Transferencia')">
-          <span class="icono">🔄</span>
+          <span class="icono">
+            <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 3l4 4-4 4M21 7H7M7 21l-4-4 4-4M3 17h14"/></svg>
+          </span>
           <p>TRANSFERENCIA</p>
         </div>
 
         <div class="medio" onclick="seleccionarMedio(this, 'Efectivo')">
-          <span class="icono">💵</span>
+          <span class="icono">
+            <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="3"/></svg>
+          </span>
           <p>EFECTIVO</p>
         </div>
 
@@ -53,25 +58,24 @@
       <p class="error" id="error-medio">Selecciona un medio de pago.</p>
     </div>
 
-    <!-- Botón pagar -->
-    <button id="btnPagar" onclick="procesarPago()">¡Haz tu pedido ahora! ✔</button>
+    <button id="btnPagar" onclick="procesarPago()">Hacer mi pedido</button>
     <p class="error" id="error-general"></p>
 
     <!-- Factura (se muestra al pagar) -->
     <div class="factura" id="factura">
-      <h3>📄 Resumen de Compra</h3>
-      <p>🛍️ Servicio: <span id="f-producto"></span></p>
-      <p>💳 Medio de pago: <span id="f-medio"></span></p>
-      <p>💰 Total: <span id="f-total"></span></p>
-      <p>🔢 N° Pedido: <span id="f-pedido"></span></p>
-      <p class="guardado">✅ Pedido guardado en tu historial.</p>
+      <h3>Resumen de compra</h3>
+      <p>Servicio: <span id="f-producto"></span></p>
+      <p>Medio de pago: <span id="f-medio"></span></p>
+      <p>Total: <span id="f-total"></span></p>
+      <p>N.° de pedido: <span id="f-pedido"></span></p>
+      <p class="guardado">Pedido guardado en tu historial.</p>
       <p><a href="pedidos.html">Ver mis pedidos</a> · <a href="pago.html">Hacer otro pedido</a></p>
     </div>
 
   </div>
 
-  <!-- Enlace al archivo JavaScript -->
   <script src="js/pago.js"></script>
+  <script src="js/menu.js"></script>
 
 </body>
 </html>
