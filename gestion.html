@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Óptica Alemana - Gestión de órdenes</title>
+  <link rel="stylesheet" href="css/gestion.css">
+</head>
+<body>
+
+  <div class="pagina">
+
+    <div class="encabezado">
+      <h1>ÓPTICA ALEMANA</h1>
+      <h2>Gestión de órdenes</h2>
+      <p>Cambia el estado de citas y pedidos</p>
+    </div>
+
+    <div class="aviso" id="aviso"></div>
+
+    <div class="seccion">
+      <div class="filtros">
+        <input type="search" id="buscar" placeholder="Buscar por cliente, servicio o número">
+        <select id="filtroEstado"><option value="">Todos los estados</option></select>
+        <button type="button" id="btnActualizar" class="btn-sec">Actualizar</button>
+      </div>
+
+      <div class="tabla-caja">
+        <table class="tabla">
+          <thead>
+            <tr>
+              <th>N.°</th><th>Fecha</th><th>Cliente</th><th>Servicio</th>
+              <th>Total</th><th>Estado</th><th>Pago</th><th></th>
+            </tr>
+          </thead>
+          <tbody id="cuerpo"><tr><td colspan="8" class="vacio">Cargando…</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+
+    <a class="btn-volver" href="dashboard.html">Volver al panel</a>
+
+  </div>
+
+  <script src="js/gestion.js"></script>
+</body>
+</html>
