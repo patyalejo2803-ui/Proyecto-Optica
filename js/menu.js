@@ -2,6 +2,7 @@
 // Reemplaza el contenido de .menu-nav (o lo crea si la página no lo tiene).
 (function () {
   const ICONOS = {
+    inicio: '<path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/>',
     citas: '<rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/>',
     pago: '<rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/>',
     pedidos: '<path d="M21 8l-9-5-9 5v8l9 5 9-5z"/><path d="M3 8l9 5 9-5M12 13v8"/>',
@@ -11,6 +12,7 @@
   };
 
   const OPCIONES = [
+    { id: 'inicio', texto: 'Inicio', href: 'inicio.html' },
     { id: 'citas', texto: 'Citas', href: 'citas.html' },
     { id: 'pago', texto: 'Pago', href: 'pago.html' },
     { id: 'pedidos', texto: 'Pedidos', href: 'pedidos.html' },

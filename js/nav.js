@@ -15,7 +15,7 @@ const MENUS = {
     { texto: "Resumen", href: "dashboard.html" },
     { texto: "Productos", href: "productos.html" },
     { texto: "Servicios", href: "estado.html" },
-    { texto: "Órdenes", href: "pedidos.html" },
+    { texto: "Órdenes", href: "gestion.html" },
     { texto: "Citas", href: "citas.html" },
     { texto: "Panel", href: "dashboard.html" },
     { texto: "Promociones", href: "promociones.html" }
@@ -24,7 +24,7 @@ const MENUS = {
     { texto: "Resumen", href: "dashboard.html" },
     { texto: "Productos", href: "productos.html" },
     { texto: "Servicios", href: "estado.html" },
-    { texto: "Órdenes", href: "pedidos.html" },
+    { texto: "Órdenes", href: "gestion.html" },
     { texto: "Citas", href: "citas.html" },
     { texto: "Promociones", href: "promociones.html" }
   ],

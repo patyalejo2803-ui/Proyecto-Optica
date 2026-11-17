@@ -1,4 +1,3 @@
-cat > php/usuario/index.php <<'EOF'
 <?php
     session_start();
     require_once 'UsuarioController.php';
@@ -52,6 +51,4 @@ cat > php/usuario/index.php <<'EOF'
         echo json_encode(["code"=>500,"msg"=>"Error en el servidor \n".$e->getMessage()]);
     }
 ?>
-EOF
 /c/xampp/php/php.exe -l php/usuario/index.php
-grep -n "fetch\|php/" js/login.js

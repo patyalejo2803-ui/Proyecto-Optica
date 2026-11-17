@@ -1,0 +1,27 @@
+@import url('pedidos.css');
+
+.vacio { margin: 0 0 12px; text-align: center; color: var(--texto-suave); }
+
+.dato { padding: 14px 16px; border: 2px solid var(--borde); border-radius: 12px; margin-bottom: 14px; }
+.dato-fila { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.dato-titulo { margin: 0; font-weight: 700; color: var(--azul); }
+.dato-sub { margin: 4px 0 0; font-size: 0.85rem; color: var(--texto-suave); }
+
+.promo {
+  display: flex; align-items: center; justify-content: space-between; gap: 14px;
+  padding: 14px 16px; margin-bottom: 10px;
+  border: 2px solid var(--borde); border-radius: 12px;
+}
+.promo:last-child { margin-bottom: 0; }
+.promo-titulo { margin: 0; font-weight: 700; color: var(--azul); }
+.promo-desc { margin: 4px 0 0; font-size: 0.85rem; color: var(--texto-suave); }
+.promo-etiqueta {
+  flex: 0 0 auto; padding: 8px 14px; font-size: 0.9rem; font-weight: 700;
+  white-space: nowrap; color: #fff;
+  background: linear-gradient(135deg, var(--dorado), #a8884f); border-radius: 999px;
+}
+
+.btn-agendar {
+  display: block; padding: 14px; text-align: center; font-weight: 700;
+  text-decoration: none; color: #fff; background: var(--azul); border-radius: 12px;
+}

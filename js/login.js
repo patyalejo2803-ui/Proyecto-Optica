@@ -75,7 +75,7 @@ async function validarLogin(correo, clave) {
           localStorage.setItem("nombreUsuario", resp.usuario.NOMBRES);
           localStorage.setItem("idRol", resp.usuario.ID_ROL);
           // Cliente (rol 1) a su área; personal al panel administrativo
-          ir(Number(resp.usuario.ID_ROL) === 1 ? "citas.html" : "dashboard.html");
+          ir(Number(resp.usuario.ID_ROL) === 1 ? "inicio.html" : "dashboard.html");
         } else {
           mostrarErrorServidor(resp.msg || "No se pudo iniciar sesión.");
           boton.disabled = false;
