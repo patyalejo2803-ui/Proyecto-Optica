@@ -50,15 +50,15 @@ function registrarUsuario() {
   }
 
   if (hayError == false) {
-    registrarUsuarioBackend(nombre, correo, contrasena);
+    registrarUsuarioBackend(nombre, correo, contrasena, fecha);
   }
 }
 
-async function registrarUsuarioBackend(nombre, correo, contrasena) {
+async function registrarUsuarioBackend(nombre, correo, contrasena, fecha) {
   await enviarPeticion({
     url: "php/registro_procesar.php",
     method: "POST",
-    param: { nombre: nombre, correo: correo, contrasena: contrasena },
+    param: { nombre: nombre, correo: correo, contrasena: contrasena, fecha: fecha },
     fSuccess: (resp) => {
       if (resp.code == 200) {
         document.getElementById("mensaje-exito").style.display = "block";

@@ -1,6 +1,5 @@
 <?php
     require_once 'usuario/UsuarioController.php';
-    header('Access-Control-Allow-Origin: *');
     header('Content-Type: application/json');
 
     try {
@@ -12,9 +11,23 @@
                     $nombre     = htmlspecialchars(trim($_POST['nombre']));
                     $correo     = htmlspecialchars(trim($_POST['correo']));
                     $contrasena = trim($_POST['contrasena']); // no se limpia con htmlspecialchars, se hashea tal cual
+                    $fecha      = trim($_POST['fecha'] ?? '');
+
+                    // Si llega fecha, debe ser una fecha real (AAAA-MM-DD) y no futura
+                    if ($fecha !== '') {
+                        $d = DateTime::createFromFormat('Y-m-d', $fecha);
+                        $valida = $d && $d->format('Y-m-d') === $fecha;
+                        if (!$valida || $d > new DateTime('today') || $d < new DateTime('1900-01-01')) {
+                            http_response_code(400);
+                            echo json_encode(["code" => 400, "msg" => "Fecha de nacimiento no válida"]);
+                            exit;
+                        }
+                    } else {
+                        $fecha = null;
+                    }
 
                     $controller = new UsuarioController();
-                    $resultado = $controller->registrar($nombre, $correo, $contrasena);
+                    $resultado = $controller->registrar($nombre, $correo, $contrasena, $fecha);
 
                     if ($resultado) {
                         http_response_code(200);

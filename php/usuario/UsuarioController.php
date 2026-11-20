@@ -12,7 +12,7 @@ class UsuarioController {
     /**
      * Registra un nuevo usuario.
      */
-    public function registrar($nombre, $correo, $contrasena) {
+    public function registrar($nombre, $correo, $contrasena, $fecha = null) {
 
         $sqlVerifica = "SELECT ID_USUARIO FROM usuario WHERE EMAIL = :email";
         $stmtVerifica = $this->db->prepare($sqlVerifica);
@@ -25,8 +25,8 @@ class UsuarioController {
         $hash = password_hash($contrasena, PASSWORD_DEFAULT);
         $identificacionTemp = 'TEMP-' . uniqid();
 
-        $sqlInsert = "INSERT INTO usuario (IDENTIFICACION, NOMBRES, TELEFONO, EMAIL, PASSWORD, ID_LOCALIDAD, ID_ROL, DIRECCION)
-                      VALUES (:identificacion, :nombre, :telefono, :email, :password, :id_localidad, :id_rol, :direccion)";
+        $sqlInsert = "INSERT INTO usuario (IDENTIFICACION, NOMBRES, TELEFONO, EMAIL, PASSWORD, ID_LOCALIDAD, ID_ROL, DIRECCION, FECHA_NACIMIENTO)
+                      VALUES (:identificacion, :nombre, :telefono, :email, :password, :id_localidad, :id_rol, :direccion, :fecha)";
         $stmtInsert = $this->db->prepare($sqlInsert);
 
         return $stmtInsert->execute([
@@ -37,7 +37,8 @@ class UsuarioController {
             ':password'       => $hash,
             ':id_localidad'   => 1,
             ':id_rol'         => 1, // CLIENTE
-            ':direccion'      => ''
+            ':direccion'      => '',
+            ':fecha'          => $fecha
         ]);
     }
 
